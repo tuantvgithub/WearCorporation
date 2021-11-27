@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
-public class UserService {
-    
+import com.example.demo.dto.UserDTO;
+
+public interface UserService {
+    public UserDTO getUserInfo(int userId);
 }
