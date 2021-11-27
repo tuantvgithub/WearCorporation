@@ -1,18 +1,41 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
-
 import com.example.demo.dto.ProductBriefDTO;
+import com.example.demo.dto.ProductDetailDTO;
 import com.example.demo.service.ProductService;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
+@Controller
+@RequestMapping("/products")
 public class ProductController {
-    public ProductService productService;
-    public String home(Model model)
-    {
-        ArrayList<ProductBriefDTO> pdto=productService.getListProductBriefDTO();
-        model.addAttribute("productDTO", pdto);
-        return "eshopper/shop";
+
+    private final ProductService productService;
+
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
+
+    @GetMapping
+    public String displayProductList(Model model) {
+        return "product-list";
+    }
+
+    @GetMapping("/{id}")
+    public String displayProductDetail(@PathVariable Long id, Model model) {
+        ProductDetailDTO productDetailDTO = this.productService.getProductDetailDTOById(id);
+        // get more similar products
+
+        model.addAttribute("product", productDetailDTO);
+
+        return "product-detail";
+    }
+
 }

@@ -1,8 +1,15 @@
 package com.example.demo.dto;
 
+import lombok.Data;
+
+@Data
 public class ProductBriefDTO {
-    public int id;
-    public String name;
-    public float price;
-    public String imgurl;
+
+    private Long id;
+
+    private String name;
+
+    private String imageUrl;
+
+    private Double price;
 }
