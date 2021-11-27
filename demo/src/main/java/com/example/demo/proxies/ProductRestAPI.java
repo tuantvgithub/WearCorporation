@@ -1,4 +1,4 @@
-package com.example.demo.restapi;
+package com.example.demo.proxies;
 
 import java.util.ArrayList;
 

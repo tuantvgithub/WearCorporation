@@ -1,14 +1,17 @@
 package com.example.demo.mapping;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.example.demo.bean.ProductBean;
 import com.example.demo.dto.ProductBriefDTO;
+import com.example.demo.dto.ProductDetailDTO;
 
-public class ProductMapping {
-   public ArrayList<ProductBriefDTO> productBeansToProductBriefDTOs(List<ProductBean> products)
-   {
-       return new ArrayList<ProductBriefDTO>();
-   } 
+import java.util.List;
+
+public interface ProductMapping {
+
+    ProductBriefDTO beanToBriefDTO(ProductBean bean);
+
+    List<ProductBriefDTO> beansToBriefDTOs(List<ProductBean> beans);
+
+    ProductDetailDTO beanToDetailDTO(ProductBean bean);
+
 }
