@@ -6,10 +6,16 @@ import com.example.demo.mapping.CartMapping;
 import com.example.demo.proxies.CartWebServiceProxy;
 import com.example.demo.service.CartService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+@Component
 public class CartServiceImpl implements CartService{
 
-    private final CartWebServiceProxy  cartWebServiceProxy;
+    private final CartWebServiceProxy cartWebServiceProxy;
     private final CartMapping cartMapping;
+    @Autowired
     public CartServiceImpl(CartWebServiceProxy cartWebServiceProxy,CartMapping cartMapping)
     {
         this.cartWebServiceProxy=cartWebServiceProxy;

@@ -7,6 +7,9 @@ import com.example.demo.bean.CartBean;
 import com.example.demo.bean.ProductDetailBean;
 import com.example.demo.proxies.CartWebServiceProxy;
 
+import org.springframework.stereotype.Component;
+
+@Component 
 public class CartWebServiceProxyImpl implements CartWebServiceProxy {
 
     @Override
