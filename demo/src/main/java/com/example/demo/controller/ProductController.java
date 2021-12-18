@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ProductDetailDTO;
-import com.example.demo.service.ProductService;
+import com.example.demo.dto.product.ProductDetailDTO;
+import com.example.demo.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/shop")
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -28,7 +28,6 @@ public class ProductController {
     @GetMapping("/{id}")
     public String displayProductDetail(@PathVariable Long id, Model model) {
         ProductDetailDTO productDetailDTO = this.productService.getProductDetailDTOById(id);
-        // get more similar products
 
         model.addAttribute("product", productDetailDTO);
 
