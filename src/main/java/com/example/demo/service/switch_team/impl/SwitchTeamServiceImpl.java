@@ -27,7 +27,7 @@ public class SwitchTeamServiceImpl implements SwitchTeamService {
 
         String old = this.productModuleConfig.getTeam();
         if (old.equals(productTeam))
-            return "Hệ thống hiện đang sử dụng API quản lý sản phầm của nhóm " + productTeam + "rồi ah";
+            return "Hệ thống hiện đang sử dụng API quản lý sản phầm của nhóm " + productTeam + " rồi ah";
 
         this.productModuleConfig.setTeam(productTeam);
         return "Đã chuyển thành công product team: " + old + " -> " + productTeam;
