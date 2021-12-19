@@ -1,4 +1,4 @@
-package com.example.demo.bean.product.sp17;
+package com.example.demo.bean.sp17;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
