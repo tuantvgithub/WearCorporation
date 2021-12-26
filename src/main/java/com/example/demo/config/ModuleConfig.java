@@ -11,4 +11,12 @@ public class ModuleConfig {
 
     private String productTeam;
     private String advertisementTeam;
+    private String cartTeam;
+    private String accountTeam;
+    private String inventoryTeam;
+    private String deliveryTeam;
+    private String sysManagementTeam;
+    private String customerCareTeam;
+    private String searchAndReportTeam;
+    private String orderTeam;
 }
