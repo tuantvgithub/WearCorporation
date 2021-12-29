@@ -1,0 +1,86 @@
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<!-- 
+THEME: Aviato | E-commerce template
+VERSION: 1.0.0
+AUTHOR: Themefisher
+
+HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
+DEMO: https://demo.themefisher.com/aviato/
+GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
+
+WEBSITE: https://themefisher.com
+TWITTER: https://twitter.com/themefisher
+FACEBOOK: https://www.facebook.com/themefisher
+-->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head(title='Order')"></head>
+<body id="body">
+
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/account-header :: account-header"></div>
+
+<section class="user-dashboard page-wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="list-inline dashboard-menu text-center">
+					<li><a th:href="@{/account/profile}">Profile Details</a></li>
+					<li><a class="active" href="#!">Orders</a></li>
+					<li><a th:href="@{/account/address}">Address</a></li>
+				</ul>
+				<div class="dashboard-wrapper user-dashboard">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Order ID</th>
+									<th>Date</th>
+									<th>Items</th>
+									<th>Total Price</th>
+									<th>Status</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="order : ${orderList}">
+									<td th:text="'#' + ${order.id}"></td>
+									<td th:text="${order.orderDate}"></td>
+									<td th:text="${order.numberOfItems}"></td>
+									<td th:text="'$' + ${order.totalPrice}"></td>
+									<td th:text="${order.status}">
+<!--										<span th:if="${order.status == 'Processing'}"-->
+<!--											  class="label label-primary">Processing</span>-->
+<!--										<span th:if="${order.status == 'Completed'}"-->
+<!--											  class="label label-success">Completed</span>-->
+<!--										<span th:if="${order.status == 'Canceled'}"-->
+<!--											  class="label label-danger">Canceled</span>-->
+<!--										<span th:if="${order.status == 'On Hold'}"-->
+<!--											  class="label label-info">On Hold</span>-->
+<!--										<span th:if="${order.status == 'Pending'}"-->
+<!--											  class="label label-warning">Pending</span>-->
+									</td>
+									<td><a th:href="@{|/account/orders/${order.id}|}" class="btn btn-default">View</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/js-script-container"></div>
+
+  </body>
+  </html>

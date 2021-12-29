@@ -1,7 +1,7 @@
 package com.example.demo.product.service.impl;
 
 import com.example.demo.product.bean.sp11.SP11ResponseBean;
-import com.example.demo.client_ui.dto.category.CategoryBriefDTO;
+import com.example.demo.client_ui.dto.category.CategoryDTO;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
 import com.example.demo.client_ui.dto.product.ProductDetailDTO;
 import com.example.demo.product.mapping.ProductMapping;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 
-@Service("sp11")
+@Service("sp11-product")
 public class ProductServiceSP11Impl implements ProductService {
 
     @Autowired
@@ -41,7 +41,7 @@ public class ProductServiceSP11Impl implements ProductService {
     }
 
     @Override
-    public List<CategoryBriefDTO> getAllCategories() {
+    public List<CategoryDTO> getAllCategories() {
         SP11ResponseBean<List<HashMap<String, Object>>> responseBean =
                 this.webServiceProxy.getAllCategories();
 

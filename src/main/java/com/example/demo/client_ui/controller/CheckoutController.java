@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/checkout")
-public class CheckoutController extends BaseController {
+public class CheckoutController {
 
-    @GetMapping
+    @GetMapping("/checkout")
     public String getCheckoutPage(Model model) {
         return "checkout";
     }

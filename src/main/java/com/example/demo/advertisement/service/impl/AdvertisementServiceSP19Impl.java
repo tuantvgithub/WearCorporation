@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("sp19")
+@Service("sp19-advertisement")
 public class AdvertisementServiceSP19Impl implements AdvertisementService {
 
     @Override

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.HashMap;
 import java.util.List;
 
-@FeignClient(name = "my-adv-api", url = "https://ltct-api.2soft.top")
+@FeignClient(name = "sp09-adv-api", url = "https://ltct-api.2soft.top")
 public interface AdvertisementSP09WebServiceProxy {
 
     @GetMapping("/advertisements")

@@ -1,19 +1,44 @@
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<!--
+THEME: Aviato | E-commerce template
+VERSION: 1.0.0
+AUTHOR: Themefisher
+
+HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
+DEMO: https://demo.themefisher.com/aviato/
+GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
+
+WEBSITE: https://themefisher.com
+TWITTER: https://twitter.com/themefisher
+FACEBOOK: https://www.facebook.com/themefisher
+-->
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head :: head(title='404')"></head>
-
-<body>
-	<div class="container text-center">
-		<div class="logo-404">
-			<a th:href="@{/}"><img th:src="@{/images/home/logo.png}" alt="" /></a>
+<body id="body">
+	<section class="page-404">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<a th:href="@{/}">
+						<img th:src="@{/images/logo.png}" alt="site logo" />
+					</a>
+					<h1>404</h1>
+					<h2>Page Not Found</h2>
+					<a th:href="@{/}" class="btn btn-main"><i class="tf-ion-android-arrow-back"></i> Go Home</a>
+					<p class="copyright-text">© 2018 Themefisher All Rights Reserved</p>
+				</div>
+			</div>
 		</div>
-		<div class="content-404">
-			<img th:src="@{/images/404/404.png}" class="img-responsive" alt="" />
-			<h1><b>OPPS!</b> We Couldn’t Find this Page</h1>
-			<p>Uh... So it looks like you brock something. The page you are looking for has up and Vanished.</p>
-			<h2><a th:href="@{/}">Bring me back Home</a></h2>
-		</div>
-	</div>
+	</section>
 
     <div th:replace="fragments/js-script-container"></div>
 </body>

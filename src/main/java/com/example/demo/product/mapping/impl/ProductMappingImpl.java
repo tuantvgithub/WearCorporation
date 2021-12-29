@@ -1,11 +1,10 @@
 package com.example.demo.product.mapping.impl;
 
-import com.example.demo.product.bean.sp02.SP02ProductDetailBean;
 import com.example.demo.product.bean.sp11.SP11CategoryBriefBean;
 import com.example.demo.product.bean.sp11.SP11ProductBriefBean;
 import com.example.demo.product.bean.sp11.SP11ProductDetailBean;
 import com.example.demo.product.bean.sp17.SP17ProductDetailBean;
-import com.example.demo.client_ui.dto.category.CategoryBriefDTO;
+import com.example.demo.client_ui.dto.category.CategoryDTO;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
 import com.example.demo.client_ui.dto.product.ProductDetailDTO;
 import com.example.demo.product.mapping.ProductMapping;
@@ -20,11 +19,20 @@ import java.util.List;
 @Component
 public class ProductMappingImpl implements ProductMapping {
 
-    private final ObjectMapper objectMapper;
-
     @Autowired
-    public ProductMappingImpl(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+    private ObjectMapper objectMapper;
+
+    @Override
+    public ProductBriefDTO detailDTOToBriefDTO(ProductDetailDTO detailDTO) {
+        if (detailDTO == null) return null;
+        ProductBriefDTO briefDTO = new ProductBriefDTO();
+
+        briefDTO.setId(detailDTO.getId());
+        briefDTO.setName(detailDTO.getName());
+        briefDTO.setPrice(detailDTO.getPrice());
+        briefDTO.setImageUrl(detailDTO.getImageUrl());
+
+        return briefDTO;
     }
 
     @Override
@@ -57,6 +65,7 @@ public class ProductMappingImpl implements ProductMapping {
         if (detailData == null) return null;
 
         SP11ProductDetailBean detailBean = this.objectMapper.convertValue(detailData, SP11ProductDetailBean.class);
+        if (detailBean == null) return null;
         ProductDetailDTO detailDTO = new ProductDetailDTO();
 
         detailDTO.setBrand(detailBean.getBrand());
@@ -67,11 +76,6 @@ public class ProductMappingImpl implements ProductMapping {
         detailDTO.setDescription(detailBean.getDetail());
 
         return detailDTO;
-    }
-
-    @Override
-    public ProductDetailDTO detailBeanToDetailDTO(SP02ProductDetailBean bean) {
-        return bean == null ? null : this.objectMapper.convertValue(bean, ProductDetailDTO.class);
     }
 
     @Override
@@ -89,12 +93,12 @@ public class ProductMappingImpl implements ProductMapping {
     }
 
     @Override
-    public CategoryBriefDTO categoryBriefBeanToCategoryBriefDTO(HashMap<String, Object> briefData) {
+    public CategoryDTO categoryBriefBeanToCategoryBriefDTO(HashMap<String, Object> briefData) {
         if (briefData == null) return null;
 
         SP11CategoryBriefBean categoryBriefBean =
                 this.objectMapper.convertValue(briefData, SP11CategoryBriefBean.class);
-        CategoryBriefDTO categoryBriefDTO = new CategoryBriefDTO();
+        CategoryDTO categoryBriefDTO = new CategoryDTO();
 
         categoryBriefDTO.setId(categoryBriefBean.getId());
         categoryBriefDTO.setName(categoryBriefBean.getName());
@@ -106,28 +110,15 @@ public class ProductMappingImpl implements ProductMapping {
     }
 
     @Override
-    public List<CategoryBriefDTO> categoryBriefBeansToCategoryBriefDTO(
+    public List<CategoryDTO> categoryBriefBeansToCategoryBriefDTO(
             List<HashMap<String, Object>> briefDataList) {
         if (briefDataList == null) return null;
-        List<CategoryBriefDTO> categoryBriefDTOList = new LinkedList<>();
+        List<CategoryDTO> categoryBriefDTOList = new LinkedList<>();
 
         briefDataList.forEach(briefData -> categoryBriefDTOList.add(
                 this.categoryBriefBeanToCategoryBriefDTO(briefData)));
 
         return categoryBriefDTOList;
-    }
-
-    @Override
-    public ProductBriefDTO detailBeanToBriefDTO(SP02ProductDetailBean bean) {
-        if (bean == null) return null;
-        ProductBriefDTO dto = new ProductBriefDTO();
-
-        dto.setId(bean.getId());
-        dto.setName(bean.getName());
-        dto.setPrice(bean.getPrice());
-        dto.setImageUrl(bean.getImageUrl());
-
-        return dto;
     }
 
     @Override
@@ -141,15 +132,5 @@ public class ProductMappingImpl implements ProductMapping {
         briefDTO.setImageUrl(bean.getImage());
 
         return briefDTO;
-    }
-
-    @Override
-    public List<ProductBriefDTO> detailBeansToBriefDTOs(List<SP02ProductDetailBean> detailBeanList) {
-        if (detailBeanList == null) return null;
-        List<ProductBriefDTO> dtoList = new LinkedList<>();
-
-        detailBeanList.forEach(detailBean -> dtoList.add(this.detailBeanToBriefDTO(detailBean)));
-
-        return dtoList;
     }
 }

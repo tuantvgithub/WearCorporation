@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 
-@Service("sp09")
+@Service("sp09-advertisement")
 public class AdvertisementServiceSP09Impl implements AdvertisementService {
 
     @Autowired
