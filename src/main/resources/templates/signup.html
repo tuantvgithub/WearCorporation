@@ -35,7 +35,8 @@ FACEBOOK: https://www.facebook.com/themefisher
             <img th:src="@{/images/logo.png}" alt="">
           </a>
           <h2 class="text-center">Create Your Account</h2>
-          <form class="text-left clearfix" th:action="@{/account/signup}" method="post" th:object="${user}">
+          <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+          <form class="text-left clearfix" th:action="@{/account/signup}" method="post" th:object="${registerForm}">
             <div class="form-group">
               <input type="text" th:field="*{firstName}" class="form-control"  placeholder="First Name">
             </div>
@@ -43,7 +44,7 @@ FACEBOOK: https://www.facebook.com/themefisher
               <input type="text" th:field="*{lastName}" class="form-control"  placeholder="Last Name">
             </div>
             <div class="form-group">
-              <input type="text" th:field="*{username}" class="form-control"  placeholder="Username">
+              <input type="text" th:field="*{country}" class="form-control"  placeholder="Country">
             </div>
             <div class="form-group">
               <input type="email" th:field="*{email}" class="form-control"  placeholder="Email">

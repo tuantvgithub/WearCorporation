@@ -1,10 +1,10 @@
 package com.example.demo.client_ui.controller;
 
 import com.example.demo.client_ui.dto.advertisement.AdvertisementBriefDTO;
-import com.example.demo.advertisement.service.AdvertisementService;
+import com.example.demo.module.advertisement.service.AdvertisementService;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
 import com.example.demo.config.ModuleConfig;
-import com.example.demo.product.service.ProductService;
+import com.example.demo.module.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
