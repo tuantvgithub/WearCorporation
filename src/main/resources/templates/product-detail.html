@@ -60,11 +60,12 @@ FACEBOOK: https://www.facebook.com/themefisher
 			</div>
 			<div class="col-md-7">
 				<div class="single-product-details">
-					<h2 th:text="${product.name}"></h2>
-					<p class="product-price" th:text="'$' + ${product.price}"></p>
-					
-					<p class="product-description mt-20" th:text="${product.description}">
-					</p>
+				<h2 th:text="${product.name}"></h2>
+				<p class="product-price" th:text="'$' + ${product.price}"></p>
+
+				<p class="product-description mt-20" th:text="${product.description}"></p>
+				<form th:action="@{/cart}" th:method="post" th:object="${productCartForm}">
+					<input type="hidden" th:value="${product.id}" th:attr="name='productId'">
 					<div class="color-swatches">
 						<span>color:</span>
 						<ul>
@@ -80,29 +81,30 @@ FACEBOOK: https://www.facebook.com/themefisher
 						</ul>
 					</div>
 					<div class="product-size">
-						<span>Size:</span>
-						<select class="form-control">
-							<option>S</option>
-							<option>M</option>
-							<option>L</option>
-							<option>XL</option>
+						<span for="size">Size:</span>
+						<select class="form-control" th:field="*{size}">
+							<option value="S">S</option>
+							<option value="M">M</option>
+							<option value="L">L</option>
+							<option value="XL">XL</option>
 						</select>
 					</div>
 					<div class="product-quantity">
 						<span>Quantity:</span>
 						<div class="product-quantity-slider">
-							<input id="product-quantity" type="text" value="0" name="product-quantity">
+							<input id="product-quantity" type="number" th:value="${1}" th:attr="name='quantity'">
 						</div>
 					</div>
 					<div class="product-category">
 						<span>Categories:</span>
 						<ul>
-							<li><a href="#!">Products</a></li>
-							<li><a href="#!">Soap</a></li>
+							<li>Products</li>
+							<li>Soap</li>
 						</ul>
 					</div>
-					<a th:href="@{/cart}" class="btn btn-main mt-20">Add To Cart</a>
-				</div>
+					<button type="submit" class="btn btn-main mt-20">Add To Cart</button>
+				</form>
+			</div>
 			</div>
 		</div>
 		<div class="row">

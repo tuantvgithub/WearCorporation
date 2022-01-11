@@ -4,5 +4,6 @@ import com.example.demo.client_ui.dto.account.AccountRoleDTO;
 
 public interface SystemManagementService {
 
-    AccountRoleDTO getRole(String username);
+    AccountRoleDTO getRoleByEmail(String email);
+    AccountRoleDTO getRoleByAccountId(String id);
 }

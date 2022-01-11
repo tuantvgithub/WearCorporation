@@ -1,10 +1,11 @@
 package com.example.demo.client_ui.controller;
 
+import com.example.demo.client_ui.dto.cart.ProductCartAddFormDTO;
+import com.example.demo.client_ui.dto.cart.ProductCartDTO;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
 import com.example.demo.client_ui.dto.product.ProductDetailDTO;
-import com.example.demo.config.ModuleConfig;
+import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.product.service.ProductService;
-import com.example.demo.module.product.service.impl.ProductServiceSP17Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,7 @@ public class ShopController {
     public String getShopPage(Model model) {
         ProductService productService = this.productServiceMap.get(this.moduleConfig.getProductTeam());
         List<ProductBriefDTO> productBriefDTOList = productService.getAllProductBriefDTO();
-        
+
         if (productBriefDTOList != null)
             model.addAttribute("productList", productBriefDTOList);
 
@@ -46,6 +47,7 @@ public class ShopController {
         ProductDetailDTO productDetailDTO = productService.getProductDetailDTOById(id);
 
         model.addAttribute("product", productDetailDTO);
+        model.addAttribute("productCartForm", new ProductCartAddFormDTO());
 
         return "product-detail";
     }

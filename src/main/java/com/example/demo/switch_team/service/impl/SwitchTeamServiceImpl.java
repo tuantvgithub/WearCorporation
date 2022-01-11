@@ -1,6 +1,6 @@
 package com.example.demo.switch_team.service.impl;
 
-import com.example.demo.config.ModuleConfig;
+import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.switch_team.service.SwitchTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class SwitchTeamServiceImpl implements SwitchTeamService {
     public static final List<String> AVAILABLE_DELIVERY_TEAM = Arrays.asList("sp02-delivery");
     public static final List<String> AVAILABLE_ADVERTISEMENT_TEAM = Arrays.asList("sp02-advertisement", "sp09-advertisement");
     public static final List<String> AVAILABLE_CART_TEAM = Arrays.asList("sp02-cart");
-    public static final List<String> AVAILABLE_SYS_MANAGEMENT_TEAM = Arrays.asList("sp02-system-management");
+    public static final List<String> AVAILABLE_SYS_MANAGEMENT_TEAM = Arrays.asList("sp02-sys-management", "sp03-sys-management");
     public static final List<String> AVAILABLE_SEARCH_AND_REPORT_TEAM = Arrays.asList("sp02-search-and-report");
 
     public static final String MODULE_IS_NOT_AVAILABLE_MESSAGE = "Module bạn yêu cầu chưa sử dụng được";

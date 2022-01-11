@@ -37,46 +37,31 @@
                         <ul class="top-menu text-right list-inline">
 
                             <li class="dropdown cart-nav dropdown-slide">
-                                <a th:href="@{/cart}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
+                                <a th:href="@{/cart}" class="dropdown-toggle" data-hover="dropdown"><i
                                         class="tf-ion-android-cart"></i>Cart</a>
-                                <div class="dropdown-menu cart-dropdown">
+                                <div th:if="${productCartList != null and !productCartList.isEmpty()}"
+                                     class="dropdown-menu cart-dropdown">
                                     <!-- Cart Item -->
-                                    <div class="media">
-                                        <a class="pull-left" th:href="@{/}">
-                                            <img class="media-object" th:src="@{/images/shop/cart/cart-1.jpg}" alt="image" />
+                                    <div class="media" th:each="product : ${productCartList}">
+                                        <a class="pull-left" th:href="@{|/shop/products/${product.productId}|}">
+                                            <img class="media-object" th:src="${product.productImage}" alt="image" />
                                         </a>
                                         <div class="media-body">
-                                            <h4 class="media-heading"><a th:href="@{/}">Ladies Bag</a></h4>
+                                            <h4 class="media-heading">
+                                                <a th:href="@{|/shop/products/${product.productId}|}"
+                                                   th:text="${product.productName}"></a>
+                                            </h4>
                                             <div class="cart-price">
-                                                <span>1 x</span>
-                                                <span>1250.00</span>
+                                                <span th:text="${product.quantity} + ' x '"></span>
+                                                <span th:text="'$' + ${product.itemPrice}"></span>
                                             </div>
-                                            <h5><strong>$1200</strong></h5>
+                                            <h5><strong th:text="'$' + ${product.totalPrice}"></strong></h5>
                                         </div>
-                                        <a th:href="@{/}" class="remove"><i class="tf-ion-close"></i></a>
                                     </div><!-- / Cart Item -->
                                     <!-- Cart Item -->
-                                    <div class="media">
-                                        <a class="pull-left" th:href="@{/}">
-                                            <img class="media-object" th:src="@{/images/shop/cart/cart-2.jpg}" alt="image" />
-                                        </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading"><a th:href="@{/}">Ladies Bag</a></h4>
-                                            <div class="cart-price">
-                                                <span>1 x</span>
-                                                <span>1250.00</span>
-                                            </div>
-                                            <h5><strong>$1200</strong></h5>
-                                        </div>
-                                        <a th:href="@{/}" class="remove"><i class="tf-ion-close"></i></a>
-                                    </div><!-- / Cart Item -->
 
-                                    <div class="cart-summary">
-                                        <span>Total</span>
-                                        <span class="total-price">$1799.00</span>
-                                    </div>
                                     <ul class="text-center cart-buttons">
-                                        <li><a th:href="@{/cart}" class="btn btn-small">View Cart</a></li>
+                                        <li><a th:href="@{/cart}" class="btn btn-small btn-solid-border">View Cart</a></li>
                                         <li><a th:href="@{/checkout}" class="btn btn-small btn-solid-border">Checkout</a></li>
                                     </ul>
                                 </div>
@@ -182,6 +167,7 @@
                                             <ul>
                                                 <li class="dropdown-header">Dashboard</li>
                                                 <li role="separator" class="divider"></li>
+                                                <li th:if="${account.isAdmin}"><a th:href="@{/admin/dashboard}">Dashboard</a></li>
                                                 <li><a th:href="@{/account/orders}">Orders</a></li>
                                                 <li><a th:href="@{/account/address}">Address</a></li>
                                                 <li><a th:href="@{/account/profile}">Profile Details</a></li>
@@ -193,7 +179,8 @@
                                             <ul>
                                                 <li class="dropdown-header">Utility</li>
                                                 <li role="separator" class="divider"></li>
-                                                <li><a th:href="@{/account/login}">Login Page</a></li>
+                                                <li th:if="${account.id != null}"><a th:href="@{/account/logout}">Logout</a></li>
+                                                <li th:unless="${account.id != null}"><a th:href="@{/account/login}">Login Page</a></li>
                                                 <li><a th:href="@{/account/signup}">Signup Page</a></li>
                                                 <li><a th:href="@{/account/forget-password}">Forget Password</a></li>
                                             </ul>

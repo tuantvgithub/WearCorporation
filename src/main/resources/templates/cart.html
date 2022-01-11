@@ -56,42 +56,23 @@ FACEBOOK: https://www.facebook.com/themefisher
                     <tr>
                       <th class="">Item Name</th>
                       <th class="">Item Price</th>
+                      <th class="">Items</th>
+                      <th class="">Amount</th>
                       <th class="">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="">
+                    <tr class="" th:each="product : ${cart.productCartList}">
                       <td class="">
                         <div class="product-info">
-                          <img width="80" th:src="@{/images/shop/cart/cart-1.jpg}" alt="" />
-                          <a href="#">Sunglass</a>
+                          <img width="80" th:src="${product.productImage}" alt="" />
+                          <a th:href="@{|/shop/products/${product.productId}|}"
+                             th:text="${product.productName}"></a>
                         </div>
                       </td>
-                      <td class="">$200.00</td>
-                      <td class="">
-                        <a class="product-remove" href="#!">Remove</a>
-                      </td>
-                    </tr>
-                    <tr class="">
-                      <td class="">
-                        <div class="product-info">
-                          <img width="80" src="images/shop/cart/cart-2.jpg" alt="" />
-                          <a href="#!">Airspace</a>
-                        </div>
-                      </td>
-                      <td class="">$200.00</td>
-                      <td class="">
-                        <a class="product-remove" href="#!">Remove</a>
-                      </td>
-                    </tr>
-                    <tr class="">
-                      <td class="">
-                        <div class="product-info">
-                          <img width="80" src="images/shop/cart/cart-3.jpg" alt="" />
-                          <a href="#!">Bingo</a>
-                        </div>
-                      </td>
-                      <td class="">$200.00</td>
+                      <td class="" th:text="'$' + ${product.itemPrice}"></td>
+                      <td class="" th:text="${product.quantity}"></td>
+                      <td class="" th:text="'$' + ${product.totalPrice}"></td>
                       <td class="">
                         <a class="product-remove" href="#!">Remove</a>
                       </td>

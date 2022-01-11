@@ -37,7 +37,7 @@ public class ProductServiceSP02Impl implements ProductService {
                     true, "E-SHOPPER", 200, 3),
             new ProductDetailDTO(3L, "Stray horn SP", this.PRODUCT_DESCRIPTION,
                     "/images/shop/products/product-3.jpg", null,
-                    true, "E-SHOPPER", 70, 3),
+                    true, "E-SHOPPER", 80, 3),
             new ProductDetailDTO(4L, "Bradley Mid", this.PRODUCT_DESCRIPTION,
                     "/images/shop/products/product-4.jpg", null,
                     true, "E-SHOPPER", 200, 3),

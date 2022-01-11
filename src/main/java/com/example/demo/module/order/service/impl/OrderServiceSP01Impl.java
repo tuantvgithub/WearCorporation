@@ -4,7 +4,7 @@ import com.example.demo.client_ui.dto.order.OrderBriefDTO;
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
 import com.example.demo.client_ui.dto.order.ProductOrderDTO;
 import com.example.demo.client_ui.dto.product.ProductDetailDTO;
-import com.example.demo.config.ModuleConfig;
+import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.order.bean.sp01.SP01OrderBean;
 import com.example.demo.module.order.bean.sp01.SP01ProductOrderBean;
 import com.example.demo.module.order.mapping.OrderMapping;

@@ -35,7 +35,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <img th:src="@{/images/logo.png}" alt="">
           </a>
           <h2 class="text-center">Welcome Back</h2>
-          <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+          <div class="alert" role="alert" th:text="${notice}" th:if="${notice}"></div>
           <form class="text-left clearfix" th:action="@{/account/login}" method="post" th:object="${loginForm}" >
             <div class="form-group">
               <input type="text" th:field="*{email}" class="form-control"  placeholder="email">
