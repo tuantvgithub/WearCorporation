@@ -167,7 +167,7 @@
                                             <ul>
                                                 <li class="dropdown-header">Dashboard</li>
                                                 <li role="separator" class="divider"></li>
-                                                <li th:if="${account.isAdmin}"><a th:href="@{/admin/dashboard}">Dashboard</a></li>
+                                                <li th:if="${account?.isAdmin}"><a th:href="@{/admin/dashboard}">Dashboard</a></li>
                                                 <li><a th:href="@{/account/orders}">Orders</a></li>
                                                 <li><a th:href="@{/account/address}">Address</a></li>
                                                 <li><a th:href="@{/account/profile}">Profile Details</a></li>
@@ -179,8 +179,8 @@
                                             <ul>
                                                 <li class="dropdown-header">Utility</li>
                                                 <li role="separator" class="divider"></li>
-                                                <li th:if="${account.id != null}"><a th:href="@{/account/logout}">Logout</a></li>
-                                                <li th:unless="${account.id != null}"><a th:href="@{/account/login}">Login Page</a></li>
+                                                <li th:if="${account?.id != null}"><a th:href="@{/account/logout}">Logout</a></li>
+                                                <li th:unless="${account?.id != null}"><a th:href="@{/account/login}">Login Page</a></li>
                                                 <li><a th:href="@{/account/signup}">Signup Page</a></li>
                                                 <li><a th:href="@{/account/forget-password}">Forget Password</a></li>
                                             </ul>
