@@ -11,9 +11,13 @@ public class AccountDTO {
 
     private String id;
 
+    private String username;
+
     private String email;
 
     private String password;
+    
+    private String password_confirmation;
 
     private String firstName;
 

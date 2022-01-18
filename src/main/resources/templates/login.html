@@ -38,7 +38,7 @@ FACEBOOK: https://www.facebook.com/themefisher
           <div class="alert" role="alert" th:text="${notice}" th:if="${notice}"></div>
           <form class="text-left clearfix" th:action="@{/account/login}" method="post" th:object="${loginForm}" >
             <div class="form-group">
-              <input type="text" th:field="*{email}" class="form-control"  placeholder="email">
+              <input type="text" th:field="*{username}" class="form-control"  placeholder="Username">
             </div>
             <div class="form-group">
               <input type="password" th:field="*{password}" class="form-control" placeholder="Password">
