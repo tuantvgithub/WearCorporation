@@ -19,8 +19,8 @@ public class PaymentInfo {
     @JsonProperty("card")
     private String cardNumber;
 
-    @JsonProperty("balance")
-    private Float balance;
+    @JsonProperty("money")
+    private Float money;
 
     @JsonProperty("expired")
     private String expired;

@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductCartDTO {
 
-    private Long productId;
+    private Integer productId;
 
     private String productName;
 
     private String productImage;
 
-    private Double itemPrice;
+    private Float itemPrice;
 
     private Integer quantity;
 
-    private Double totalPrice;
+    private Float totalPrice;
 }

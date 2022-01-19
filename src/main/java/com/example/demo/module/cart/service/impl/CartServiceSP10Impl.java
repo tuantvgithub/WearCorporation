@@ -20,7 +20,7 @@ public class CartServiceSP10Impl implements CartService {
     }
 
     @Override
-    public CartDTO removeProduct(String cartId, Long productId) {
+    public CartDTO removeProduct(String cartId,Integer productId) {
         return null;
     }
 }

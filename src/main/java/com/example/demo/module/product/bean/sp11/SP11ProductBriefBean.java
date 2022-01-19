@@ -7,7 +7,7 @@ import lombok.Data;
 public class SP11ProductBriefBean {
 
     @JsonProperty("id")
-    private Long id;
+    private Integer id;
 
     @JsonProperty("name")
     private String name;
@@ -16,7 +16,7 @@ public class SP11ProductBriefBean {
     private String detail;
 
     @JsonProperty("price")
-    private Double price;
+    private Float price;
 
     @JsonProperty("category_id")
     private Long categoryId;

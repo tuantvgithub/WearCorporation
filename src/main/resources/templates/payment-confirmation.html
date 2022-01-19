@@ -59,31 +59,30 @@ FACEBOOK: https://www.facebook.com/themefisher
 				                  	</tr>
 				                </thead>
 
-				                <tbody>
+				                <tbody th:object="${order}">
 
 				                  	<tr>
 				                    	<td class=""><strong>Payment Status:</strong></td>
-				                    	<td class="">Complete</td>
+				                    	<td th:text="*{status}"></td>
 				                  	</tr>
 
 
 				                  	<tr>
 				                    	<td><strong>Payment Method:</strong></td>
-				                    	<td>Free Purchase</td>
+				                    	<td th:text="*{paymentMethod}"></td>
 				                  	</tr>
 				                  	<tr>
 				                    	<td><strong>Date:</strong></td>
-				                    	<td>December 20, 2016</td>
+				                    	<td th:text="*{orderDate}"></td>
 				                  	</tr>
 				                  	<tr>
 				                    	<td><strong>Subtotal</strong></td>
-				                    	<td>
-				                      	$18.00        </td>
+				                    	<td th:text="*{subTotal}"> </td>
 				                    </tr>
 
 				                    <tr>
 				                      	<td><strong>Total Price:</strong></td>
-				                      	<td>$18.00</td>
+				                      	<td th:text="*{totalPrice}"></td>
 				                    </tr>
 				                </tbody>
 				            </table>

@@ -8,7 +8,7 @@ import lombok.Data;
 public class SP10PaymentResponseBean {
 
     @JsonProperty("status")
-    private String status;
+    private Integer status;
 
     @JsonProperty("message")
     private String message;

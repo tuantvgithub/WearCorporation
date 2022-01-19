@@ -11,7 +11,11 @@ public class OrderDetailDTO {
 
     private String orderDate;
 
-    private Double totalPrice;
+    private Float totalPrice;
+
+    private Float subTotal;
+
+    private String paymentMethod;
 
     private String status;
 

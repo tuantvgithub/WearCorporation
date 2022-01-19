@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductDetailDTO {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -26,16 +26,16 @@ public class ProductDetailDTO {
 
     private String brand;
 
-    private double price;
+    private Float price;
 
     private int stars;
 
     private CategoryDTO categoryDTO;
 
-    public ProductDetailDTO(Long id, String name, String description,
+    public ProductDetailDTO(Integer id, String name, String description,
                             String imageUrl, List<String> similarImageUrlList,
                             boolean isAvailability, String brand,
-                            double price, int stars) {
+                            Float price, int stars) {
         this.id = id;
         this.name = name;
         this.description = description;

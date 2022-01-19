@@ -15,7 +15,7 @@ public class OrderBriefDTO {
 
     private Integer numberOfItems;
 
-    private Double totalPrice;
+    private Float totalPrice;
 
     private String status;
 }

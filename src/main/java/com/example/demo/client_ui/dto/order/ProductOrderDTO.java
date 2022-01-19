@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductOrderDTO {
 
-    private Long productId;
+    private int productId;
 
     private String productName;
 
     private String productImageUrl;
 
-    private Double productPrice;
+    private Float productPrice;
 
     private Integer quantity;
 }

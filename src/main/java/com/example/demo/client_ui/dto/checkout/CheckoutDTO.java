@@ -1,5 +1,9 @@
 package com.example.demo.client_ui.dto.checkout;
 
+import java.util.List;
+
+import com.example.demo.client_ui.dto.order.ProductOrderDTO;
+
 import lombok.Data;
 
 @Data
@@ -23,5 +27,13 @@ public class CheckoutDTO {
 
     private String cvv;
 
+    private Float subTotal;
+
+    private float shipFee;
+
     private Float total;
+
+    private Float voucher;
+
+    private String voucherCode;
 }

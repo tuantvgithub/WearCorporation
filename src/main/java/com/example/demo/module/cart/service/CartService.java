@@ -10,5 +10,5 @@ public interface CartService {
 
     CartDTO addProduct(String cartId, ProductCartAddFormDTO addFormDTO);
 
-    CartDTO removeProduct(String cartId, Long productId);
+    CartDTO removeProduct(String cartId, Integer productId);
 }

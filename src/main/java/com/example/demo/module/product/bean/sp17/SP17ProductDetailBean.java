@@ -5,13 +5,13 @@ import lombok.Data;
 @Data
 public class SP17ProductDetailBean {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 
     private String type;
 
-    private Double price;
+    private Float price;
 
     private String description;
 

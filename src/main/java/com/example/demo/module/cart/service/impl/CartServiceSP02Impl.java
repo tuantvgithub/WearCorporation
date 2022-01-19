@@ -19,15 +19,15 @@ import java.util.Map;
 public class CartServiceSP02Impl implements CartService {
 
     private final List<ProductCartDTO> productCartDTOList = new LinkedList<>(Arrays.asList(
-            new ProductCartDTO(1L, "Reef Boardsport",
+            new ProductCartDTO(1, "Reef Boardsport",
                     "/images/shop/products/product-1.jpg",
-                    200., 2, 400.),
-            new ProductCartDTO(2L, "Rainbow Shoes",
+                    200f, 2, 400f),
+            new ProductCartDTO(2, "Rainbow Shoes",
                     "/images/shop/products/product-2.jpg",
-                    200., 1, 200.),
-            new ProductCartDTO(3L, "Stray horn SP",
+                    200f, 1, 200f),
+            new ProductCartDTO(3, "Stray horn SP",
                     "/images/shop/products/product-3.jpg",
-                    80., 3, 240.)));
+                    80f, 3, 240f)));
 
     private final CartDTO cartDTO = new CartDTO("1", this.productCartDTOList, 840.);
 
@@ -63,11 +63,11 @@ public class CartServiceSP02Impl implements CartService {
     }
 
     @Override
-    public CartDTO removeProduct(String cartId, Long productId) {
+    public CartDTO removeProduct(String cartId, Integer productId) {
         if (!cartId.equals(this.cartDTO.getId())) return null;
         for (ProductCartDTO productCartDTO : this.cartDTO.getProductCartList())
             if (productCartDTO.getProductId().equals(productId)) {
-                Double tmp = productCartDTO.getTotalPrice();
+                Float tmp = productCartDTO.getTotalPrice();
                 this.cartDTO.getProductCartList().remove(productCartDTO);
                 this.cartDTO.setTotalPrice(this.cartDTO.getTotalPrice() - tmp);
             }

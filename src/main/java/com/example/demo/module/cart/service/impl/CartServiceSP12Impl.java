@@ -2,7 +2,6 @@ package com.example.demo.module.cart.service.impl;
 
 import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartAddFormDTO;
-import com.example.demo.client_ui.dto.cart.ProductCartDTO;
 import com.example.demo.module.cart.service.CartService;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class CartServiceSP12Impl implements CartService {
     }
 
     @Override
-    public CartDTO removeProduct(String cartId, Long productId) {
+    public CartDTO removeProduct(String cartId, Integer productId) {
         return null;
     }
 }

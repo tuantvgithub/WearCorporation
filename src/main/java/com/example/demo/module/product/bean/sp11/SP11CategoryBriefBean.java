@@ -7,7 +7,7 @@ import lombok.Data;
 public class SP11CategoryBriefBean {
 
     @JsonProperty("id")
-    private Long id;
+    private Integer id;
 
     @JsonProperty("name")
     private String name;

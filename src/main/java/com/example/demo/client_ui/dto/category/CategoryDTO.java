@@ -7,7 +7,7 @@ import lombok.Data;
 public class CategoryDTO {
 
     @JsonProperty("id")
-    private Long id;
+    private Integer id;
 
     @JsonProperty("name")
     private String name;
