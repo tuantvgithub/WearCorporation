@@ -72,6 +72,8 @@ public class AccountController {
         else {
             this.currentAccount.setId(accountDTO.getId());
             this.currentAccount.setEmail(accountDTO.getEmail());
+            this.currentAccount.setFullname(accountDTO.getUsername());
+            this.currentAccount.setPhone(accountDTO.getPhone());
             this.currentAccount.setRole(systemManagementService.getRoleByAccountId(accountDTO.getId()));
             if (this.currentAccount.getRole() == AccountRoleDTO.ADMIN_ROLE)
                 this.currentAccount.setAdmin(true);
@@ -130,7 +132,12 @@ public class AccountController {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return new ModelAndView("redirect:/account/login", model);
 
-        return new ModelAndView("profile", model);
+        System.out.println(this.currentAccount);
+        ModelAndView mv= new ModelAndView();
+        mv.addObject("profile", this.currentAccount);
+        mv.setViewName("profile");
+
+        return mv;
     }
 
     @GetMapping("/orders")

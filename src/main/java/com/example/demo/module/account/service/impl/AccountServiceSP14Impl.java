@@ -28,6 +28,7 @@ public class AccountServiceSP14Impl implements AccountService {
             accountDTO.setId(responseBean.getData().getId());
             accountDTO.setEmail(responseBean.getData().getEmail());
             accountDTO.setUsername(responseBean.getData().getUsername());
+            accountDTO.setPhone(responseBean.getData().getPhone());
             return accountDTO;
         } catch (Exception excpt) {
             log.error(excpt.getMessage(), excpt.getCause());
@@ -44,6 +45,7 @@ public class AccountServiceSP14Impl implements AccountService {
             accountDTO.setId(responseBean.getData().getId());
             accountDTO.setEmail(responseBean.getData().getEmail());
             accountDTO.setUsername(responseBean.getData().getUsername());
+            accountDTO.setPhone(responseBean.getData().getPhone());
             return accountDTO;
         } catch (Exception excpt) {
             log.error(excpt.getMessage(), excpt.getCause());

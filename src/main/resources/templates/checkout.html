@@ -109,10 +109,10 @@ FACEBOOK: https://www.facebook.com/themefisher
                                     placeholder="CVC">
                                  <span th:text="${invalidCvv} ?: ''"></span>
                               </div>
-                              <input th:field="*{total}" type="hidden" value="${total}">
-                              <input th:field="*{subTotal}" type="hidden" value="${subTotal}">
-                              <input th:field="*{shipFee}" type="hidden" value="${shipFee}">
-                              <input th:field="*{voucherCode}" type="hidden" value="${voucherCode}">
+                              <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">
+                              <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">
+                              <input th:field="*{shipFee}" type="hidden" id="ip_ship_fee" value="${shipFee}">
+                              <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">
                               <button class="btn btn-main mt-20">Place Order</button>
                               </form>
                            </div>
@@ -151,20 +151,21 @@ FACEBOOK: https://www.facebook.com/themefisher
                         <ul class="summary-prices">
                            <li>
                               <span>Subtotal:</span>
-                              <span class="price" th:text="'$' + ${checkoutForm.subTotal}"></span>
+                              <span id="subtotal" class="price" th:text="'$' + ${checkoutForm.subTotal}"></span>
                            </li>
                            <li>
                               <span> Voucher:</span>
-                              <span class="price" th:text="${checkoutForm.voucher} + '% ('+ ${checkoutForm.voucherCode} + ')'?: 'None'"></span>
+                              <span class="price" id="voucher"
+                                 th:text="${checkoutForm.voucher} + '% ('+ ${checkoutForm.voucherCode} + ')'?: 'None'"></span>
                            </li>
                            <li>
                               <span>Shipping:</span>
-                              <span th:text="'$' + ${checkoutForm.shipFee}"></span>
+                              <span id="ship_fee" th:text="'$' + ${checkoutForm.shipFee}"></span>
                            </li>
                         </ul>
                         <div class="summary-total">
                            <span>Total</span>
-                           <span th:text="'$' + ${checkoutForm.total}"></span>
+                           <span id="total" th:text="'$' + ${checkoutForm.total}"></span>
                         </div>
                         <div class="verified-icon">
                            <img src="images/shop/verified.png">

@@ -36,6 +36,9 @@ public class SP14AccountBean {
     @JsonProperty("gender")
     private String gender;
 
+    @JsonProperty("phone")
+    private String phone;
+
     
 
 }
