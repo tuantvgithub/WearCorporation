@@ -9,4 +9,6 @@ public interface OrderService {
 
     List<OrderBriefDTO> getAllOrderDTOByUserId(Long userId);
     OrderDetailDTO getOrderDTOById(Long orderId);
+    void updateOrder(Long orderId,OrderDetailDTO updateOder);
+    OrderDetailDTO createOrder(OrderDetailDTO orderDetailDTO);
 }

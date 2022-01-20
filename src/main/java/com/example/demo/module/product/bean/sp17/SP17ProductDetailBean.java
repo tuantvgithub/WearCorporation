@@ -11,7 +11,7 @@ public class SP17ProductDetailBean {
 
     private String type;
 
-    private Float price;
+    private Integer price;
 
     private String description;
 

@@ -17,10 +17,10 @@ public class AccountServiceSP02Impl implements AccountService {
     public static Integer ID_COUNT = 3;
 
     private final List<AccountDTO> ACCOUNT_LIST = Arrays.asList(
-            new AccountDTO("1",null, "ltct.sp02@gmail.com", "sp02",null,
+            new AccountDTO(1,null, "ltct.sp02@gmail.com", "sp02",null,
                     "ltct", "sp02", "HUST", "123456",
                     "/images/avater.jpg", null),
-            new AccountDTO("2", null,"admin@gmail.com", "admin",null,
+            new AccountDTO(2, null,"admin@gmail.com", "admin",null,
                     "Johanna", "Doe", "USA", "+880123123",
                     "/images/avater.jpg", "Dec , 22 ,1991")
     );
@@ -50,7 +50,7 @@ public class AccountServiceSP02Impl implements AccountService {
         if (formDTO == null) return null;
         if (!isValidEmail(formDTO.getEmail())) return null;
 
-        AccountDTO savedAccount = new AccountDTO(ID_COUNT.toString(), null,formDTO.getEmail(),
+        AccountDTO savedAccount = new AccountDTO(ID_COUNT, null,formDTO.getEmail(),
                 formDTO.getPassword(),null, formDTO.getFirstName(), formDTO.getLastName(),
                 formDTO.getCountry(), null, null, null);
         this.ACCOUNT_SET.add(savedAccount);

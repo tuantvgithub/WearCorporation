@@ -11,9 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CartDTO {
 
-    private String id;
-
     private List<ProductCartDTO> productCartList;
 
-    private Double totalPrice;
+
 }

@@ -1,11 +1,13 @@
 package com.example.demo.client_ui.controller;
 
 import com.example.demo.client_ui.dto.account.*;
+import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.client_ui.dto.order.OrderBriefDTO;
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.account.service.AccountService;
+import com.example.demo.module.cart.service.CartService;
 import com.example.demo.module.order.service.OrderService;
 import com.example.demo.module.system_management.service.SystemManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +36,17 @@ public class AccountController {
     private final Map<String, OrderService> orderServiceMap;
 
     @Autowired
+    private  Map<String, CartService> cartServiceMap;
+
+    @Autowired
     private final Map<String, AccountService> accountServiceMap;
 
     @Autowired
     private final Map<String, SystemManagementService> sysManagementServiceMap;
 
     public AccountController(Map<String, OrderService> orderServiceMap,
-                             Map<String, AccountService> accountServiceMap,
-                             Map<String, SystemManagementService> sysManagementServiceMap) {
+            Map<String, AccountService> accountServiceMap,
+            Map<String, SystemManagementService> sysManagementServiceMap) {
         this.orderServiceMap = orderServiceMap;
         this.accountServiceMap = accountServiceMap;
         this.sysManagementServiceMap = sysManagementServiceMap;
@@ -59,30 +64,30 @@ public class AccountController {
 
     @PostMapping("/login")
     public ModelAndView login(@ModelAttribute("loginForm") AccountLoginFormDTO formDTO,
-                        ModelMap model, HttpServletRequest request) {
-        AccountService accountService =
-                this.accountServiceMap.get(this.moduleConfig.getAccountTeam());
-        SystemManagementService systemManagementService =
-                this.sysManagementServiceMap.get(this.moduleConfig.getSysManagementTeam());
+            ModelMap model, HttpServletRequest request) {
+        AccountService accountService = this.accountServiceMap.get(this.moduleConfig.getAccountTeam());
+        SystemManagementService systemManagementService = this.sysManagementServiceMap
+                .get(this.moduleConfig.getSysManagementTeam());
 
         AccountDTO accountDTO = accountService.login(formDTO);
         String notice = null;
 
-        if (accountDTO == null) notice = "Failed";
+        if (accountDTO == null)
+            notice = "Failed";
         else {
             this.currentAccount.setId(accountDTO.getId());
             this.currentAccount.setEmail(accountDTO.getEmail());
             this.currentAccount.setFullname(accountDTO.getUsername());
             this.currentAccount.setPhone(accountDTO.getPhone());
-            this.currentAccount.setRole(systemManagementService.getRoleByAccountId(accountDTO.getId()));
+            this.currentAccount.setRole(systemManagementService.getRoleByAccountId(accountDTO.getId().toString()));
             if (this.currentAccount.getRole() == AccountRoleDTO.ADMIN_ROLE)
                 this.currentAccount.setAdmin(true);
         }
         model.addAttribute("notice", notice);
         model.addAttribute("account", this.currentAccount);
 
-        return accountDTO == null ? new ModelAndView("login", model) :
-                new ModelAndView("redirect:" + request.getHeader("referer"), model);
+        return accountDTO == null ? new ModelAndView("login", model)
+                : new ModelAndView("redirect:" + request.getHeader("referer"), model);
     }
 
     @GetMapping("/logout")
@@ -106,17 +111,20 @@ public class AccountController {
 
     @PostMapping("/signup")
     public ModelAndView signup(@ModelAttribute("registerForm") AccountRegisterFormDTO formDTO,
-                         ModelMap model) {
-        AccountService accountService =
-                this.accountServiceMap.get(this.moduleConfig.getAccountTeam());
+            ModelMap model) {
+        AccountService accountService = this.accountServiceMap.get(this.moduleConfig.getAccountTeam());
         AccountDTO accountDTO = accountService.signup(formDTO);
         String notice = null;
 
-        if (accountDTO == null) notice = "Failed";
+        if (accountDTO == null)
+            notice = "Failed";
         model.addAttribute("notice", notice);
+        CartService cartService=cartServiceMap.get(this.moduleConfig.getCartTeam());
+       cartService.createCart(new UserDTO(accountDTO.getId()));
 
-        return accountDTO == null ? new ModelAndView("signup", model) :
-                new ModelAndView("redirect:/account/login", model);
+
+        return accountDTO == null ? new ModelAndView("signup", model)
+                : new ModelAndView("redirect:/account/login", model);
     }
 
     @GetMapping("/address")
@@ -133,7 +141,7 @@ public class AccountController {
             return new ModelAndView("redirect:/account/login", model);
 
         System.out.println(this.currentAccount);
-        ModelAndView mv= new ModelAndView();
+        ModelAndView mv = new ModelAndView();
         mv.addObject("profile", this.currentAccount);
         mv.setViewName("profile");
 

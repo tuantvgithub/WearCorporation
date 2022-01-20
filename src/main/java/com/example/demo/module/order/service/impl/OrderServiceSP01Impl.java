@@ -78,4 +78,16 @@ public class OrderServiceSP01Impl implements OrderService {
 
         return detailDTO;
     }
+
+    @Override
+    public void updateOrder(Long orderId, OrderDetailDTO updateOder) {
+        orderSP01WebServiceProxy.updateOrder(X_API_KEY_TOKEN, orderId, updateOder);
+    }
+
+    @Override
+    public OrderDetailDTO createOrder(OrderDetailDTO orderDetailDTO) {
+        
+        OrderDetailDTO order=orderSP01WebServiceProxy.createOrder(X_API_KEY_TOKEN,orderDetailDTO);
+        return order;
+    }
 }

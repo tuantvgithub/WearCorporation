@@ -1,5 +1,6 @@
 package com.example.demo.client_ui.controller;
 
+import com.example.demo.client_ui.dto.account.UserDTO;
 import com.example.demo.client_ui.dto.advertisement.AdvertisementBriefDTO;
 import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.config.account.CurrentAccount;
@@ -19,45 +20,53 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-    @Autowired
-    private CurrentAccount currentAccount;
+        @Autowired
+        private CurrentAccount currentAccount;
 
-    @Autowired
-    private ModuleConfig moduleConfig;
+        @Autowired
+        private ModuleConfig moduleConfig;
 
-    private final Map<String, AdvertisementService> advServiceMap;
-    private final Map<String, ProductService> productServiceMap;
-    private final Map<String, CartService> cartServiceMap;
+        private final Map<String, AdvertisementService> advServiceMap;
+        private final Map<String, ProductService> productServiceMap;
+        private final Map<String, CartService> cartServiceMap;
 
-    @Autowired
-    public HomeController(Map<String, AdvertisementService> advServiceMap,
-                          Map<String, ProductService> productServiceMap,
-                          Map<String, CartService> cartServiceMap) {
-        this.advServiceMap = advServiceMap;
-        this.productServiceMap = productServiceMap;
-        this.cartServiceMap = cartServiceMap;
-    }
+        @Autowired
+        public HomeController(Map<String, AdvertisementService> advServiceMap,
+                        Map<String, ProductService> productServiceMap,
+                        Map<String, CartService> cartServiceMap) {
+                this.advServiceMap = advServiceMap;
+                this.productServiceMap = productServiceMap;
+                this.cartServiceMap = cartServiceMap;
+        }
 
-    @GetMapping("/")
-    public String displayHomepage(Model model) {
-        List<AdvertisementBriefDTO> advBriefList = this.advServiceMap.get(
-                this.moduleConfig.getAdvertisementTeam()).getAllAdvertisementBriefDTOs();
-        List<ProductBriefDTO> trendyProductList = this.productServiceMap.get(
-                this.moduleConfig.getProductTeam()).getAllProductBriefDTO();
-        CartDTO cartDTO = this.cartServiceMap.get(
-                this.moduleConfig.getCartTeam()).getCartByAccountId(this.currentAccount.getId());
+        @GetMapping("/")
+        public String displayHomepage(Model model) {
+                List<AdvertisementBriefDTO> advBriefList = this.advServiceMap.get(
+                                this.moduleConfig.getAdvertisementTeam()).getAllAdvertisementBriefDTOs();
+                List<ProductBriefDTO> trendyProductList = this.productServiceMap.get(
+                                this.moduleConfig.getProductTeam()).getAllProductBriefDTO();
+                CartDTO cartDTO=null;
+                if (this.currentAccount.getId() != null) {
 
-        if (cartDTO != null && cartDTO.getProductCartList() != null)
-            model.addAttribute("productCartList", cartDTO.getProductCartList().size() > 1 ?
-                    cartDTO.getProductCartList().subList(0, 2) : cartDTO.getProductCartList());
-        if (advBriefList != null)
-            model.addAttribute("advList", advBriefList.size() > 2 ?
-                    advBriefList.subList(0, 3) : advBriefList);
-        if (trendyProductList != null)
-            model.addAttribute("trendyProductList", trendyProductList.size() > 5 ?
-                    trendyProductList.subList(0, 6) : trendyProductList);
-        model.addAttribute("account", this.currentAccount);
+                        cartDTO = this.cartServiceMap.get(
+                                        this.moduleConfig.getCartTeam())
+                                        .getCartByAccountId(new UserDTO(this.currentAccount.getId()));
+                }
+                
+                if (cartDTO != null && cartDTO.getProductCartList() != null)
+                        model.addAttribute("productCartList",
+                                        cartDTO.getProductCartList().size() > 1
+                                                        ? cartDTO.getProductCartList().subList(0, 2)
+                                                        : cartDTO.getProductCartList());
+                if (advBriefList != null)
+                        model.addAttribute("advList",
+                                        advBriefList.size() > 2 ? advBriefList.subList(0, 3) : advBriefList);
+                if (trendyProductList != null)
+                        model.addAttribute("trendyProductList",
+                                        trendyProductList.size() > 5 ? trendyProductList.subList(0, 6)
+                                                        : trendyProductList);
+                model.addAttribute("account", this.currentAccount);
 
-        return "index";
-    }
+                return "index";
+        }
 }

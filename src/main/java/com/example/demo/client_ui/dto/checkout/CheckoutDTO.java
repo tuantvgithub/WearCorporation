@@ -27,13 +27,13 @@ public class CheckoutDTO {
 
     private String cvv;
 
-    private Float subTotal;
+    private Integer subTotal;
 
-    private float shipFee;
+    private Integer shipFee;
 
-    private Float total;
+    private Integer total;
 
-    private Float voucher;
+    private Integer voucher;
 
     private String voucherCode;
 }

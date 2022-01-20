@@ -111,8 +111,8 @@ FACEBOOK: https://www.facebook.com/themefisher
                               </div>
                               <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">
                               <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">
-                              <input th:field="*{shipFee}" type="hidden" id="ip_ship_fee" value="${shipFee}">
                               <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">
+                               <input th:field="*{voucher}" type="hidden" id="ip_voucher" value="${voucher}">
                               <button class="btn btn-main mt-20">Place Order</button>
                               </form>
                            </div>
@@ -129,14 +129,14 @@ FACEBOOK: https://www.facebook.com/themefisher
                               <td>
                                  <div class="media product-card">
                                     <a class="pull-left" href="product-single.html">
-                                       <img class="media-object" width="80" th:src="${product.productImageUrl}"
+                                       <img class="media-object" width="80" th:src="${product.productImage}"
                                           alt="Image" />
                                     </a>
                                     <div class="media-body">
                                        <h4 class="media-heading"><a th:href="@{/product-detail}"
                                              th:text="${product.productName}"></a>
                                        </h4>
-                                       <p class="price" th:text="${product.quantity}+'x'+${product.productPrice}+' $'">
+                                       <p class="price" th:text="${product.quantity}+'x'+${product.itemPrice}">
                                        </p>
                                        <span class="remove">Remove</span>
                                     </div>
@@ -151,21 +151,17 @@ FACEBOOK: https://www.facebook.com/themefisher
                         <ul class="summary-prices">
                            <li>
                               <span>Subtotal:</span>
-                              <span id="subtotal" class="price" th:text="'$' + ${checkoutForm.subTotal}"></span>
+                              <span id="subtotal" class="price" th:text="${checkoutForm.subTotal}"></span>
                            </li>
                            <li>
                               <span> Voucher:</span>
                               <span class="price" id="voucher"
-                                 th:text="${checkoutForm.voucher} + '% ('+ ${checkoutForm.voucherCode} + ')'?: 'None'"></span>
-                           </li>
-                           <li>
-                              <span>Shipping:</span>
-                              <span id="ship_fee" th:text="'$' + ${checkoutForm.shipFee}"></span>
+                                 th:text="${checkoutForm.voucher} + ' ('+ ${checkoutForm.voucherCode} + ')'?: 'None'"></span>
                            </li>
                         </ul>
                         <div class="summary-total">
                            <span>Total</span>
-                           <span id="total" th:text="'$' + ${checkoutForm.total}"></span>
+                           <span id="total" th:text="${checkoutForm.total}"></span>
                         </div>
                         <div class="verified-icon">
                            <img src="images/shop/verified.png">

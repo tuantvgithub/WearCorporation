@@ -26,7 +26,7 @@ public class ProductDetailDTO {
 
     private String brand;
 
-    private Float price;
+    private Integer price;
 
     private int stars;
 
@@ -35,7 +35,7 @@ public class ProductDetailDTO {
     public ProductDetailDTO(Integer id, String name, String description,
                             String imageUrl, List<String> similarImageUrlList,
                             boolean isAvailability, String brand,
-                            Float price, int stars) {
+                            Integer price, int stars) {
         this.id = id;
         this.name = name;
         this.description = description;

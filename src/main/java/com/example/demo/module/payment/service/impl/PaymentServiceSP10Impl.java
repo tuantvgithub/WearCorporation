@@ -19,5 +19,11 @@ public class PaymentServiceSP10Impl implements PaymentService {
         
         return paymentSP10WebServiceProxy.payment(paymentInfo);
     }
+
+    @Override
+    public SP10PaymentResponseBean validate(PaymentInfo paymentInfo) {
+       
+        return paymentSP10WebServiceProxy.validate(paymentInfo);
+    }
     
 }

@@ -1,5 +1,7 @@
 package com.example.demo.client_ui.dto.order;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +11,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductOrderDTO {
 
+    @JsonProperty("product_id")
     private int productId;
 
     private String productName;
 
     private String productImageUrl;
 
-    private Float productPrice;
+    private Integer productPrice;
 
+    @JsonProperty("quantity")
     private Integer quantity;
 }

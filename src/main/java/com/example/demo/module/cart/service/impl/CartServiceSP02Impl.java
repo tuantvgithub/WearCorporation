@@ -1,5 +1,6 @@
 package com.example.demo.module.cart.service.impl;
 
+import com.example.demo.client_ui.dto.account.UserDTO;
 import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartAddFormDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartDTO;
@@ -19,17 +20,18 @@ import java.util.Map;
 public class CartServiceSP02Impl implements CartService {
 
     private final List<ProductCartDTO> productCartDTOList = new LinkedList<>(Arrays.asList(
-            new ProductCartDTO(1, "Reef Boardsport",
-                    "/images/shop/products/product-1.jpg",
-                    200f, 2, 400f),
-            new ProductCartDTO(2, "Rainbow Shoes",
-                    "/images/shop/products/product-2.jpg",
-                    200f, 1, 200f),
-            new ProductCartDTO(3, "Stray horn SP",
-                    "/images/shop/products/product-3.jpg",
-                    80f, 3, 240f)));
+            // new ProductCartDTO(1,1, "Reef Boardsport",
+            //         "/images/shop/products/product-1.jpg",
+            //         200, 2),
+            // new ProductCartDTO(2,2, "Rainbow Shoes",
+            //         "/images/shop/products/product-2.jpg",
+            //         200, 1),
+            // new ProductCartDTO(3,3, "Stray horn SP",
+            //         "/images/shop/products/product-3.jpg",
+            //         80, 3)
+            ));
 
-    private final CartDTO cartDTO = new CartDTO("1", this.productCartDTOList, 840.);
+    private final CartDTO cartDTO = new CartDTO(this.productCartDTOList);
 
     @Autowired
     private ModuleConfig moduleConfig;
@@ -42,36 +44,42 @@ public class CartServiceSP02Impl implements CartService {
     }
 
     @Override
-    public CartDTO getCartByAccountId(String id) {
-        return id != null ? cartDTO : null;
+    public CartDTO getCartByAccountId(UserDTO userDTO) {
+        return userDTO.getUserId()!= null ? cartDTO : null;
     }
 
     @Override
     public CartDTO addProduct(String cartId, ProductCartAddFormDTO addFormDTO) {
-        if (!cartId.equals(this.cartDTO.getId()) || addFormDTO.getQuantity() == null) return null;
+        // if (!cartId.equals(this.cartDTO.getId()) || addFormDTO.getQuantity() == null) return null;
 
-        ProductDetailDTO detailDTO = this.productServiceMap.get(
-                this.moduleConfig.getProductTeam()).getProductDetailDTOById(addFormDTO.getProductId());
+        // ProductDetailDTO detailDTO = this.productServiceMap.get(
+        //         this.moduleConfig.getProductTeam()).getProductDetailDTOById(addFormDTO.getProductId());
 
-        if (detailDTO == null) return this.cartDTO;
+        // if (detailDTO == null) return this.cartDTO;
 
-        this.cartDTO.getProductCartList().add(new ProductCartDTO(detailDTO.getId(),
-                detailDTO.getName(), detailDTO.getImageUrl(), detailDTO.getPrice(),
-                addFormDTO.getQuantity(), addFormDTO.getQuantity() * detailDTO.getPrice()));
+        // this.cartDTO.getProductCartList().add(new ProductCartDTO(detailDTO.getId(),1,
+        //         detailDTO.getName(), detailDTO.getImageUrl(), detailDTO.getPrice(),
+        //         addFormDTO.getQuantity()));
+
+         return this.cartDTO;
+    }
+
+    @Override
+    public CartDTO removeProduct(String cartId, Integer productId) {
+        // if (!cartId.equals(this.cartDTO.getId())) return null;
+        // for (ProductCartDTO productCartDTO : this.cartDTO.getProductCartList())
+        //     if (productCartDTO.getProductId().equals(productId)) {
+        //         Integer tmp = productCartDTO.getTotalPrice();
+        //         this.cartDTO.getProductCartList().remove(productCartDTO);
+        //         this.cartDTO.setTotalPrice(this.cartDTO.getTotalPrice() - tmp);
+        //     }
 
         return this.cartDTO;
     }
 
     @Override
-    public CartDTO removeProduct(String cartId, Integer productId) {
-        if (!cartId.equals(this.cartDTO.getId())) return null;
-        for (ProductCartDTO productCartDTO : this.cartDTO.getProductCartList())
-            if (productCartDTO.getProductId().equals(productId)) {
-                Float tmp = productCartDTO.getTotalPrice();
-                this.cartDTO.getProductCartList().remove(productCartDTO);
-                this.cartDTO.setTotalPrice(this.cartDTO.getTotalPrice() - tmp);
-            }
-
-        return this.cartDTO;
+    public CartDTO createCart(UserDTO userDTO) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

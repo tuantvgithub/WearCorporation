@@ -1,17 +1,12 @@
-package com.example.demo.client_ui.dto.cart;
+package com.example.demo.module.cart.bean.sp02;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProductCartDTO {
+public class SP12CartBean {
 
-    
     @JsonProperty("id")
     private Integer id;
 
@@ -22,15 +17,16 @@ public class ProductCartDTO {
     private Integer productId;
 
     @JsonProperty("name")
-    private String productName;
+    private String name;
 
     @JsonProperty("price")
-    private Integer itemPrice;
+    private Integer price;
 
     @JsonProperty("quantity")
     private Integer quantity;
 
     @JsonProperty("image_url")
-    private String productImage;
+    private String imageUrl;
+
 
 }

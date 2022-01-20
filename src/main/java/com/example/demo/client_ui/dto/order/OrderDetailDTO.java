@@ -4,20 +4,48 @@ import lombok.Data;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDetailDTO {
 
+    @JsonProperty("order_id")
     private Long orderId;
 
+    @JsonProperty("user_id")
+    private Integer userId;
+
+    @JsonProperty("order_timestamp")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private String orderDate;
 
-    private Float totalPrice;
+    @JsonProperty("price")
+    private Integer totalPrice;
 
-    private Float subTotal;
+    private Integer subTotal;
 
+    @JsonProperty("payment_method")
     private String paymentMethod;
 
+    @JsonProperty("address")
+    private String address;
+
+    @JsonProperty("shipping_fee")
+    private Integer shipFee;
+
+    private Integer voucher;
+
+    @JsonProperty("phone_number")
+    private String phone;
+
+    private String voucherCode;
+
+    @JsonProperty("status")
     private String status;
 
+    @JsonProperty("product_list")
     private List<ProductOrderDTO> productList;
 }

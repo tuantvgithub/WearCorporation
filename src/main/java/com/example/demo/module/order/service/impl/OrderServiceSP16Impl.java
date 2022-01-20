@@ -19,4 +19,16 @@ public class OrderServiceSP16Impl implements OrderService {
     public OrderDetailDTO getOrderDTOById(Long orderId) {
         return null;
     }
+
+    @Override
+    public void updateOrder(Long orderId, OrderDetailDTO updateOder) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public OrderDetailDTO createOrder(OrderDetailDTO orderDetailDTO) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

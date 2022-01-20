@@ -10,7 +10,7 @@ import lombok.Data;
 public class SP14AccountBean {
 
     @JsonProperty("id")
-    private String id;
+    private Integer id;
 
     @JsonProperty("username")
     private String username;

@@ -16,7 +16,7 @@ public class SP01OrderBean {
     private Long userId;
 
     @JsonProperty("price")
-    private Float price;
+    private Integer price;
 
     @JsonProperty("delivery_note")
     private String deliveryNote;

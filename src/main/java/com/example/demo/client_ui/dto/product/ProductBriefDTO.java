@@ -11,5 +11,5 @@ public class ProductBriefDTO {
 
     private String imageUrl;
 
-    private Float price;
+    private Integer price;
 }

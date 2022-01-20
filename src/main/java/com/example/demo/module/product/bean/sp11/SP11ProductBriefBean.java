@@ -16,7 +16,7 @@ public class SP11ProductBriefBean {
     private String detail;
 
     @JsonProperty("price")
-    private Float price;
+    private Integer price;
 
     @JsonProperty("category_id")
     private Long categoryId;

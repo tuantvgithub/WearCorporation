@@ -12,6 +12,9 @@ public interface PaymentSP10WebServiceProxy {
     
     @PostMapping
     SP10PaymentResponseBean payment(@RequestBody PaymentInfo paymentInfo);
+
+    @PostMapping
+    SP10PaymentResponseBean validate(@RequestBody PaymentInfo paymentInfo);
     
 
 }

@@ -1,6 +1,7 @@
 package com.example.demo.client_ui.controller;
 
 import com.example.demo.client_ui.dto.account.AccountRoleDTO;
+import com.example.demo.client_ui.dto.account.UserDTO;
 import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartAddFormDTO;
 import com.example.demo.config.account.CurrentAccount;
@@ -35,8 +36,9 @@ public class CartController {
     public String getCartPage(Model model) {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return "redirect:/account/login";
+
         CartService cartService = this.cartServiceMap.get(this.moduleConfig.getCartTeam());
-        CartDTO cartDTO = cartService.getCartByAccountId(this.currentAccount.getId());
+        CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(1));
 
         if (cartDTO.getProductCartList() == null) cartDTO.setProductCartList(new ArrayList<>());
 
@@ -52,15 +54,15 @@ public class CartController {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return "redirect:/account/login";
         CartService cartService = this.cartServiceMap.get(this.moduleConfig.getCartTeam());
-        CartDTO cartDTO = cartService.getCartByAccountId(this.currentAccount.getId());
+        CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId()));
         CartDTO updatedCart = null;
 
-        if (cartDTO != null)
-            updatedCart = cartService.addProduct(cartDTO.getId(), addFormDTO);
-        if (updatedCart != null)
-            model.addAttribute("cart", updatedCart);
+        // if (cartDTO != null)
+        //     updatedCart = cartService.addProduct(cartDTO.getId(), addFormDTO);
+        // if (updatedCart != null)
+        //     model.addAttribute("cart", updatedCart);
 
-        model.addAttribute("account", this.currentAccount);
+        // model.addAttribute("account", this.currentAccount);
 
         return "redirect:/cart";
     }

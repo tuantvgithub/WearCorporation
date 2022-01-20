@@ -14,21 +14,21 @@ public class OrderServiceSP02Impl implements OrderService {
 
     private final List<OrderBriefDTO> ORDER_BRIEF_DTO_LIST = Arrays.asList(
             new OrderBriefDTO(10L, "12/12/2021", 3,
-                    500f, "Completed"),
+                    500, "Completed"),
             new OrderBriefDTO(11L, "13/12/2021", 2,
-                    100f, "Canceled"),
+                    100, "Canceled"),
             new OrderBriefDTO(12L, "30/12/2021", 2,
-                    200f, "Processing"));
+                    200, "Processing"));
 
     private final List<ProductOrderDTO> PRODUCT_ORDER_DTO_LIST = Arrays.asList(
             new ProductOrderDTO(1, "Reef Boardsport",
-                    "/images/shop/products/product-1.jpg", 100f, 3),
+                    "/images/shop/products/product-1.jpg", 100, 3),
             new ProductOrderDTO(2, "Rainbow Shoes",
-                    "/images/shop/products/product-2.jpg", 200f, 1),
+                    "/images/shop/products/product-2.jpg", 200, 1),
             new ProductOrderDTO(3, "Stray horn SP",
-                    "/images/shop/products/product-3.jpg", 100f, 2),
+                    "/images/shop/products/product-3.jpg", 100, 2),
             new ProductOrderDTO(4, "Bradley Mid",
-                    "/images/shop/products/product-4.jpg", 150f, 1)
+                    "/images/shop/products/product-4.jpg", 150, 1)
     );
 
     @Override
@@ -54,4 +54,16 @@ public class OrderServiceSP02Impl implements OrderService {
 
         return detailDTO;
     }
+
+@Override
+public void updateOrder(Long orderId, OrderDetailDTO updateOder) {
+        // TODO Auto-generated method stub
+        
+}
+
+@Override
+public OrderDetailDTO createOrder(OrderDetailDTO orderDetailDTO) {
+        // TODO Auto-generated method stub
+        return null;
+}
 }

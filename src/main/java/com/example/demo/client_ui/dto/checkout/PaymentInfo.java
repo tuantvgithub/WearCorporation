@@ -20,7 +20,7 @@ public class PaymentInfo {
     private String cardNumber;
 
     @JsonProperty("money")
-    private Float money;
+    private Integer money;
 
     @JsonProperty("expired")
     private String expired;
