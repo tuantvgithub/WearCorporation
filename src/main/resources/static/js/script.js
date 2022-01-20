@@ -15,7 +15,7 @@
     });
   });
 
-  
+
   // Instagram Feed
   if (($('#instafeed').length) !== 0) {
     var accessToken = $('#instafeed').attr('data-accessToken');
@@ -37,23 +37,23 @@
       slidesToShow: 6,
       slidesToScroll: 1,
       responsive: [{
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 4
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 3
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 2
-          }
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4
         }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2
+        }
+      }
       ]
     });
   }, 1500);
@@ -95,3 +95,56 @@
 
 
 })(jQuery);
+
+const addToCart = async (id, isLogin,userId,group) => {
+
+  if (isLogin === true) {
+
+    window.localStorage.setItem('userId',userId);
+
+    let payload;
+    let url;
+    if(group===17)
+    {
+      url="https://laptrinhcautrucapi.herokuapp.com/product/id?id=";
+    }
+    else if(group===11)
+    {
+      url="https://team-product-api.herokuapp.com/api/products/"
+    }
+    await fetch(url + id, {
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data[0]);
+        payload = {
+          image_url: data[0].image,
+          price: data[0].price,
+          productId: data[0].id,
+          name: data[0].name,
+          size: data[0].size,
+          quantity: 1,
+          userId: userId,
+          color: data[0].color
+        }
+      });
+   
+      console.log(payload);
+    await fetch("https://ltct-sp12-module-cart.herokuapp.com/api/cart/addProduct", {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify(payload) // body data type must match "Content-Type" header
+
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));
+  }else
+  {
+    window.location.replace("/account/login");
+  }
+
+}

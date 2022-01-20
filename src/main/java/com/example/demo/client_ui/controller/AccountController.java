@@ -75,6 +75,7 @@ public class AccountController {
         if (accountDTO == null)
             notice = "Failed";
         else {
+
             this.currentAccount.setId(accountDTO.getId());
             this.currentAccount.setEmail(accountDTO.getEmail());
             this.currentAccount.setFullname(accountDTO.getUsername());

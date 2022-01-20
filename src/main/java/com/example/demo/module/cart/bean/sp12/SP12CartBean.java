@@ -1,4 +1,4 @@
-package com.example.demo.module.cart.bean.sp02;
+package com.example.demo.module.cart.bean.sp12;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

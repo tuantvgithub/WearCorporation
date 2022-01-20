@@ -38,7 +38,7 @@ public class CartController {
             return "redirect:/account/login";
 
         CartService cartService = this.cartServiceMap.get(this.moduleConfig.getCartTeam());
-        CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(1));
+        CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId()));
 
         if (cartDTO.getProductCartList() == null) cartDTO.setProductCartList(new ArrayList<>());
 

@@ -1,9 +1,11 @@
 package com.example.demo.client_ui.controller;
 
+import com.example.demo.client_ui.dto.account.AccountRoleDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartAddFormDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartDTO;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
 import com.example.demo.client_ui.dto.product.ProductDetailDTO;
+import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/shop")
 public class ShopController {
+
+    @Autowired
+    private CurrentAccount currentAccount;
 
     @Autowired
     private ModuleConfig moduleConfig;
@@ -37,6 +42,9 @@ public class ShopController {
 
         if (productBriefDTOList != null)
             model.addAttribute("productList", productBriefDTOList);
+            model.addAttribute("isLogin", currentAccount.getRole()!=AccountRoleDTO.GUEST_ROLE?true:false);
+            model.addAttribute("userId", currentAccount.getId());
+            model.addAttribute("teamNum",this.moduleConfig.getProductTeam().equals("sp17-product")?17:11);
 
         return "shop";
     }

@@ -4,7 +4,7 @@ import com.example.demo.client_ui.dto.account.UserDTO;
 import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartDTO;
 import com.example.demo.module.cart.bean.CartResponse;
-import com.example.demo.module.cart.bean.sp02.SP12CartBean;
+import com.example.demo.module.cart.bean.sp12.SP12CartBean;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,5 +18,8 @@ public interface CartSP12WebServiceProxy {
 
     @PostMapping("/cartUser")
     CartResponse<ProductCartDTO> createCart(@RequestBody UserDTO userDTO);
+
+     @PostMapping("/cartUser")
+    CartResponse<ProductCartDTO> addProductToCart(@RequestBody ProductCartDTO productCartDTO);
 
 }

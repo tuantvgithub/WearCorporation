@@ -15,6 +15,10 @@ public class ProductCartDTO {
     @JsonProperty("id")
     private Integer id;
 
+
+    @JsonProperty("userId")
+    private Integer userId;
+
     @JsonProperty("cartId")
     private Integer cartId;
 
