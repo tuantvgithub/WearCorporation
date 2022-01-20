@@ -72,7 +72,7 @@ FACEBOOK: https://www.facebook.com/themefisher
                       <td class="" th:text="'$' + ${product.itemPrice}"></td>
                       <td class="" th:text="${product.quantity}"></td>
                       <td class="">
-                        <a class="product-remove" href="#!">Remove</a>
+                        <a class="product-remove" th:onclick="'removeProduct('+${product.id}+')'">Remove</a>
                       </td>
                     </tr>
                   </tbody>

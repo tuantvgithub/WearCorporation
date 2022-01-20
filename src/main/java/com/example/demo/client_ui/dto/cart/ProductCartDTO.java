@@ -15,7 +15,6 @@ public class ProductCartDTO {
     @JsonProperty("id")
     private Integer id;
 
-
     @JsonProperty("userId")
     private Integer userId;
 

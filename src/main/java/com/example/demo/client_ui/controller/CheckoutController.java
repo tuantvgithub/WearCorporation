@@ -31,7 +31,6 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class CheckoutController {
 
-
     @Autowired
     private CurrentAccount currentAccount;
 
@@ -52,9 +51,8 @@ public class CheckoutController {
         CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId()));
 
         CheckoutDTO checkoutDTO = new CheckoutDTO();
-        
-        List<ProductCartDTO> products =cartDTO.getProductCartList();
 
+        List<ProductCartDTO> products = cartDTO.getProductCartList();
 
         checkoutDTO.setAddress("Bắc Từ Liêm");
         checkoutDTO.setCity("Hà Nội");
@@ -84,6 +82,7 @@ public class CheckoutController {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return new ModelAndView("redirect:/account/login");
 
+        System.out.println(checkoutDTO);
         PaymentInfo paymentInfo = new PaymentInfo();
         paymentInfo.setCardNumber(checkoutDTO.getCardNumber());
         paymentInfo.setName(checkoutDTO.getCardHolder());

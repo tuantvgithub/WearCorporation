@@ -43,4 +43,9 @@ public class CartServiceSP12Impl implements CartService {
        
         return new CartDTO(cartSP12WebServiceProxy.createCart(userDTO).getData());
     }
+
+    @Override
+    public void resetCart(UserDTO userDTO) {
+        cartSP12WebServiceProxy.resetCart(userDTO);     
+    }
 }

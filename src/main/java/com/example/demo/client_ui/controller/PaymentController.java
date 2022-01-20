@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.Map;
 
 import com.example.demo.client_ui.dto.account.AccountRoleDTO;
+import com.example.demo.client_ui.dto.account.UserDTO;
 import com.example.demo.client_ui.dto.checkout.CheckoutDTO;
 import com.example.demo.client_ui.dto.checkout.PaymentInfo;
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
+import com.example.demo.module.cart.service.CartService;
 import com.example.demo.module.delivery.bean.sp07.SP07ResponseDeliveryBean;
 import com.example.demo.module.delivery.service.DeliveryService;
 import com.example.demo.module.order.service.OrderService;
@@ -40,6 +42,10 @@ public class PaymentController {
     private Map<String, DeliveryService> deliveryServiceMap;
 
     @Autowired
+    private Map<String, CartService> cartServiceMap;
+
+
+    @Autowired
     private Map<String, OrderService> orderServiceMap;
 
     @Autowired
@@ -49,6 +55,8 @@ public class PaymentController {
     public String getPaymentConfirmationPage(@ModelAttribute("checkoutForm") CheckoutDTO checkoutDTO, ModelMap model) {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return "redirect:/account/login";
+
+       
         OrderService orderService = orderServiceMap.get(this.moduleConfig.getOrderTeam());
         DeliveryService deliveryService = this.deliveryServiceMap.get(this.moduleConfig.getDeliveryTeam());
         StringBuilder sb = new StringBuilder();
@@ -94,7 +102,7 @@ public class PaymentController {
     public String paymentConfirmation(@ModelAttribute("order") OrderDetailDTO orderDetailDTO, ModelMap model) {
 
         OrderService orderService = orderServiceMap.get(this.moduleConfig.getOrderTeam());
-
+        CartService cartService =cartServiceMap.get(this.moduleConfig.getCartTeam());
         SP10PaymentResponseBean responseBean = paymentService.payment(paymentInfo);
         String notice = null;
         if (responseBean.getStatus() == 137) {
@@ -108,6 +116,10 @@ public class PaymentController {
         // OrderDetailDTO updateOrder = new OrderDetailDTO();
         // updateOrder.setStatus("Paid");
         // orderService.updateOrder(orderDetailDTO.getOrderId(), updateOrder);
+
+        cartService.resetCart(new UserDTO(this.currentAccount.getId()));
+
+
         return "redirect:/payment-successful";
     }
 

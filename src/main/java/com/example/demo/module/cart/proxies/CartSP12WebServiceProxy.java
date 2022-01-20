@@ -1,16 +1,14 @@
 package com.example.demo.module.cart.proxies;
 
 import com.example.demo.client_ui.dto.account.UserDTO;
-import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartDTO;
 import com.example.demo.module.cart.bean.CartResponse;
-import com.example.demo.module.cart.bean.sp12.SP12CartBean;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(value = "sp12-api", url = "https://ltct-sp12-module-cart.herokuapp.com/api")
+@FeignClient(value = "sp12-api", url = "https://sp12-cart.herokuapp.com/api/")
 public interface CartSP12WebServiceProxy {
 
     @PostMapping("/cart")
@@ -19,7 +17,14 @@ public interface CartSP12WebServiceProxy {
     @PostMapping("/cartUser")
     CartResponse<ProductCartDTO> createCart(@RequestBody UserDTO userDTO);
 
-     @PostMapping("/cartUser")
+     @PostMapping("/cart/addProduct")
     CartResponse<ProductCartDTO> addProductToCart(@RequestBody ProductCartDTO productCartDTO);
+
+     @PostMapping("/cart/removeAll")
+    CartResponse<ProductCartDTO> resetCart(@RequestBody UserDTO userDTO);
+
+    
+
+    
 
 }

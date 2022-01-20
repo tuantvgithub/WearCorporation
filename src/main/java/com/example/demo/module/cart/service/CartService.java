@@ -14,4 +14,7 @@ public interface CartService {
     CartDTO removeProduct(String cartId, Integer productId);
 
     CartDTO createCart(UserDTO userDTO);
+
+    void resetCart(UserDTO userDTO);
+
 }

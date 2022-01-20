@@ -96,21 +96,21 @@
 
 })(jQuery);
 
-const addToCart = async (id, isLogin,userId,group) => {
+
+//Add to cart
+const addToCart = async (id, isLogin, userId, group) => {
 
   if (isLogin === true) {
 
-    window.localStorage.setItem('userId',userId);
+    window.localStorage.setItem('userId', userId);
 
     let payload;
     let url;
-    if(group===17)
-    {
-      url="https://laptrinhcautrucapi.herokuapp.com/product/id?id=";
+    if (group === 17) {
+      url = "https://laptrinhcautrucapi.herokuapp.com/product/id?id=";
     }
-    else if(group===11)
-    {
-      url="https://team-product-api.herokuapp.com/api/products/"
+    else if (group === 11) {
+      url = "https://team-product-api.herokuapp.com/api/products/"
     }
     await fetch(url + id, {
       method: 'GET',
@@ -120,18 +120,19 @@ const addToCart = async (id, isLogin,userId,group) => {
         console.log(data[0]);
         payload = {
           image_url: data[0].image,
-          price: data[0].price,
+          price: data[0].price+"",
           productId: data[0].id,
           name: data[0].name,
           size: data[0].size,
           quantity: 1,
           userId: userId,
-          color: data[0].color
+          color:data[0].color
+          
         }
       });
-   
-      console.log(payload);
-    await fetch("https://ltct-sp12-module-cart.herokuapp.com/api/cart/addProduct", {
+
+    console.log(payload);
+    await fetch("https://sp12-cart.herokuapp.com/api/cart/addProduct", {
       method: 'POST', // *GET, POST, PUT, DELETE, etc
       headers: {
         'Content-Type': 'application/json'
@@ -142,9 +143,160 @@ const addToCart = async (id, isLogin,userId,group) => {
     })
       .then(res => res.json())
       .then(data => console.log(data));
-  }else
-  {
+  } else {
     window.location.replace("/account/login");
   }
+
+}
+
+
+//payment method
+const paymentWithCard = () => {
+  const payment_info = document.getElementById('payment-info');
+  payment_info.innerHTML = '<div class="checkout-product-details">\
+                        <div class="payment">\
+                           <div class="card-details" th:object="${checkoutForm}">\
+                              <div class="form-group">\
+                                 <label for="card-holder">Card Holder <span class="required">*</span></label>\
+                                 <input id="card-holder" th:field="*{cardHolder}" class="form-control" type="text"\
+                                    placeholder="Card holder">\
+                                 <span th:text="${invalidName} ?: \'\'"></span>\
+                              </div>\
+                              <div class="form-group">\
+                                 <label for="card-number">Card Number <span class="required">*</span></label>\
+                                 <input id="card-number" th:field="*{cardNumber}" class="form-control" type="tel"\
+                                    placeholder="•••• •••• •••• ••••">\
+                                 <span th:text="${invalidCardNumber} ?: \'\'"></span>\
+                              </div>\
+                              <div class="form-group half-width padding-right">\
+                                 <label for="card-expiry">Expiry (MM/YY) <span class="required">*</span></label>\
+                                 <input id="card-expiry" th:field="*{expiredDate}" class="form-control" type="text"\
+                                    placeholder="MM / YY">\
+                                 <span th:text="${invalidName} ?: \'\'"></span>\
+                              </div>\
+                              <div class="form-group half-width padding-left">\
+                                 <label for="card-cvc">Cvv <span class="required">*</span></label>\
+                                 <input id="card-cvc" th:field="*{cvv}" class="form-control" type="text" maxlength="4"\
+                                    placeholder="CVC">\
+                                 <span th:text="${invalidCvv} ?: \'\'"></span>\
+                              </div>\
+                              <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">\
+                              <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">\
+                              <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">\
+                               <input th:field="*{voucher}" type="hidden" id="ip_voucher" value="${voucher}">\
+                           </div>\
+                        </div>\
+                     </div>'
+
+}
+const paymentWithZalo = () => {
+  const payment_info = document.getElementById('payment-info');
+  payment_info.innerHTML = '<div class="checkout-product-details">\
+    <h2>Zalo Pay</h2>\
+                        <div class="payment">\
+                           <div class="card-details" th:object="${checkoutForm}">\
+                              <div class="form-group">\
+                                 <label for="card-holder">Phone number <span class="required">*</span></label>\
+                                 <input id="card-holder" th:field="*{phone}" class="form-control" type="text"\
+                                    placeholder="0...">\
+                                 <span th:text="${invalidPhone} ?: \'\'"></span>\
+                              </div>\
+                              <div class="form-group">\
+                                 <label for="card-number">Password <span class="required">*</span></label>\
+                                 <input id="card-number" th:field="*{password}" class="form-control" type="tel"\
+                                    placeholder="•••• •••• •••• ••••">\
+                                 <span th:text="${invalidPassword} ?: \'\'"></span>\
+                              </div>\
+                              <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">\
+                              <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">\
+                              <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">\
+                              <input th:field="*{paymentMethod}" type="hidden" value="zalo">\
+                               <input th:field="*{voucher}" type="hidden" id="ip_voucher" value="${voucher}">\
+                           </div>\
+                        </div>\
+                     </div>'
+
+}
+
+const paymentWithMomo = () => {
+  const payment_info = document.getElementById('payment-info');
+  payment_info.innerHTML = '<div class="checkout-product-details">\
+    <h2>Momo Pay</h2>\
+                        <div class="payment">\
+                           <div class="card-details" th:object="${checkoutForm}">\
+                              <div class="form-group">\
+                                 <label for="card-holder">Phone number <span class="required">*</span></label>\
+                                 <input id="card-holder" th:field="*{phone}" class="form-control" type="text"\
+                                    placeholder="0...">\
+                                 <span th:text="${invalidPhone} ?: \'\'"></span>\
+                              </div>\
+                              <div class="form-group">\
+                                 <label for="card-number">Password <span class="required">*</span></label>\
+                                 <input id="card-number" th:field="*{password}" class="form-control" type="tel"\
+                                    placeholder="•••• •••• •••• ••••">\
+                                 <span th:text="${invalidPassword} ?: \'\'"></span>\
+                              </div>\
+                              <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">\
+                              <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">\
+                              <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">\
+                              <input th:field="*{paymentMethod}" type="hidden" value="momo">\
+                               <input th:field="*{voucher}" type="hidden" id="ip_voucher" value="${voucher}">\
+                           </div>\
+                        </div>\
+                     </div>'
+
+}
+
+const paymentWithViettel = () => {
+  const payment_info = document.getElementById('payment-info');
+  payment_info.innerHTML = '<div class="checkout-product-details">\
+                        <h2>Viettel Pay</h2>\
+                        <div class="payment">\
+                           <div class="card-details" th:object="${checkoutForm}">\
+                              <div class="form-group">\
+                                 <label for="card-holder">Phone number <span class="required">*</span></label>\
+                                 <input id="card-holder" th:field="*{phone}" class="form-control" type="text"\
+                                    placeholder="0...">\
+                                 <span th:text="${invalidPhone} ?: \'\'"></span>\
+                              </div>\
+                              <div class="form-group">\
+                                 <label for="card-number">Password <span class="required">*</span></label>\
+                                 <input id="card-number" th:field="*{password}" class="form-control" type="tel"\
+                                    placeholder="•••• •••• •••• ••••">\
+                                 <span th:text="${invalidPassword} ?: \'\'"></span>\
+                              </div>\
+                              <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">\
+                              <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">\
+                              <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">\
+                              <input th:field="*{paymentMethod}" type="hidden" value="viettel">\
+                               <input th:field="*{voucher}" type="hidden" id="ip_voucher" value="${voucher}">\
+                           </div>\
+                        </div>\
+                     </div>'
+
+}
+
+
+const removeProduct = async (id)=>{
+
+
+  let url="https://sp12-cart.herokuapp.com/api/cart";
+
+  await fetch(url,{
+    method:'DELETE',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      id:id
+    })
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    if(data.status===200)
+    {
+      window.location.reload();
+    }
+  });
 
 }

@@ -36,4 +36,10 @@ public class CheckoutDTO {
     private Integer voucher;
 
     private String voucherCode;
+
+    private String paymentMethod;
+
+    private String phone;
+
+    private String password;
 }
