@@ -23,7 +23,7 @@ public class ProductServiceSP11Impl implements ProductService {
     private ProductSP11WebServiceProxy webServiceProxy;
 
     @Override
-    public ProductDetailDTO getProductDetailDTOById(Long productId) {
+    public ProductDetailDTO getProductDetailDTOById(Integer productId) {
         SP11ResponseBean<HashMap<String, Object>> responseBean =
                 this.webServiceProxy.findById(productId);
 

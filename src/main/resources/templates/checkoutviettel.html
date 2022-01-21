@@ -87,8 +87,8 @@ FACEBOOK: https://www.facebook.com/themefisher
                            </div>
                            <div class="paymentWrap">
                               <div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
-                                
-                                <label onclick="location.href='/checkout?method=bank'" class="btn paymentMethod">
+
+                                 <label onclick="location.href='/checkout?method=bank'" class="btn paymentMethod">
                                     <div class="method visa"></div>
                                  </label>
                                  <label onclick="location.href='/checkout?method=zalo'" class="btn paymentMethod">
@@ -176,8 +176,7 @@ FACEBOOK: https://www.facebook.com/themefisher
                            </li>
                            <li>
                               <span> Voucher:</span>
-                              <span class="price" id="voucher"
-                                 th:text="${checkoutForm.voucherCode}?: 'None'"></span>
+                              <span class="price" id="voucher" th:text="${checkoutForm.voucherCode}?: 'None'"></span>
                            </li>
                         </ul>
                         <div class="summary-total">
@@ -194,7 +193,7 @@ FACEBOOK: https://www.facebook.com/themefisher
          </div>
       </div>
    </div>
-    <!-- Modal -->
+   <!-- Modal -->
    <div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
          <div class="modal-content">
@@ -202,11 +201,20 @@ FACEBOOK: https://www.facebook.com/themefisher
                <form th:action="@{/voucher}" th:method="GET">
                   <div class="form-group">
                      <input class="form-control" name="code" type="text" placeholder="Enter Coupon Code">
-                      <input class="form-control" name="type" type="hidden" value="viettel">
+                     <input class="form-control" name="type" type="hidden" value="viettel">
                   </div>
-                  <button type="submit" class="btn btn-main">Apply Coupon</button>
-               </form>
+
+                  <div th:each="voucher: ${vouchers}" style="border-style: dotted;">
+                     Name:<p th:text="${voucher.name}"></p>
+                     Discount code<p th:text="${voucher.discountCode}"></p>
+                     Discount <p
+                        th:text="${voucher.percentDiscount != null} ? ${voucher.percentDiscount} +'%' : ${voucher.cashDiscount}">
+                     </p>
+
+                  </div>
             </div>
+            <button type="submit" class="btn btn-main">Apply Coupon</button>
+            </form>
          </div>
       </div>
    </div>

@@ -67,7 +67,6 @@ public class PaymentController {
 
         CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
 
-        System.out.println(checkoutDTO);
 
         int shipFee = calculateShippingFee(checkoutDTO.getAddress(), checkoutDTO.getCity());
 
@@ -151,8 +150,7 @@ public class PaymentController {
         sb.append(address);
         sb.append(" - ");
         sb.append(city);
-        String to_address = sb.toString();
-        System.out.println(to_address);
+        String to_address = sb.toString();   
         return deliveryService.calculateShipFee(to_address).getFee();
     }
 }

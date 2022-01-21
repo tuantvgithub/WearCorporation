@@ -10,12 +10,14 @@ import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartDTO;
 import com.example.demo.client_ui.dto.checkout.CheckoutDTO;
 import com.example.demo.client_ui.dto.checkout.PaymentInfo;
-import com.example.demo.client_ui.dto.order.ProductOrderDTO;
+
+import com.example.demo.client_ui.dto.sale_promotion.VoucherCodeDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.cart.service.CartService;
 import com.example.demo.module.payment.bean.SP10PaymentResponseBean;
 import com.example.demo.module.payment.service.PaymentService;
+import com.example.demo.module.sale_promotion.service.sp19.PromotionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,10 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import feign.Param;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class CheckoutController {
@@ -42,6 +41,9 @@ public class CheckoutController {
     private ModuleConfig moduleConfig;
 
     private CheckoutDTO checkout;
+
+    @Autowired 
+    private PromotionService promotionService;
 
     @Autowired
     private Map<String, CartService> cartServiceMap;
@@ -60,6 +62,7 @@ public class CheckoutController {
         CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId()));
 
         List<ProductCartDTO> products = cartDTO.getProductCartList();
+        List<VoucherCodeDTO> voucherCodes=promotionService.getAllVoucherCode();
 
         CheckoutDTO checkoutDTO = new CheckoutDTO();
         checkoutDTO.setAddress("Bắc Từ Liêm");
@@ -81,6 +84,7 @@ public class CheckoutController {
 
         model.addAttribute("products", products);
         model.addAttribute("checkoutForm", checkoutDTO);
+        model.addAttribute("vouchers", voucherCodes);
 
         if (!type.isEmpty()) {
             checkoutDTO.setPaymentMethod(type);

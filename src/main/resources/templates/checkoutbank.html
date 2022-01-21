@@ -217,11 +217,20 @@ FACEBOOK: https://www.facebook.com/themefisher
                <form th:action="@{/voucher}" th:method="GET">
                   <div class="form-group">
                      <input class="form-control" name="code" type="text" placeholder="Enter Coupon Code">
-                      <input class="form-control" name="type" type="hidden" value="bank">
+                     <input class="form-control" name="type" type="hidden" value="bank">
                   </div>
-                  <button type="submit" class="btn btn-main">Apply Coupon</button>
-               </form>
+
+                  <div th:each="voucher: ${vouchers}" style="border-style: dotted;">
+                     Name:<p th:text="${voucher.name}"></p>
+                     Discount code<p th:text="${voucher.discountCode}"></p>
+                     Discount <p
+                        th:text="${voucher.percentDiscount != null} ? ${voucher.percentDiscount} +'%' : ${voucher.cashDiscount}">
+                     </p>
+
+                  </div>
             </div>
+            <button type="submit" class="btn btn-main">Apply Coupon</button>
+            </form>
          </div>
       </div>
    </div>

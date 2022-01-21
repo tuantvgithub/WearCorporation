@@ -2417,3 +2417,15 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 	border-color: #4cd264;
 	outline: none !important;
 }
+
+
+.coupon {
+  border: 5px dotted #bbb;
+  width: 80%;
+  border-radius: 15px;
+  margin: 0 auto;
+  max-width: 600px;
+}
+.expire {
+  color: red;
+}
