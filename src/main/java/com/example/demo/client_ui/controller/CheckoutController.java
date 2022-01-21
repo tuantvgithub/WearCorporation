@@ -51,9 +51,8 @@ public class CheckoutController {
 
     @GetMapping("/checkout")
     public String getCheckoutPage(@RequestParam(name = "method", required = false) String method,
-                                @ModelAttribute("voucher") String code, 
-                                @ModelAttribute("type") String type, Model model) {
-
+            @ModelAttribute("voucher") String code,
+            @ModelAttribute("type") String type, Model model) {
 
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return "redirect:/account/login";
@@ -61,7 +60,7 @@ public class CheckoutController {
         CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId()));
 
         List<ProductCartDTO> products = cartDTO.getProductCartList();
-        
+
         CheckoutDTO checkoutDTO = new CheckoutDTO();
         checkoutDTO.setAddress("Bắc Từ Liêm");
         checkoutDTO.setCity("Hà Nội");
@@ -77,19 +76,24 @@ public class CheckoutController {
         }
         checkoutDTO.setSubTotal(subtotal);
         checkoutDTO.setTotal(subtotal);
-        checkout = checkoutDTO;
+        this.checkout=checkoutDTO;
+       
 
         model.addAttribute("products", products);
-        model.addAttribute("checkoutForm", checkout);
+        model.addAttribute("checkoutForm", checkoutDTO);
 
-        if(!type.isEmpty())
-        {
+        if (!type.isEmpty()) {
             checkoutDTO.setPaymentMethod(type);
-            return "checkout"+type;
+            return "checkout" + type;
+        }
+        if (method == null) {
+            checkoutDTO.setPaymentMethod("bank");
+            return "checkout";
         }
         checkoutDTO.setPaymentMethod(method);
-        return method!=null?"checkout"+method:"checkout";
+        return "checkout"+method;
     }
+
     @PostMapping("/checkout")
     public ModelAndView placeOrder(@ModelAttribute("checkoutForm") CheckoutDTO checkoutDTO, ModelMap model,
             RedirectAttributes rd) {
@@ -97,7 +101,7 @@ public class CheckoutController {
             return new ModelAndView("redirect:/account/login");
 
         String type = checkoutDTO.getPaymentMethod();
-        System.out.println(checkoutDTO) ;
+        System.out.println(checkoutDTO);
         if (!type.equals("cod")) {
 
             PaymentInfo paymentInfo = new PaymentInfo();
@@ -146,12 +150,11 @@ public class CheckoutController {
 
     @GetMapping(value = "/voucher")
     public ModelAndView getVoucher(@RequestParam(name = "code") String code,
-                                    @RequestParam(name="type") String type, RedirectAttributes rd) {
-        
-        
+            @RequestParam(name = "type") String type, RedirectAttributes rd) {
+
         rd.addFlashAttribute("voucher", code);
         rd.addFlashAttribute("type", type);
-       
+
         return new ModelAndView("redirect:/checkout");
     }
 

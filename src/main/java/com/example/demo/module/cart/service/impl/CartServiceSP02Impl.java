@@ -49,22 +49,6 @@ public class CartServiceSP02Impl implements CartService {
     }
 
     @Override
-    public CartDTO addProduct(String cartId, ProductCartAddFormDTO addFormDTO) {
-        // if (!cartId.equals(this.cartDTO.getId()) || addFormDTO.getQuantity() == null) return null;
-
-        // ProductDetailDTO detailDTO = this.productServiceMap.get(
-        //         this.moduleConfig.getProductTeam()).getProductDetailDTOById(addFormDTO.getProductId());
-
-        // if (detailDTO == null) return this.cartDTO;
-
-        // this.cartDTO.getProductCartList().add(new ProductCartDTO(detailDTO.getId(),1,
-        //         detailDTO.getName(), detailDTO.getImageUrl(), detailDTO.getPrice(),
-        //         addFormDTO.getQuantity()));
-
-         return this.cartDTO;
-    }
-
-    @Override
     public CartDTO removeProduct(String cartId, Integer productId) {
         // if (!cartId.equals(this.cartDTO.getId())) return null;
         // for (ProductCartDTO productCartDTO : this.cartDTO.getProductCartList())
@@ -78,13 +62,19 @@ public class CartServiceSP02Impl implements CartService {
     }
 
     @Override
-    public CartDTO createCart(UserDTO userDTO) {
+    public void createCart(UserDTO userDTO) {
         // TODO Auto-generated method stub
-        return null;
+        
     }
 
     @Override
     public void resetCart(UserDTO userDTO) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void addProduct(ProductCartAddFormDTO addFormDTO) {
         // TODO Auto-generated method stub
         
     }

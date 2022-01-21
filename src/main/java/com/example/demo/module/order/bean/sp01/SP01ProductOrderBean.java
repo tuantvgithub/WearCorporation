@@ -7,7 +7,7 @@ import lombok.Data;
 public class SP01ProductOrderBean {
 
     @JsonProperty("product_id")
-    private Long productId;
+    private Integer productId;
 
     @JsonProperty("quantity")
     private Integer quantity;

@@ -11,17 +11,19 @@ import java.util.List;
 public class OrderServiceSP16Impl implements OrderService {
 
     @Override
-    public List<OrderBriefDTO> getAllOrderDTOByUserId(Long userId) {
+    public List<OrderBriefDTO> getAllOrderDTOByUserId(Integer userId) {
+        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public OrderDetailDTO getOrderDTOById(Long orderId) {
+    public OrderDetailDTO getOrderDTOById(Integer orderId) {
+        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void updateOrder(Long orderId, OrderDetailDTO updateOder) {
+    public void updateOrder(Integer orderId, OrderDetailDTO updateOder) {
         // TODO Auto-generated method stub
         
     }
@@ -31,4 +33,6 @@ public class OrderServiceSP16Impl implements OrderService {
         // TODO Auto-generated method stub
         return null;
     }
+
+    
 }

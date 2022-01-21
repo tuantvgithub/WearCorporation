@@ -30,6 +30,7 @@ public class ProductDetailDTO {
 
     private int stars;
 
+
     private CategoryDTO categoryDTO;
 
     public ProductDetailDTO(Integer id, String name, String description,

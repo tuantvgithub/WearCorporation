@@ -50,12 +50,18 @@ public class ShopController {
     }
 
     @GetMapping("/products/{id}")
-    public String getProductDetailById(@PathVariable Long id, Model model) {
+    public String getProductDetailById(@PathVariable Integer id, Model model) {
         ProductService productService = this.productServiceMap.get(this.moduleConfig.getProductTeam());
         ProductDetailDTO productDetailDTO = productService.getProductDetailDTOById(id);
 
+
         model.addAttribute("product", productDetailDTO);
-        model.addAttribute("productCartForm", new ProductCartAddFormDTO());
+        ProductCartAddFormDTO productCart= new ProductCartAddFormDTO();
+        productCart.setImageUrl(productDetailDTO.getImageUrl());
+        productCart.setProductId(productDetailDTO.getId());
+        productCart.setPrice(productDetailDTO.getPrice());
+        productCart.setName(productDetailDTO.getName());
+        model.addAttribute("productCartForm", productCart);
 
         return "product-detail";
     }

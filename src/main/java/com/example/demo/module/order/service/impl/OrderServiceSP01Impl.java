@@ -36,7 +36,7 @@ public class OrderServiceSP01Impl implements OrderService {
     private OrderMapping orderMapping;
 
     @Override
-    public List<OrderBriefDTO> getAllOrderDTOByUserId(Long userId) {
+    public List<OrderBriefDTO> getAllOrderDTOByUserId(Integer userId) {
         List<SP01OrderBean> sp01OrderBeanList =
                 this.orderSP01WebServiceProxy.getAllOrder(X_API_KEY_TOKEN, null);
         if (sp01OrderBeanList == null) return null;
@@ -50,7 +50,7 @@ public class OrderServiceSP01Impl implements OrderService {
     }
 
     @Override
-    public OrderDetailDTO getOrderDTOById(Long orderId) {
+    public OrderDetailDTO getOrderDTOById(Integer orderId) {
         ProductService productService =
                 this.productServiceMap.get(this.moduleConfig.getProductTeam());
         SP01OrderBean orderBean =
@@ -80,7 +80,7 @@ public class OrderServiceSP01Impl implements OrderService {
     }
 
     @Override
-    public void updateOrder(Long orderId, OrderDetailDTO updateOder) {
+    public void updateOrder(Integer orderId, OrderDetailDTO updateOder) {
         orderSP01WebServiceProxy.updateOrder(X_API_KEY_TOKEN, orderId, updateOder);
     }
 

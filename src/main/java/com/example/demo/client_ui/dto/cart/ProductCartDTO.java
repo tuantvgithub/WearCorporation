@@ -36,4 +36,10 @@ public class ProductCartDTO {
     @JsonProperty("image_url")
     private String productImage;
 
+    @JsonProperty("size")
+    private String size;
+
+    @JsonProperty("color")
+    private String color;
+
 }

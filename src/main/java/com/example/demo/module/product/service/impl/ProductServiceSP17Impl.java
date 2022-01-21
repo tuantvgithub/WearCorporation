@@ -23,7 +23,7 @@ public class ProductServiceSP17Impl implements ProductService {
     ProductSP17WebServiceProxy webServiceProxy;
 
     @Override
-    public ProductDetailDTO getProductDetailDTOById(Long productId) {
+    public ProductDetailDTO getProductDetailDTOById(Integer productId) {
         List<SP17ProductDetailBean> detailBean = this.webServiceProxy.getProductById(productId);
         if (detailBean == null || detailBean.isEmpty()) return null;
         return this.productMapping.detailBeanToDetailDTO(detailBean.get(0));

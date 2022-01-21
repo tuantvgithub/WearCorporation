@@ -1,11 +1,14 @@
 package com.example.demo.client_ui.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import com.example.demo.client_ui.dto.account.AccountRoleDTO;
 import com.example.demo.client_ui.dto.account.UserDTO;
+import com.example.demo.client_ui.dto.cart.CartDTO;
+import com.example.demo.client_ui.dto.cart.ProductCartDTO;
 import com.example.demo.client_ui.dto.checkout.CheckoutDTO;
 import com.example.demo.client_ui.dto.checkout.PaymentInfo;
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
@@ -13,21 +16,21 @@ import com.example.demo.client_ui.dto.order.ProductOrderDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.cart.service.CartService;
-import com.example.demo.module.delivery.bean.sp07.SP07ResponseDeliveryBean;
 import com.example.demo.module.delivery.service.DeliveryService;
+import com.example.demo.module.order.mapping.OrderMapping;
 import com.example.demo.module.order.service.OrderService;
 import com.example.demo.module.payment.bean.SP10PaymentResponseBean;
 import com.example.demo.module.payment.service.PaymentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
+
 
 @Controller
 public class PaymentController {
@@ -41,11 +44,13 @@ public class PaymentController {
     private ModuleConfig moduleConfig;
 
     @Autowired
-    private Map<String, DeliveryService> deliveryServiceMap;
+    private OrderMapping orderMapping;
 
     @Autowired
     private Map<String, CartService> cartServiceMap;
 
+    @Autowired
+    private Map<String, DeliveryService> deliveryServiceMap;
 
     @Autowired
     private Map<String, OrderService> orderServiceMap;
@@ -59,45 +64,42 @@ public class PaymentController {
             return "redirect:/account/login";
 
         OrderService orderService = orderServiceMap.get(this.moduleConfig.getOrderTeam());
-        DeliveryService deliveryService = this.deliveryServiceMap.get(this.moduleConfig.getDeliveryTeam());
-         CartService cartService =cartServiceMap.get(this.moduleConfig.getCartTeam());
 
-         System.out.println(checkoutDTO);
-        StringBuilder sb = new StringBuilder();
-        sb.append(checkoutDTO.getAddress());
-        sb.append(" - ");
-        sb.append(checkoutDTO.getCity());
-        String to_address = sb.toString();
-        SP07ResponseDeliveryBean shipFee = deliveryService.calculateShipFee(to_address);
+        CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
 
-        OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
-        orderDetailDTO.setPaymentMethod(checkoutDTO.getPaymentMethod());
-        orderDetailDTO.setAddress(to_address);
-        orderDetailDTO.setSubTotal(checkoutDTO.getSubTotal());
-        orderDetailDTO.setVoucherCode(checkoutDTO.getVoucherCode());
+        System.out.println(checkoutDTO);
+
+        int shipFee = calculateShippingFee(checkoutDTO.getAddress(), checkoutDTO.getCity());
+
+        OrderDetailDTO orderDetailDTO = new OrderDetailDTO(checkoutDTO);
         orderDetailDTO.setUserId(this.currentAccount.getId());
 
-       // List<ProductOrderDTO> products=cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId())).getProductCartList();
-        
+        List<ProductCartDTO> cartProducts = cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId()))
+                .getProductCartList();
+
+        List<ProductOrderDTO> orderProducts = orderMapping.mapCartProductToOrderProduct(cartProducts);
+        orderDetailDTO.setProductList(orderProducts);
+
+        System.out.println(orderDetailDTO);
+
         // Call api create order
-       // orderService.createOrder(orderDetailDTO);
-        
-        orderDetailDTO.setOrderId(1L);
-        orderDetailDTO.setShipFee(shipFee.getFee());
+        // orderService.createOrder(orderDetailDTO);
+
+        orderDetailDTO.setOrderId(1);
+        orderDetailDTO.setShipFee(shipFee);
         orderDetailDTO.setStatus("Unpaid");
         orderDetailDTO.setVoucher(checkoutDTO.getVoucher());
         orderDetailDTO.setOrderDate(new Date().toString());
         orderDetailDTO.setTotalPrice(checkoutDTO.getSubTotal());
 
         // Save payment info
-        if(!checkoutDTO.getPaymentMethod().equals("cod"))
-        {
+        if (!checkoutDTO.getPaymentMethod().equals("cod")) {
 
             PaymentInfo payment = new PaymentInfo();
             payment.setCardNumber(checkoutDTO.getCardNumber());
             payment.setName(checkoutDTO.getCardHolder());
             payment.setCvv(checkoutDTO.getCvv());
-            payment.setType("bank");
+            payment.setType(checkoutDTO.getPaymentMethod());
             payment.setExpired(checkoutDTO.getExpiredDate());
             payment.setMoney(orderDetailDTO.getTotalPrice());
             this.paymentInfo = payment;
@@ -112,26 +114,25 @@ public class PaymentController {
     public String paymentConfirmation(@ModelAttribute("order") OrderDetailDTO orderDetailDTO, ModelMap model) {
 
         OrderService orderService = orderServiceMap.get(this.moduleConfig.getOrderTeam());
-        CartService cartService =cartServiceMap.get(this.moduleConfig.getCartTeam());
-        if(!orderDetailDTO.getPaymentMethod().equals("cod"))
-        {
+        CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
+        if (!orderDetailDTO.getPaymentMethod().equals("cod")) {
             SP10PaymentResponseBean responseBean = paymentService.payment(paymentInfo);
+            
             String notice = null;
             if (responseBean.getStatus() == 137) {
                 notice = responseBean.getMessage();
                 model.addAttribute("notEnough", notice);
-    
+
                 return "payment-confirmation";
             }
         }
 
-        //Update order Info
+        // Update order Info
         // OrderDetailDTO updateOrder = new OrderDetailDTO();
         // updateOrder.setStatus("Paid");
         // orderService.updateOrder(orderDetailDTO.getOrderId(), updateOrder);
 
         cartService.resetCart(new UserDTO(this.currentAccount.getId()));
-
 
         return "redirect:/payment-successful";
     }
@@ -142,5 +143,16 @@ public class PaymentController {
             return "redirect:/account/login";
 
         return "payment-successful";
+    }
+
+    private int calculateShippingFee(String address, String city) {
+        DeliveryService deliveryService = this.deliveryServiceMap.get(this.moduleConfig.getDeliveryTeam());
+        StringBuilder sb = new StringBuilder();
+        sb.append(address);
+        sb.append(" - ");
+        sb.append(city);
+        String to_address = sb.toString();
+        System.out.println(to_address);
+        return deliveryService.calculateShipFee(to_address).getFee();
     }
 }

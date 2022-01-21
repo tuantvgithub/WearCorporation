@@ -14,5 +14,5 @@ public interface ProductSP17WebServiceProxy {
     List<SP17ProductDetailBean> getAllProduct();
 
     @GetMapping("/product/id")
-    List<SP17ProductDetailBean> getProductById(@RequestParam("id") Long productId);
+    List<SP17ProductDetailBean> getProductById(@RequestParam("id") Integer productId);
 }

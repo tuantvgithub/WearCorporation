@@ -10,10 +10,10 @@ import java.util.List;
 public class SP01OrderBean {
 
     @JsonProperty("order_id")
-    private Long orderId;
+    private Integer orderId;
 
     @JsonProperty("user_id")
-    private Long userId;
+    private Integer userId;
 
     @JsonProperty("price")
     private Integer price;

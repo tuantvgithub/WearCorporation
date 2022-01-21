@@ -15,7 +15,7 @@ public interface ProductSP11WebServiceProxy {
     @GetMapping("/products")
     SP11ResponseBean<List<HashMap<String, Object>>> findAll();
     @GetMapping("/products/{id}")
-    SP11ResponseBean<HashMap<String, Object>> findById(@PathVariable Long id);
+    SP11ResponseBean<HashMap<String, Object>> findById(@PathVariable Integer id);
 
     @GetMapping("/categories")
     SP11ResponseBean<List<HashMap<String, Object>>> getAllCategories();

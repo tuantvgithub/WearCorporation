@@ -13,32 +13,32 @@ import java.util.List;
 public class OrderServiceSP02Impl implements OrderService {
 
     private final List<OrderBriefDTO> ORDER_BRIEF_DTO_LIST = Arrays.asList(
-            new OrderBriefDTO(10L, "12/12/2021", 3,
+            new OrderBriefDTO(10, "12/12/2021", 3,
                     500, "Completed"),
-            new OrderBriefDTO(11L, "13/12/2021", 2,
+            new OrderBriefDTO(11, "13/12/2021", 2,
                     100, "Canceled"),
-            new OrderBriefDTO(12L, "30/12/2021", 2,
+            new OrderBriefDTO(12, "30/12/2021", 2,
                     200, "Processing"));
 
     private final List<ProductOrderDTO> PRODUCT_ORDER_DTO_LIST = Arrays.asList(
             new ProductOrderDTO(1, "Reef Boardsport",
-                    "/images/shop/products/product-1.jpg", 100, 3),
+                    "/images/shop/products/product-1.jpg", 100, 3,"red","X"),
             new ProductOrderDTO(2, "Rainbow Shoes",
-                    "/images/shop/products/product-2.jpg", 200, 1),
+                    "/images/shop/products/product-2.jpg", 200, 1,"red","X"),
             new ProductOrderDTO(3, "Stray horn SP",
-                    "/images/shop/products/product-3.jpg", 100, 2),
+                    "/images/shop/products/product-3.jpg", 100, 2,"red","X"),
             new ProductOrderDTO(4, "Bradley Mid",
-                    "/images/shop/products/product-4.jpg", 150, 1)
+                    "/images/shop/products/product-4.jpg", 150, 1,"red","X")
     );
 
     @Override
-    public List<OrderBriefDTO> getAllOrderDTOByUserId(Long userId) {
+    public List<OrderBriefDTO> getAllOrderDTOByUserId(Integer userId) {
         if (userId == null) return null;
         return this.ORDER_BRIEF_DTO_LIST;
     }
 
     @Override
-    public OrderDetailDTO getOrderDTOById(Long orderId) {
+    public OrderDetailDTO getOrderDTOById(Integer orderId) {
         OrderBriefDTO briefDTO = null;
         for (OrderBriefDTO dto : this.ORDER_BRIEF_DTO_LIST)
             if (orderId.equals(dto.getId())) briefDTO = dto;
@@ -56,7 +56,7 @@ public class OrderServiceSP02Impl implements OrderService {
     }
 
 @Override
-public void updateOrder(Long orderId, OrderDetailDTO updateOder) {
+public void updateOrder(Integer orderId, OrderDetailDTO updateOder) {
         // TODO Auto-generated method stub
         
 }

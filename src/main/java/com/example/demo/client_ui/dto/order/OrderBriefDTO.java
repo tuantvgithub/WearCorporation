@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderBriefDTO {
 
-    private Long id;
+    private Integer id;
 
     private String orderDate;
 

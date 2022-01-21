@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductDetailDTO getProductDetailDTOById(Long productId);
+    ProductDetailDTO getProductDetailDTOById(Integer productId);
     List<ProductBriefDTO> getAllProductBriefDTO();
 
     List<CategoryDTO> getAllCategories();

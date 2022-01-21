@@ -54,15 +54,12 @@ public class CartController {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return "redirect:/account/login";
         CartService cartService = this.cartServiceMap.get(this.moduleConfig.getCartTeam());
-        CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId()));
-        CartDTO updatedCart = null;
 
-        // if (cartDTO != null)
-        //     updatedCart = cartService.addProduct(cartDTO.getId(), addFormDTO);
-        // if (updatedCart != null)
-        //     model.addAttribute("cart", updatedCart);
+        addFormDTO.setUserId(this.currentAccount.getId());
 
-        // model.addAttribute("account", this.currentAccount);
+        System.out.println(addFormDTO);
+        cartService.addProduct(addFormDTO);
+
 
         return "redirect:/cart";
     }

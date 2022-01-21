@@ -156,7 +156,7 @@ public class AccountController {
 
         OrderService orderService = this.orderServiceMap.get(this.moduleConfig.getOrderTeam());
 
-        List<OrderBriefDTO> orderBriefDTOList = orderService.getAllOrderDTOByUserId(2L);
+        List<OrderBriefDTO> orderBriefDTOList = orderService.getAllOrderDTOByUserId(2);
         if (orderBriefDTOList != null)
             model.addAttribute("orderList", orderBriefDTOList);
 
@@ -164,7 +164,7 @@ public class AccountController {
     }
 
     @GetMapping("/orders/{id}")
-    public ModelAndView getOrderDetailPage(@PathVariable Long id, ModelMap model) {
+    public ModelAndView getOrderDetailPage(@PathVariable Integer id, ModelMap model) {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return new ModelAndView("redirect:/account/login", model);
 

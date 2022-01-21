@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.List;
 
+import com.example.demo.client_ui.dto.checkout.CheckoutDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class OrderDetailDTO {
 
     @JsonProperty("order_id")
-    private Long orderId;
+    private Integer orderId;
 
     @JsonProperty("user_id")
     private Integer userId;
@@ -48,4 +49,14 @@ public class OrderDetailDTO {
 
     @JsonProperty("product_list")
     private List<ProductOrderDTO> productList;
+
+    public OrderDetailDTO(){}
+
+    public OrderDetailDTO(CheckoutDTO checkoutDTO)
+    {
+        this.address=checkoutDTO.getAddress()+" - "+checkoutDTO.getCity();
+         this.paymentMethod=checkoutDTO.getPaymentMethod();
+        this.subTotal=checkoutDTO.getSubTotal();
+        this.voucherCode=checkoutDTO.getVoucherCode();
+    }
 }

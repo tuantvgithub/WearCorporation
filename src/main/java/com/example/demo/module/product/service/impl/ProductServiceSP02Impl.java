@@ -58,7 +58,7 @@ public class ProductServiceSP02Impl implements ProductService {
                     true, "E-SHOPPER", 200, 3));
 
     @Override
-    public ProductDetailDTO getProductDetailDTOById(Long productId) {
+    public ProductDetailDTO getProductDetailDTOById(Integer productId) {
         for (ProductDetailDTO detailDTO : this.PRODUCT_LIST)
             if (detailDTO.getId().equals(productId))
                 return detailDTO;

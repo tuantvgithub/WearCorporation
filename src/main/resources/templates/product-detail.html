@@ -22,317 +22,337 @@ FACEBOOK: https://www.facebook.com/themefisher
 
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="fragments/head :: head(title='Product details')"></head>
+
 <body id="body">
 
-<div th:replace="fragments/header :: header"></div>
+	<div th:replace="fragments/header :: header"></div>
 
-<section class="single-product">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6">
-				<ol class="breadcrumb">
-					<li><a th:href="@{/}">Home</a></li>
-					<li><a th:href="@{/shop}">Shop</a></li>
-					<li class="active">Single Product</li>
-				</ol>
+	<section class="single-product">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<ol class="breadcrumb">
+						<li><a th:href="@{/}">Home</a></li>
+						<li><a th:href="@{/shop}">Shop</a></li>
+						<li class="active">Single Product</li>
+					</ol>
+				</div>
+				<div class="col-md-6">
+					<ol class="product-pagination text-right">
+						<li><a th:href="@{/blog-left-sidebar}"><i class="tf-ion-ios-arrow-left"></i> Preview </a></li>
+						<li><a th:href="@{/blog-left-sidebar}">Next <i class="tf-ion-ios-arrow-right"></i></a></li>
+					</ol>
+				</div>
 			</div>
-			<div class="col-md-6">
-				<ol class="product-pagination text-right">
-					<li><a th:href="@{/blog-left-sidebar}"><i class="tf-ion-ios-arrow-left"></i> Preview </a></li>
-					<li><a th:href="@{/blog-left-sidebar}">Next <i class="tf-ion-ios-arrow-right"></i></a></li>
-				</ol>
+			<div class="row mt-20">
+				<div class="col-md-5">
+					<div class="single-product-slider">
+						<div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+							<div class='carousel-outer'>
+								<div class='carousel-inner '>
+									<div class='item active'>
+										<img th:src="${product.imageUrl}" alt='' />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="single-product-details">
+						<h2 th:text="${product.name}"></h2>
+						<p class="product-price" th:text="'$' + ${product.price}"></p>
+
+						<p class="product-description mt-20" th:text="${product.description}"></p>
+						<form th:action="@{/cart}" th:method="post" th:object="${productCartForm}">
+							<input type="hidden" th:value="${product.id}" th:attr="name='productId'"
+								th:field="*{productId}">
+							<input type="hidden" th:value="${product.imageUrl}" th:field="*{imageUrl}">
+							<input type="hidden" th:value="${product.name}" th:field="*{name}">
+							<input type="hidden" th:value="${product.price}" th:field="*{price}">
+							<div class="color-swatches" style="width: 200px;">
+								<span>color:</span>
+								<select class="form-control" th:field="*{color}">
+									<option value="red">Red</option>
+									<option value="green">Green</option>
+									<option value="blue">Blue</option>
+									<option value="yellow">Yellow</option>
+									<option value="white">White</option>
+									<option value="black">Black</option>
+								</select>
+
+							</div>
+							<div class="product-size">
+								<span for="size">Size:</span>
+								<select class="form-control" th:field="*{size}">
+									<option value="S">S</option>
+									<option value="M">M</option>
+									<option value="L">L</option>
+									<option value="XL">XL</option>
+								</select>
+							</div>
+							<div class="product-quantity">
+								<span>Quantity:</span>
+								<div class="product-quantity-slider">
+									<input id="product-quantity" type="number" th:value="${1}"
+										th:attr="name='quantity'">
+								</div>
+							</div>
+							<div class="product-category">
+								<span>Categories:</span>
+								<ul>
+									<li>Products</li>
+									<li>Soap</li>
+								</ul>
+							</div>
+							<button type="submit" class="btn btn-main mt-20">Add To Cart</button>
+						</form>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="row mt-20">
-			<div class="col-md-5">
-				<div class="single-product-slider">
-					<div id='carousel-custom' class='carousel slide' data-ride='carousel'>
-						<div class='carousel-outer'>
-							<div class='carousel-inner '>
-								<div class='item active'>
-									<img th:src="${product.imageUrl}" alt=''/>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="tabCommon mt-20">
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#details" aria-expanded="true">Details</a>
+							</li>
+							<li class=""><a data-toggle="tab" href="#reviews" aria-expanded="false">Reviews (3)</a></li>
+						</ul>
+						<div class="tab-content patternbg">
+							<div id="details" class="tab-pane fade active in">
+								<h4>Product Description</h4>
+								<p th:text="${product.description}"></p>
+							</div>
+							<div id="reviews" class="tab-pane fade">
+								<div class="post-comments">
+									<ul class="media-list comments-list m-bot-50 clearlist">
+										<!-- Comment Item start-->
+										<li class="media">
+
+											<a class="pull-left" href="#!">
+												<img class="media-object comment-avatar"
+													th:src="@{/images/blog/avater-1.jpg}" alt="" width="50"
+													height="50" />
+											</a>
+
+											<div class="media-body">
+												<div class="comment-info">
+													<h4 class="comment-author">
+														<a href="#!">Jonathon Andrew</a>
+
+													</h4>
+													<time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
+													<a class="comment-button" href="#!"><i
+															class="tf-ion-chatbubbles"></i>Reply</a>
+												</div>
+
+												<p>
+													Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at
+													magna ut ante eleifend eleifend.Lorem ipsum dolor sit amet,
+													consectetur adipisicing elit. Quod laborum minima, reprehenderit
+													laboriosam officiis praesentium? Impedit minus provident assumenda
+													quae.
+												</p>
+											</div>
+
+										</li>
+										<!-- End Comment Item -->
+
+										<!-- Comment Item start-->
+										<li class="media">
+
+											<a class="pull-left" href="#!">
+												<img class="media-object comment-avatar"
+													th:src="@{/images/blog/avater-4.jpg}" alt="" width="50"
+													height="50" />
+											</a>
+
+											<div class="media-body">
+
+												<div class="comment-info">
+													<div class="comment-author">
+														<a href="#!">Jonathon Andrew</a>
+													</div>
+													<time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
+													<a class="comment-button" href="#!"><i
+															class="tf-ion-chatbubbles"></i>Reply</a>
+												</div>
+
+												<p>
+													Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at
+													magna ut ante eleifend eleifend. Lorem ipsum dolor sit amet,
+													consectetur adipisicing elit. Magni natus, nostrum iste non delectus
+													atque ab a accusantium optio, dolor!
+												</p>
+
+											</div>
+
+										</li>
+										<!-- End Comment Item -->
+
+										<!-- Comment Item start-->
+										<li class="media">
+
+											<a class="pull-left" href="#!">
+												<img class="media-object comment-avatar"
+													th:src="@{/images/blog/avater-1.jpg}" alt="" width="50" height="50">
+											</a>
+
+											<div class="media-body">
+
+												<div class="comment-info">
+													<div class="comment-author">
+														<a href="#!">Jonathon Andrew</a>
+													</div>
+													<time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
+													<a class="comment-button" href="#!"><i
+															class="tf-ion-chatbubbles"></i>Reply</a>
+												</div>
+
+												<p>
+													Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at
+													magna ut ante eleifend eleifend.
+												</p>
+
+											</div>
+
+										</li>
+									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-7">
-				<div class="single-product-details">
-				<h2 th:text="${product.name}"></h2>
-				<p class="product-price" th:text="'$' + ${product.price}"></p>
-
-				<p class="product-description mt-20" th:text="${product.description}"></p>
-				<form th:action="@{/cart}" th:method="post" th:object="${productCartForm}">
-					<input type="hidden" th:value="${product.id}" th:attr="name='productId'">
-					<div class="color-swatches">
-						<span>color:</span>
-						<ul>
-							<li>
-								<a href="#!" class="swatch-violet"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-black"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-cream"></a>
-							</li>
-						</ul>
-					</div>
-					<div class="product-size">
-						<span for="size">Size:</span>
-						<select class="form-control" th:field="*{size}">
-							<option value="S">S</option>
-							<option value="M">M</option>
-							<option value="L">L</option>
-							<option value="XL">XL</option>
-						</select>
-					</div>
-					<div class="product-quantity">
-						<span>Quantity:</span>
-						<div class="product-quantity-slider">
-							<input id="product-quantity" type="number" th:value="${1}" th:attr="name='quantity'">
-						</div>
-					</div>
-					<div class="product-category">
-						<span>Categories:</span>
-						<ul>
-							<li>Products</li>
-							<li>Soap</li>
-						</ul>
-					</div>
-					<button type="submit" class="btn btn-main mt-20">Add To Cart</button>
-				</form>
-			</div>
-			</div>
 		</div>
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="tabCommon mt-20">
-					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#details" aria-expanded="true">Details</a></li>
-						<li class=""><a data-toggle="tab" href="#reviews" aria-expanded="false">Reviews (3)</a></li>
-					</ul>
-					<div class="tab-content patternbg">
-						<div id="details" class="tab-pane fade active in">
-							<h4>Product Description</h4>
-							<p th:text="${product.description}"></p>
-						</div>
-						<div id="reviews" class="tab-pane fade">
-							<div class="post-comments">
-						    	<ul class="media-list comments-list m-bot-50 clearlist">
-								    <!-- Comment Item start-->
-								    <li class="media">
-
-								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar"
-												 th:src="@{/images/blog/avater-1.jpg}" alt="" width="50" height="50" />
-								        </a>
-
-								        <div class="media-body">
-								            <div class="comment-info">
-								                <h4 class="comment-author">
-								                    <a href="#!">Jonathon Andrew</a>
-								                	
-								                </h4>
-								                <time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
-								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
-								            </div>
-
-								            <p>
-								                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at magna ut ante eleifend eleifend.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod laborum minima, reprehenderit laboriosam officiis praesentium? Impedit minus provident assumenda quae.
-								            </p>
-								        </div>
-
-								    </li>
-								    <!-- End Comment Item -->
-
-								    <!-- Comment Item start-->
-								    <li class="media">
-
-								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar"
-												 th:src="@{/images/blog/avater-4.jpg}" alt="" width="50" height="50" />
-								        </a>
-
-								        <div class="media-body">
-
-								            <div class="comment-info">
-								                <div class="comment-author">
-								                    <a href="#!">Jonathon Andrew</a>
-								                </div>
-								                <time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
-								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
-								            </div>
-
-								            <p>
-								                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at magna ut ante eleifend eleifend. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni natus, nostrum iste non delectus atque ab a accusantium optio, dolor!
-								            </p>
-
-								        </div>
-
-								    </li>
-								    <!-- End Comment Item -->
-
-								    <!-- Comment Item start-->
-								    <li class="media">
-
-								        <a class="pull-left" href="#!">
-								            <img class="media-object comment-avatar"
-												 th:src="@{/images/blog/avater-1.jpg}" alt="" width="50" height="50">
-								        </a>
-
-								        <div class="media-body">
-
-								            <div class="comment-info">
-								                <div class="comment-author">
-								                    <a href="#!">Jonathon Andrew</a>
-								                </div>
-								                <time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
-								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
-								            </div>
-
-								            <p>
-								                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at magna ut ante eleifend eleifend.
-								            </p>
-
-								        </div>
-
-								    </li>
-							</ul>
+	</section>
+	<section class="products related-products section">
+		<div class="container">
+			<div class="row">
+				<div class="title text-center">
+					<h2>Related Products</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="product-item">
+						<div class="product-thumb">
+							<span class="bage">Sale</span>
+							<img class="img-responsive" th:src="@{/images/shop/products/product-5.jpg}"
+								alt="product-img" />
+							<div class="preview-meta">
+								<ul>
+									<li>
+										<span data-toggle="modal" data-target="#product-modal">
+											<i class="tf-ion-ios-search"></i>
+										</span>
+									</li>
+									<li>
+										<a href="#"><i class="tf-ion-ios-heart"></i></a>
+									</li>
+									<li>
+										<a href="#!"><i class="tf-ion-android-cart"></i></a>
+									</li>
+								</ul>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<section class="products related-products section">
-	<div class="container">
-		<div class="row">
-			<div class="title text-center">
-				<h2>Related Products</h2>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3">
-				<div class="product-item">
-					<div class="product-thumb">
-						<span class="bage">Sale</span>
-						<img class="img-responsive"
-							 th:src="@{/images/shop/products/product-5.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a th:href="@{|/shop/products/${product.id}|}">Reef Boardsport</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive"
-							 th:src="@{/images/shop/products/product-1.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a th:href="@{|/shop/products/${product.id}|}">Rainbow Shoes</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="product-item">
-					<div class="product-thumb">
-						<span class="bage">Sale</span>
-						<img class="img-responsive"
-							 th:src="@{/images/shop/products/product-5.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search"></i>
-									</span>
-								</li>
-								<li>
-									<a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
+						<div class="product-content">
+							<h4><a th:href="@{|/shop/products/${product.id}|}">Reef Boardsport</a></h4>
+							<p class="price">$200</p>
 						</div>
 					</div>
-					<div class="product-content">
-						<h4><a th:href="@{|/shop/products/${product.id}|}">Reef Boardsport</a></h4>
-						<p class="price">$200</p>
-					</div>
 				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive"
-							 th:src="@{/images/shop/products/product-1.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-									<a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
+				<div class="col-md-3">
+					<div class="product-item">
+						<div class="product-thumb">
+							<img class="img-responsive" th:src="@{/images/shop/products/product-1.jpg}"
+								alt="product-img" />
+							<div class="preview-meta">
+								<ul>
+									<li>
+										<span data-toggle="modal" data-target="#product-modal">
+											<i class="tf-ion-ios-search-strong"></i>
+										</span>
+									</li>
+									<li>
+										<a href="#"><i class="tf-ion-ios-heart"></i></a>
+									</li>
+									<li>
+										<a href="#!"><i class="tf-ion-android-cart"></i></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="product-content">
+							<h4><a th:href="@{|/shop/products/${product.id}|}">Rainbow Shoes</a></h4>
+							<p class="price">$200</p>
 						</div>
 					</div>
-					<div class="product-content">
-						<h4><a th:href="@{|/shop/products/${product.id}|}">Rainbow Shoes</a></h4>
-						<p class="price">$200</p>
+				</div>
+				<div class="col-md-3">
+					<div class="product-item">
+						<div class="product-thumb">
+							<span class="bage">Sale</span>
+							<img class="img-responsive" th:src="@{/images/shop/products/product-5.jpg}"
+								alt="product-img" />
+							<div class="preview-meta">
+								<ul>
+									<li>
+										<span data-toggle="modal" data-target="#product-modal">
+											<i class="tf-ion-ios-search"></i>
+										</span>
+									</li>
+									<li>
+										<a href="#"><i class="tf-ion-ios-heart"></i></a>
+									</li>
+									<li>
+										<a href="#!"><i class="tf-ion-android-cart"></i></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="product-content">
+							<h4><a th:href="@{|/shop/products/${product.id}|}">Reef Boardsport</a></h4>
+							<p class="price">$200</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="product-item">
+						<div class="product-thumb">
+							<img class="img-responsive" th:src="@{/images/shop/products/product-1.jpg}"
+								alt="product-img" />
+							<div class="preview-meta">
+								<ul>
+									<li>
+										<span data-toggle="modal" data-target="#product-modal">
+											<i class="tf-ion-ios-search-strong"></i>
+										</span>
+									</li>
+									<li>
+										<a href="#"><i class="tf-ion-ios-heart"></i></a>
+									</li>
+									<li>
+										<a href="#!"><i class="tf-ion-android-cart"></i></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="product-content">
+							<h4><a th:href="@{|/shop/products/${product.id}|}">Rainbow Shoes</a></h4>
+							<p class="price">$200</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
+	</section>
 
-<div th:replace="fragments/footer :: footer"></div>
-<div th:replace="fragments/js-script-container"></div>
+	<div th:replace="fragments/footer :: footer"></div>
+	<div th:replace="fragments/js-script-container"></div>
 
-  </body>
-  </html>
+</body>
+
+</html>

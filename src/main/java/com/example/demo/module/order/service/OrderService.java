@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface OrderService {
 
-    List<OrderBriefDTO> getAllOrderDTOByUserId(Long userId);
-    OrderDetailDTO getOrderDTOById(Long orderId);
-    void updateOrder(Long orderId,OrderDetailDTO updateOder);
+    List<OrderBriefDTO> getAllOrderDTOByUserId(Integer userId);
+    OrderDetailDTO getOrderDTOById(Integer orderId);
+    void updateOrder(Integer orderId,OrderDetailDTO updateOder);
     OrderDetailDTO createOrder(OrderDetailDTO orderDetailDTO);
 }

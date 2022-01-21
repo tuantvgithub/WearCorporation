@@ -9,11 +9,11 @@ public interface CartService {
 
     CartDTO getCartByAccountId(UserDTO userDTO);
 
-    CartDTO addProduct(String cartId, ProductCartAddFormDTO addFormDTO);
+    void addProduct(ProductCartAddFormDTO addFormDTO);
 
     CartDTO removeProduct(String cartId, Integer productId);
 
-    CartDTO createCart(UserDTO userDTO);
+    void createCart(UserDTO userDTO);
 
     void resetCart(UserDTO userDTO);
 
