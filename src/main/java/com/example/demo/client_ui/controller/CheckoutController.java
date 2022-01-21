@@ -24,9 +24,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+
+import feign.Param;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class CheckoutController {
@@ -37,6 +41,8 @@ public class CheckoutController {
     @Autowired
     private ModuleConfig moduleConfig;
 
+    private CheckoutDTO checkout;
+
     @Autowired
     private Map<String, CartService> cartServiceMap;
 
@@ -44,84 +50,109 @@ public class CheckoutController {
     private PaymentService paymentService;
 
     @GetMapping("/checkout")
-    public String getCheckoutPage(Model model) {
+    public String getCheckoutPage(@RequestParam(name = "method", required = false) String method,
+                                @ModelAttribute("voucher") String code, 
+                                @ModelAttribute("type") String type, Model model) {
+
+
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return "redirect:/account/login";
         CartService cartService = this.cartServiceMap.get(this.moduleConfig.getCartTeam());
         CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId()));
 
-        CheckoutDTO checkoutDTO = new CheckoutDTO();
-
         List<ProductCartDTO> products = cartDTO.getProductCartList();
-
+        
+        CheckoutDTO checkoutDTO = new CheckoutDTO();
         checkoutDTO.setAddress("Bắc Từ Liêm");
         checkoutDTO.setCity("Hà Nội");
         checkoutDTO.setCardHolder("SPTwo SPFour");
         checkoutDTO.setCardNumber("123567");
         checkoutDTO.setCvv("4590");
         checkoutDTO.setExpiredDate("10/27");
+        checkoutDTO.setVoucherCode(code);
         // Calculate money
         int subtotal = 0;
         for (ProductCartDTO productOrderDTO : products) {
             subtotal += productOrderDTO.getItemPrice() * productOrderDTO.getQuantity();
         }
         checkoutDTO.setSubTotal(subtotal);
-        checkoutDTO.setVoucher(10000);
-        checkoutDTO.setVoucherCode("SP02");
-
-        checkoutDTO.setTotal(subtotal - checkoutDTO.getVoucher());
+        checkoutDTO.setTotal(subtotal);
+        checkout = checkoutDTO;
 
         model.addAttribute("products", products);
-        model.addAttribute("checkoutForm", checkoutDTO);
-        return "checkout";
-    }
+        model.addAttribute("checkoutForm", checkout);
 
+        if(!type.isEmpty())
+        {
+            checkoutDTO.setPaymentMethod(type);
+            return "checkout"+type;
+        }
+        checkoutDTO.setPaymentMethod(method);
+        return method!=null?"checkout"+method:"checkout";
+    }
     @PostMapping("/checkout")
     public ModelAndView placeOrder(@ModelAttribute("checkoutForm") CheckoutDTO checkoutDTO, ModelMap model,
             RedirectAttributes rd) {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return new ModelAndView("redirect:/account/login");
 
-        System.out.println(checkoutDTO);
-        PaymentInfo paymentInfo = new PaymentInfo();
-        paymentInfo.setCardNumber(checkoutDTO.getCardNumber());
-        paymentInfo.setName(checkoutDTO.getCardHolder());
-        paymentInfo.setCvv(checkoutDTO.getCvv());
-        paymentInfo.setType("bank");
-        paymentInfo.setExpired(checkoutDTO.getExpiredDate());
+        String type = checkoutDTO.getPaymentMethod();
+        System.out.println(checkoutDTO) ;
+        if (!type.equals("cod")) {
 
-        SP10PaymentResponseBean responseBean = paymentService.validate(paymentInfo);
-        ModelAndView mv = new ModelAndView();
-        String notice = null;
-        switch (responseBean.getStatus()) {
-            case 404:
-                notice = responseBean.getMessage();
-                mv.addObject("invalidCardNumber", notice);
-                mv.addObject("checkoutForm", checkoutDTO);
-                mv.setViewName("checkout");
-                return mv;
-            case 4061:
-                notice = responseBean.getMessage();
-                mv.addObject("invalidCvv", notice);
-                mv.addObject("checkoutForm", checkoutDTO);
-                mv.setViewName("checkout");
-                return mv;
-            case 4062:
-                notice = responseBean.getMessage();
-                mv.addObject("invalidName", notice);
-                mv.addObject("checkoutForm", checkoutDTO);
-                mv.setViewName("checkout");
-                return mv;
-            case 137:
-                notice = responseBean.getMessage();
-                mv.addObject("notEnough", notice);
-                mv.addObject("checkoutForm", checkoutDTO);
-                mv.setViewName("checkout");
-                return mv;
+            PaymentInfo paymentInfo = new PaymentInfo();
+            paymentInfo.setCardNumber(checkoutDTO.getCardNumber());
+            paymentInfo.setName(checkoutDTO.getCardHolder());
+            paymentInfo.setCvv(checkoutDTO.getCvv());
+            paymentInfo.setType(checkoutDTO.getPaymentMethod());
+            paymentInfo.setExpired(checkoutDTO.getExpiredDate());
+            paymentInfo.setPhone(checkoutDTO.getPhone());
+            paymentInfo.setPassword(checkoutDTO.getPassword());
 
+            SP10PaymentResponseBean responseBean = paymentService.validate(paymentInfo);
+
+            ModelAndView mv = new ModelAndView();
+            String notice = null;
+            switch (responseBean.getStatus()) {
+                case 404:
+                    notice = responseBean.getMessage();
+                    mv.addObject("invalid", notice);
+                    mv.addObject("checkoutForm", checkout);
+                    mv.setViewName("checkout" + type);
+                    return mv;
+                case 406:
+                    notice = responseBean.getMessage();
+                    mv.addObject("invalidPassword", notice);
+                    mv.addObject("checkoutForm", checkout);
+                    mv.setViewName("checkout" + type);
+                case 4061:
+                    notice = responseBean.getMessage();
+                    mv.addObject("invalidCvv", notice);
+                    mv.addObject("checkoutForm", checkout);
+                    mv.setViewName("checkout" + type);
+                    return mv;
+                case 4062:
+                    notice = responseBean.getMessage();
+                    mv.addObject("invalidName", notice);
+                    mv.addObject("checkoutForm", checkout);
+                    mv.setViewName("checkout" + type);
+                    return mv;
+            }
         }
-        rd.addFlashAttribute("checkoutForm", checkoutDTO);
+        rd.addFlashAttribute("checkoutForm", checkout);
         return new ModelAndView("redirect:/payment-confirmation");
 
     }
+
+    @GetMapping(value = "/voucher")
+    public ModelAndView getVoucher(@RequestParam(name = "code") String code,
+                                    @RequestParam(name="type") String type, RedirectAttributes rd) {
+        
+        
+        rd.addFlashAttribute("voucher", code);
+        rd.addFlashAttribute("type", type);
+       
+        return new ModelAndView("redirect:/checkout");
+    }
+
 }

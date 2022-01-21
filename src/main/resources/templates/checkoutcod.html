@@ -65,7 +65,7 @@ FACEBOOK: https://www.facebook.com/themefisher
                   <div class="method vishwa"></div>
                </label>
 
-               <label onclick="location.href='/checkout?method=cod'" class="btn paymentMethod">
+               <label class="btn paymentMethod">
                   <div class="method master-card"></div>
 
                </label>
@@ -114,31 +114,8 @@ FACEBOOK: https://www.facebook.com/themefisher
                      <div id="payment-info">
                         <div class="checkout-product-details">
                            <div class="payment">
+                              <h1>Cash On Delivery</h1>
                               <div class="card-details" th:object="${checkoutForm}">
-                                 <div class="form-group">
-                                    <label for="card-holder">Card Holder <span class="required">*</span></label>
-                                    <input id="card-holder" th:field="*{cardHolder}" class="form-control" type="text"
-                                       placeholder="Card holder">
-                                    <span th:text="${invalid} ?: ''"></span>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="card-number">Card Number <span class="required">*</span></label>
-                                    <input id="card-number" th:field="*{cardNumber}" class="form-control" type="tel"
-                                       placeholder="•••• •••• •••• ••••">
-                                    <span th:text="${invalidCardNumber} ?: ''"></span>
-                                 </div>
-                                 <div class="form-group half-width padding-right">
-                                    <label for="card-expiry">Expiry (MM/YY) <span class="required">*</span></label>
-                                    <input id="card-expiry" th:field="*{expiredDate}" class="form-control" type="text"
-                                       placeholder="MM / YY">
-                                    <span th:text="${invalidName} ?: ''"></span>
-                                 </div>
-                                 <div class="form-group half-width padding-left">
-                                    <label for="card-cvc">Cvv <span class="required">*</span></label>
-                                    <input id="card-cvc" th:field="*{cvv}" class="form-control" type="password"
-                                       maxlength="4" placeholder="CVC">
-                                    <span th:text="${invalidCvv} ?: ''"></span>
-                                 </div>
                                  <input th:field="*{total}" type="hidden" id="ip_total" value="${checkoutForm.total}">
                                  <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">
                                  <input th:field="*{voucherCode}" type="hidden" value="${voucherCode}">
@@ -217,7 +194,7 @@ FACEBOOK: https://www.facebook.com/themefisher
                <form th:action="@{/voucher}" th:method="GET">
                   <div class="form-group">
                      <input class="form-control" name="code" type="text" placeholder="Enter Coupon Code">
-                      <input class="form-control" name="type" type="hidden" value="bank">
+                      <input class="form-control" name="type" type="hidden" value="cod">
                   </div>
                   <button type="submit" class="btn btn-main">Apply Coupon</button>
                </form>

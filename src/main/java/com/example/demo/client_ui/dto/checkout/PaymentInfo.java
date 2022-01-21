@@ -24,4 +24,10 @@ public class PaymentInfo {
 
     @JsonProperty("expired")
     private String expired;
+
+    @JsonProperty("phone")
+    private String phone;
+
+    @JsonProperty("password")
+    private String password;
 }

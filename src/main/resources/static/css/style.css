@@ -2397,7 +2397,7 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 
 .paymentWrap .paymentBtnGroup .paymentMethod .method.master-card {
-	background-image: url("https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png");
+	background-image: url("https://cdn1.iconfinder.com/data/icons/marketplace-and-shipping/64/COD_cash_on_delivery_shipping_payment_delivery-512.png");
 }
 
 .paymentWrap .paymentBtnGroup .paymentMethod .method.amex {

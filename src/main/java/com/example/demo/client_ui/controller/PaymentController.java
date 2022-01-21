@@ -1,6 +1,7 @@
 package com.example.demo.client_ui.controller;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.example.demo.client_ui.dto.account.AccountRoleDTO;
@@ -8,6 +9,7 @@ import com.example.demo.client_ui.dto.account.UserDTO;
 import com.example.demo.client_ui.dto.checkout.CheckoutDTO;
 import com.example.demo.client_ui.dto.checkout.PaymentInfo;
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
+import com.example.demo.client_ui.dto.order.ProductOrderDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.cart.service.CartService;
@@ -56,9 +58,11 @@ public class PaymentController {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return "redirect:/account/login";
 
-       
         OrderService orderService = orderServiceMap.get(this.moduleConfig.getOrderTeam());
         DeliveryService deliveryService = this.deliveryServiceMap.get(this.moduleConfig.getDeliveryTeam());
+         CartService cartService =cartServiceMap.get(this.moduleConfig.getCartTeam());
+
+         System.out.println(checkoutDTO);
         StringBuilder sb = new StringBuilder();
         sb.append(checkoutDTO.getAddress());
         sb.append(" - ");
@@ -67,11 +71,13 @@ public class PaymentController {
         SP07ResponseDeliveryBean shipFee = deliveryService.calculateShipFee(to_address);
 
         OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
-        orderDetailDTO.setPaymentMethod("Payment via bank card");
+        orderDetailDTO.setPaymentMethod(checkoutDTO.getPaymentMethod());
         orderDetailDTO.setAddress(to_address);
         orderDetailDTO.setSubTotal(checkoutDTO.getSubTotal());
         orderDetailDTO.setVoucherCode(checkoutDTO.getVoucherCode());
         orderDetailDTO.setUserId(this.currentAccount.getId());
+
+       // List<ProductOrderDTO> products=cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId())).getProductCartList();
         
         // Call api create order
        // orderService.createOrder(orderDetailDTO);
@@ -81,17 +87,21 @@ public class PaymentController {
         orderDetailDTO.setStatus("Unpaid");
         orderDetailDTO.setVoucher(checkoutDTO.getVoucher());
         orderDetailDTO.setOrderDate(new Date().toString());
-        orderDetailDTO.setTotalPrice(checkoutDTO.getSubTotal() + shipFee.getFee() - checkoutDTO.getVoucher());
+        orderDetailDTO.setTotalPrice(checkoutDTO.getSubTotal());
 
         // Save payment info
-        PaymentInfo payment = new PaymentInfo();
-        payment.setCardNumber(checkoutDTO.getCardNumber());
-        payment.setName(checkoutDTO.getCardHolder());
-        payment.setCvv(checkoutDTO.getCvv());
-        payment.setType("bank");
-        payment.setExpired(checkoutDTO.getExpiredDate());
-        payment.setMoney(orderDetailDTO.getTotalPrice());
-        this.paymentInfo = payment;
+        if(!checkoutDTO.getPaymentMethod().equals("cod"))
+        {
+
+            PaymentInfo payment = new PaymentInfo();
+            payment.setCardNumber(checkoutDTO.getCardNumber());
+            payment.setName(checkoutDTO.getCardHolder());
+            payment.setCvv(checkoutDTO.getCvv());
+            payment.setType("bank");
+            payment.setExpired(checkoutDTO.getExpiredDate());
+            payment.setMoney(orderDetailDTO.getTotalPrice());
+            this.paymentInfo = payment;
+        }
 
         model.addAttribute("order", orderDetailDTO);
 
@@ -103,13 +113,16 @@ public class PaymentController {
 
         OrderService orderService = orderServiceMap.get(this.moduleConfig.getOrderTeam());
         CartService cartService =cartServiceMap.get(this.moduleConfig.getCartTeam());
-        SP10PaymentResponseBean responseBean = paymentService.payment(paymentInfo);
-        String notice = null;
-        if (responseBean.getStatus() == 137) {
-            notice = responseBean.getMessage();
-            model.addAttribute("notEnough", notice);
-
-            return "payment-confirmation";
+        if(!orderDetailDTO.getPaymentMethod().equals("cod"))
+        {
+            SP10PaymentResponseBean responseBean = paymentService.payment(paymentInfo);
+            String notice = null;
+            if (responseBean.getStatus() == 137) {
+                notice = responseBean.getMessage();
+                model.addAttribute("notEnough", notice);
+    
+                return "payment-confirmation";
+            }
         }
 
         //Update order Info

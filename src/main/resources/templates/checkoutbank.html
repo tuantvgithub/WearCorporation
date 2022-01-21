@@ -139,7 +139,7 @@ FACEBOOK: https://www.facebook.com/themefisher
                                        maxlength="4" placeholder="CVC">
                                     <span th:text="${invalidCvv} ?: ''"></span>
                                  </div>
-                                 <input th:field="*{total}" type="hidden" id="ip_total" value="${checkoutForm.total}">
+                                 <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">
                                  <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">
                                  <input th:field="*{voucherCode}" type="hidden" value="${voucherCode}">
                                  <input th:field="*{paymentMethod}" type="hidden" value="${paymentMethod}">

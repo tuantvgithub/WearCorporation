@@ -150,132 +150,18 @@ const addToCart = async (id, isLogin, userId, group) => {
 }
 
 
-//payment method
-const paymentWithCard = () => {
-  const payment_info = document.getElementById('payment-info');
-  payment_info.innerHTML = '<div class="checkout-product-details">\
-                        <div class="payment">\
-                           <div class="card-details" th:object="${checkoutForm}">\
-                              <div class="form-group">\
-                                 <label for="card-holder">Card Holder <span class="required">*</span></label>\
-                                 <input id="card-holder" th:field="*{cardHolder}" class="form-control" type="text"\
-                                    placeholder="Card holder">\
-                                 <span th:text="${invalidName} ?: \'\'"></span>\
-                              </div>\
-                              <div class="form-group">\
-                                 <label for="card-number">Card Number <span class="required">*</span></label>\
-                                 <input id="card-number" th:field="*{cardNumber}" class="form-control" type="tel"\
-                                    placeholder="•••• •••• •••• ••••">\
-                                 <span th:text="${invalidCardNumber} ?: \'\'"></span>\
-                              </div>\
-                              <div class="form-group half-width padding-right">\
-                                 <label for="card-expiry">Expiry (MM/YY) <span class="required">*</span></label>\
-                                 <input id="card-expiry" th:field="*{expiredDate}" class="form-control" type="text"\
-                                    placeholder="MM / YY">\
-                                 <span th:text="${invalidName} ?: \'\'"></span>\
-                              </div>\
-                              <div class="form-group half-width padding-left">\
-                                 <label for="card-cvc">Cvv <span class="required">*</span></label>\
-                                 <input id="card-cvc" th:field="*{cvv}" class="form-control" type="text" maxlength="4"\
-                                    placeholder="CVC">\
-                                 <span th:text="${invalidCvv} ?: \'\'"></span>\
-                              </div>\
-                              <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">\
-                              <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">\
-                              <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">\
-                               <input th:field="*{voucher}" type="hidden" id="ip_voucher" value="${voucher}">\
-                           </div>\
-                        </div>\
-                     </div>'
+const handleAddVoucher = ()=>
+{
+ 
+  const voucher=document.getElementById('voucher-code');
+
+  const voucher_ele=document.getElementById("voucher");
+
+  voucher_ele.innerHTML=voucher.value;
+
+  document.getElementById('ip_voucher_code').setAttribute('value',voucher.value);
 
 }
-const paymentWithZalo = () => {
-  const payment_info = document.getElementById('payment-info');
-  payment_info.innerHTML = '<div class="checkout-product-details">\
-    <h2>Zalo Pay</h2>\
-                        <div class="payment">\
-                           <div class="card-details" th:object="${checkoutForm}">\
-                              <div class="form-group">\
-                                 <label for="card-holder">Phone number <span class="required">*</span></label>\
-                                 <input id="card-holder" th:field="*{phone}" class="form-control" type="text"\
-                                    placeholder="0...">\
-                                 <span th:text="${invalidPhone} ?: \'\'"></span>\
-                              </div>\
-                              <div class="form-group">\
-                                 <label for="card-number">Password <span class="required">*</span></label>\
-                                 <input id="card-number" th:field="*{password}" class="form-control" type="tel"\
-                                    placeholder="•••• •••• •••• ••••">\
-                                 <span th:text="${invalidPassword} ?: \'\'"></span>\
-                              </div>\
-                              <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">\
-                              <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">\
-                              <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">\
-                              <input th:field="*{paymentMethod}" type="hidden" value="zalo">\
-                               <input th:field="*{voucher}" type="hidden" id="ip_voucher" value="${voucher}">\
-                           </div>\
-                        </div>\
-                     </div>'
-
-}
-
-const paymentWithMomo = () => {
-  const payment_info = document.getElementById('payment-info');
-  payment_info.innerHTML = '<div class="checkout-product-details">\
-    <h2>Momo Pay</h2>\
-                        <div class="payment">\
-                           <div class="card-details" th:object="${checkoutForm}">\
-                              <div class="form-group">\
-                                 <label for="card-holder">Phone number <span class="required">*</span></label>\
-                                 <input id="card-holder" th:field="*{phone}" class="form-control" type="text"\
-                                    placeholder="0...">\
-                                 <span th:text="${invalidPhone} ?: \'\'"></span>\
-                              </div>\
-                              <div class="form-group">\
-                                 <label for="card-number">Password <span class="required">*</span></label>\
-                                 <input id="card-number" th:field="*{password}" class="form-control" type="tel"\
-                                    placeholder="•••• •••• •••• ••••">\
-                                 <span th:text="${invalidPassword} ?: \'\'"></span>\
-                              </div>\
-                              <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">\
-                              <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">\
-                              <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">\
-                              <input th:field="*{paymentMethod}" type="hidden" value="momo">\
-                               <input th:field="*{voucher}" type="hidden" id="ip_voucher" value="${voucher}">\
-                           </div>\
-                        </div>\
-                     </div>'
-
-}
-
-const paymentWithViettel = () => {
-  const payment_info = document.getElementById('payment-info');
-  payment_info.innerHTML = '<div class="checkout-product-details">\
-                        <h2>Viettel Pay</h2>\
-                        <div class="payment">\
-                           <div class="card-details" th:object="${checkoutForm}">\
-                              <div class="form-group">\
-                                 <label for="card-holder">Phone number <span class="required">*</span></label>\
-                                 <input id="card-holder" th:field="*{phone}" class="form-control" type="text"\
-                                    placeholder="0...">\
-                                 <span th:text="${invalidPhone} ?: \'\'"></span>\
-                              </div>\
-                              <div class="form-group">\
-                                 <label for="card-number">Password <span class="required">*</span></label>\
-                                 <input id="card-number" th:field="*{password}" class="form-control" type="tel"\
-                                    placeholder="•••• •••• •••• ••••">\
-                                 <span th:text="${invalidPassword} ?: \'\'"></span>\
-                              </div>\
-                              <input th:field="*{total}" type="hidden" id="ip_total" value="${total}">\
-                              <input th:field="*{subTotal}" type="hidden" id="ip_subtotal" value="${subTotal}">\
-                              <input th:field="*{voucherCode}" type="hidden" id="ip_voucher_code" value="${voucherCode}">\
-                              <input th:field="*{paymentMethod}" type="hidden" value="viettel">\
-                               <input th:field="*{voucher}" type="hidden" id="ip_voucher" value="${voucher}">\
-                           </div>\
-                        </div>\
-                     </div>'
-
-}
-
 
 const removeProduct = async (id)=>{
 
