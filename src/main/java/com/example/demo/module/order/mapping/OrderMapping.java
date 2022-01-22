@@ -17,6 +17,4 @@ public interface OrderMapping {
 
     List<ProductOrderDTO> mapCartProductToOrderProduct(List<ProductCartDTO> cartDTOs);
 
-   
-
 }

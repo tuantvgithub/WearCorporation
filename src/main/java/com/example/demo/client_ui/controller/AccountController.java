@@ -120,9 +120,11 @@ public class AccountController {
         if (accountDTO == null)
             notice = "Failed";
         model.addAttribute("notice", notice);
-        CartService cartService=cartServiceMap.get(this.moduleConfig.getCartTeam());
-       cartService.createCart(new UserDTO(accountDTO.getId()));
 
+        if (accountDTO != null) {
+            CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
+            cartService.createCart(new UserDTO(accountDTO.getId()));
+        }
 
         return accountDTO == null ? new ModelAndView("signup", model)
                 : new ModelAndView("redirect:/account/login", model);

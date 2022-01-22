@@ -1,5 +1,6 @@
 package com.example.demo.module.product.bean.sp17;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -24,4 +25,7 @@ public class SP17ProductDetailBean {
     private String color;
 
     private Integer quantity;
+
+    @JsonProperty("category_id")
+    private Integer categoryId;
 }

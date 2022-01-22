@@ -48,4 +48,9 @@ public class ProductServiceSP11Impl implements ProductService {
         return responseBean.isSuccess() ?
                 this.productMapping.categoryBriefBeansToCategoryBriefDTO(responseBean.getData()) : null;
     }
+
+    @Override
+    public List<ProductBriefDTO> getProductByFilter(HashMap<String, Object> params) {
+        return this.getAllProductBriefDTO();
+    }
 }

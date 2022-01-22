@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -79,5 +80,10 @@ public class ProductServiceSP02Impl implements ProductService {
     @Override
     public List<CategoryDTO> getAllCategories() {
         return null;
+    }
+
+    @Override
+    public List<ProductBriefDTO> getProductByFilter(HashMap<String, Object> params) {
+        return getAllProductBriefDTO();
     }
 }
