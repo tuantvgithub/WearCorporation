@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ProductCartAddFormDTO {
 
     @JsonProperty("productId")
-    private Integer productId;
+    private Integer id;
 
     @JsonProperty("quantity")
     private Integer quantity;
@@ -34,4 +34,6 @@ public class ProductCartAddFormDTO {
 
     @JsonProperty("userId")
     private Integer userId;
+
+    private String description;
 }

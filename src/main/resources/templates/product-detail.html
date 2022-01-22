@@ -68,10 +68,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 						<p class="product-description mt-20" th:text="${product.description}"></p>
 						<form th:action="@{/cart}" th:method="post" th:object="${productCartForm}">
 							<input type="hidden" th:value="${product.id}" th:attr="name='productId'"
-								th:field="*{productId}">
+								th:field="*{id}">
 							<input type="hidden" th:value="${product.imageUrl}" th:field="*{imageUrl}">
 							<input type="hidden" th:value="${product.name}" th:field="*{name}">
 							<input type="hidden" th:value="${product.price}" th:field="*{price}">
+							<input type="hidden" th:value="${product.description}" th:field="*{description}">
 							<div class="color-swatches" style="width: 200px;">
 								<span>color:</span>
 								<select class="form-control" th:field="*{color}">
@@ -107,6 +108,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 									<li>Soap</li>
 								</ul>
 							</div>
+							<p th:text="${notice}?: ''"></p>
 							<button type="submit" class="btn btn-main mt-20">Add To Cart</button>
 						</form>
 					</div>

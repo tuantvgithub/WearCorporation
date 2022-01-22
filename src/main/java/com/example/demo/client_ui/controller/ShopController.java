@@ -2,7 +2,6 @@ package com.example.demo.client_ui.controller;
 
 import com.example.demo.client_ui.dto.account.AccountRoleDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartAddFormDTO;
-import com.example.demo.client_ui.dto.cart.ProductCartDTO;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
 import com.example.demo.client_ui.dto.product.ProductDetailDTO;
 import com.example.demo.config.account.CurrentAccount;
@@ -56,9 +55,10 @@ public class ShopController {
 
 
         model.addAttribute("product", productDetailDTO);
+        model.addAttribute("notice", null);
         ProductCartAddFormDTO productCart= new ProductCartAddFormDTO();
         productCart.setImageUrl(productDetailDTO.getImageUrl());
-        productCart.setProductId(productDetailDTO.getId());
+        productCart.setId(productDetailDTO.getId());
         productCart.setPrice(productDetailDTO.getPrice());
         productCart.setName(productDetailDTO.getName());
         model.addAttribute("productCartForm", productCart);
