@@ -92,14 +92,15 @@ public class AccountController {
     }
 
     @GetMapping("/logout")
-    public ModelAndView logout(ModelMap model) {
+    public String logout(Model model) {
         this.currentAccount.setId(null);
         this.currentAccount.setEmail(null);
         this.currentAccount.setRole(AccountRoleDTO.GUEST_ROLE);
 
-        model.addAttribute("notice", "Logout successfully");
+//        model.addAttribute("notice", "Logout successfully");
+//        model.addAttribute("loginForm", new AccountLoginFormDTO());
 
-        return new ModelAndView("login", model);
+        return "redirect:/";
     }
 
     @GetMapping("/signup")
@@ -131,11 +132,11 @@ public class AccountController {
     }
 
     @GetMapping("/address")
-    public ModelAndView getAddressPage(ModelMap model) {
+    public String getAddressPage(Model model) {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
-            return new ModelAndView("redirect:/account/login", model);
+            return "redirect:/account/login";
 
-        return new ModelAndView("address", model);
+        return "address";
     }
 
     @GetMapping("/profile")
