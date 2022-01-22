@@ -79,7 +79,6 @@ public class PaymentController {
         List<ProductOrderDTO> orderProducts = orderMapping.mapCartProductToOrderProduct(cartProducts);
         orderDetailDTO.setProductList(orderProducts);
 
-        System.out.println(orderDetailDTO);
 
         // Call api create order
         // orderService.createOrder(orderDetailDTO);

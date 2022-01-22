@@ -6,6 +6,7 @@ import com.example.demo.client_ui.dto.order.OrderBriefDTO;
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
+import com.example.demo.module.account.bean.UserRole;
 import com.example.demo.module.account.service.AccountService;
 import com.example.demo.module.cart.service.CartService;
 import com.example.demo.module.order.service.OrderService;
@@ -80,7 +81,7 @@ public class AccountController {
             this.currentAccount.setEmail(accountDTO.getEmail());
             this.currentAccount.setFullname(accountDTO.getUsername());
             this.currentAccount.setPhone(accountDTO.getPhone());
-            this.currentAccount.setRole(systemManagementService.getRoleByAccountId(accountDTO.getId().toString()));
+            this.currentAccount.setRole(systemManagementService.getRoleByAccountId(new UserRole(this.currentAccount.getId(), null)));
             if (this.currentAccount.getRole() == AccountRoleDTO.ADMIN_ROLE)
                 this.currentAccount.setAdmin(true);
         }
@@ -114,6 +115,7 @@ public class AccountController {
     public ModelAndView signup(@ModelAttribute("registerForm") AccountRegisterFormDTO formDTO,
             ModelMap model) {
         AccountService accountService = this.accountServiceMap.get(this.moduleConfig.getAccountTeam());
+        SystemManagementService systemManagementService=this.sysManagementServiceMap.get(this.moduleConfig.getSysManagementTeam());
         AccountDTO accountDTO = accountService.signup(formDTO);
         String notice = null;
 
@@ -124,8 +126,13 @@ public class AccountController {
 
         } else {
 
+            //Set role user
+            systemManagementService.setRole(new UserRole(this.currentAccount.getId(),0));
+
             CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
             cartService.createCart(new UserDTO(accountDTO.getId()));
+
+
         }
 
         return accountDTO == null ? new ModelAndView("signup", model)
