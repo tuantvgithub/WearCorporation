@@ -17,8 +17,11 @@ import com.example.demo.module.sale_promotion.service.sp19.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service("sp19-service")
-public class SP19PromotionServiceImpl implements PromotionService{
+@Slf4j
+public class SP19PromotionServiceImpl implements PromotionService {
 
     @Autowired
     private SP19WebServiceProxy sp19WebServiceProxy;
@@ -29,32 +32,47 @@ public class SP19PromotionServiceImpl implements PromotionService{
     @Override
     public List<PromotionDTO> getAllSales() {
 
-        List<PromotionSP19Bean> pros=sp19WebServiceProxy.getAllSales();
-       
-        return promotionMapping.beansToDtos(pros);
+        try {
+            List<PromotionSP19Bean> pros = sp19WebServiceProxy.getAllSales();
+
+            return promotionMapping.beansToDtos(pros);
+
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public PromotionDetailDTO getPromotionById(String id) {
-       
-        PromoDetailSP19Bean promoDetailSP19Bean=sp19WebServiceProxy.getPromotionDetail(id);
-        return promotionMapping.detailBeanToDto(promoDetailSP19Bean);
+
+        try {
+            
+            PromoDetailSP19Bean promoDetailSP19Bean = sp19WebServiceProxy.getPromotionDetail(id);
+            return promotionMapping.detailBeanToDto(promoDetailSP19Bean);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
+            return PromotionDetailDTO.builder().build();
+        }
     }
 
     @Override
     public List<VoucherCodeDTO> getAllVoucherCode() {
-        
-        List<CodeSP19Bean> codeBeans=sp19WebServiceProxy.getAllVoucherCode();
-        List<VoucherCodeDTO> voucherCodeDTOs=new ArrayList<>();
 
-        for (CodeSP19Bean code : codeBeans) {
-            VoucherCodeDTO voucherCodeDTO= promotionMapping.codeBeanToDto(code);
-            voucherCodeDTOs.add(voucherCodeDTO);
+        try {
+
+            List<CodeSP19Bean> codeBeans = sp19WebServiceProxy.getAllVoucherCode();
+            List<VoucherCodeDTO> voucherCodeDTOs = new ArrayList<>();
+
+            for (CodeSP19Bean code : codeBeans) {
+                VoucherCodeDTO voucherCodeDTO = promotionMapping.codeBeanToDto(code);
+                voucherCodeDTOs.add(voucherCodeDTO);
+            }
+            return voucherCodeDTOs;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
+            return new ArrayList<>();
         }
-        return voucherCodeDTOs;
     }
 
-    
-    
-    
 }

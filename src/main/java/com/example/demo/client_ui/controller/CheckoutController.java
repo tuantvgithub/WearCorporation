@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 @Controller
 public class CheckoutController {
 
@@ -42,7 +41,7 @@ public class CheckoutController {
 
     private CheckoutDTO checkout;
 
-    @Autowired 
+    @Autowired
     private PromotionService promotionService;
 
     @Autowired
@@ -62,7 +61,7 @@ public class CheckoutController {
         CartDTO cartDTO = cartService.getCartByAccountId(new UserDTO(this.currentAccount.getId()));
 
         List<ProductCartDTO> products = cartDTO.getProductCartList();
-        List<VoucherCodeDTO> voucherCodes=promotionService.getAllVoucherCode();
+        List<VoucherCodeDTO> voucherCodes = promotionService.getAllVoucherCode();
 
         CheckoutDTO checkoutDTO = new CheckoutDTO();
         checkoutDTO.setAddress("Bắc Từ Liêm");
@@ -79,11 +78,11 @@ public class CheckoutController {
         }
         checkoutDTO.setSubTotal(subtotal);
         checkoutDTO.setTotal(subtotal);
-        this.checkout=checkoutDTO;
-       
+        this.checkout = checkoutDTO;
 
         model.addAttribute("products", products);
         model.addAttribute("checkoutForm", checkoutDTO);
+
         model.addAttribute("vouchers", voucherCodes);
 
         if (!type.isEmpty()) {
@@ -95,7 +94,7 @@ public class CheckoutController {
             return "checkout";
         }
         checkoutDTO.setPaymentMethod(method);
-        return "checkout"+method;
+        return "checkout" + method;
     }
 
     @PostMapping("/checkout")
