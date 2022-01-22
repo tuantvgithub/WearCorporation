@@ -4,6 +4,7 @@ import com.example.demo.client_ui.dto.account.AccountRoleDTO;
 import com.example.demo.client_ui.dto.account.UserDTO;
 import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartAddFormDTO;
+import com.example.demo.client_ui.dto.inventory.InventoryDetailProductDTO;
 import com.example.demo.client_ui.dto.inventory.InventoryProductDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
@@ -22,7 +23,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/cart")
 public class CartController {
-    private final String NOT_ENOUGH_PRODUCT_IN_WAREHOUSE = "Not enough product in warehouse";
+    private final String NOT_ENOUGH_PRODUCT_IN_WAREHOUSE = "Not enough product in warehouse! Maximum ";
 
     @Autowired
     private CurrentAccount currentAccount;
@@ -67,9 +68,9 @@ public class CartController {
         addFormDTO.setUserId(this.currentAccount.getId());
 
         // Check product available in warehouse
-        InventoryProductDTO inventoryProductDTO = inventoryService.getProductInInventoryById(addFormDTO.getId());
+        InventoryDetailProductDTO inventoryProductDTO = inventoryService.getProductInInventoryById(addFormDTO.getId());
         if (inventoryProductDTO != null) {
-            if (inventoryProductDTO.getQuantity() > addFormDTO.getQuantity()) {
+            if (inventoryProductDTO.getTotal() > addFormDTO.getQuantity()) {
 
                 cartService.addProduct(addFormDTO);
                 return "redirect:/cart";
@@ -77,7 +78,7 @@ public class CartController {
 
         }
 
-        model.addAttribute("notice", NOT_ENOUGH_PRODUCT_IN_WAREHOUSE);
+        model.addAttribute("notice", inventoryProductDTO!=null?NOT_ENOUGH_PRODUCT_IN_WAREHOUSE +inventoryProductDTO.getTotal():NOT_ENOUGH_PRODUCT_IN_WAREHOUSE);
         model.addAttribute("product", addFormDTO);
         return "product-detail";
 

@@ -2,8 +2,8 @@ package com.example.demo.module.inventory.service.impl;
 
 import java.util.List;
 
-import com.example.demo.client_ui.dto.inventory.InventoryProductDTO;
-import com.example.demo.module.inventory.bean.sp20.SP20InventoryBean;
+import com.example.demo.client_ui.dto.inventory.InventoryDetailProductDTO;
+import com.example.demo.module.inventory.bean.sp20.SP20ResponseDetailBean;
 import com.example.demo.module.inventory.mapping.InventoryMapping;
 import com.example.demo.module.inventory.proxies.InventorySP20WebServiceProxy;
 import com.example.demo.module.inventory.service.InventoryService;
@@ -23,13 +23,13 @@ public class InventoryServiceSP20Impl implements InventoryService {
     @Autowired
     private InventoryMapping inventoryMapping;
 
-    public InventoryProductDTO getProductInInventoryById(Integer id) {
+    @Override
+    public InventoryDetailProductDTO getProductInInventoryById(Integer id) {
 
         try {
-            List<SP20InventoryBean> inventoryBean = inventorySP20WebServiceProxy.getProductInWarehouseById(id);
-            System.out.println(inventoryBean);
-            return null;
-            // inventoryMapping.mapSp20BeanToDto(inventoryBean);
+            SP20ResponseDetailBean inventoryBean = inventorySP20WebServiceProxy.getProductInWarehouseById(id);
+           
+            return inventoryMapping.mapSp20BeanDetailToDto(inventoryBean);
 
         } catch (Exception e) {
             log.error(e.getMessage(), e.getCause());
