@@ -1,0 +1,133 @@
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<!-- 
+THEME: Aviato | E-commerce template
+VERSION: 1.0.0
+AUTHOR: Themefisher
+
+HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
+DEMO: https://demo.themefisher.com/aviato/
+GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
+
+WEBSITE: https://themefisher.com
+TWITTER: https://twitter.com/themefisher
+FACEBOOK: https://www.facebook.com/themefisher
+-->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head(title='Confirmation')"></head>
+
+<body id="body">
+
+	<div th:replace="fragments/header :: header"></div>
+
+	<section class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="content">
+						<h1 class="page-name">Purchase Confirmation</h1>
+						<ol class="breadcrumb">
+							<li><a th:href="@{/}">Home</a></li>
+							<li class="active">purchase confirmation</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<div class="page-wrapper">
+		<div class="purchase-confirmation shopping">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="block ">
+							<div class="purchase-confirmation-details">
+								<table id="purchase-receipt" class="table">
+									<thead>
+										<tr>
+											<th><strong>Payment:</strong></th>
+											<th>33056</th>
+										</tr>
+									</thead>
+
+									<tbody th:object="${order}">
+
+										<tr>
+											<td class=""><strong>Payment Status:</strong></td>
+											<td th:text="*{status}"></td>
+										</tr>
+
+										<tr>
+											<td><strong>Payment Method:</strong></td>
+											<td th:text="*{paymentMethod}"></td>
+										</tr>
+										<tr>
+											<td><strong>Date:</strong></td>
+											<td th:text="*{orderDate}"></td>
+										</tr>
+										<tr>
+											<td><strong>Address:</strong></td>
+											<td th:text="*{address}"></td>
+										</tr>
+										<tr>
+											<td><strong>Subtotal</strong></td>
+											<td th:text="*{subTotal}"> </td>
+										</tr>
+										<tr>
+											<td><strong>Shipping Fee</strong></td>
+											<td th:text="*{shipFee}"> </td>
+										</tr>
+										<tr>
+											<td><strong>Voucher</strong></td>
+											<td th:text="*{voucherCode}"> </td>
+										</tr>
+										<tr>
+											<td><strong>Discount</strong></td>
+											<td th:text="*{voucher}"> </td>
+										</tr>
+										<tr>
+											<td><strong>Total Price</strong></td>
+											<td th:text="*{totalPrice}"></td>
+										</tr>
+
+									</tbody>
+								</table>
+								 <span th:text="${notEnough} ?: ''"></span>
+							</div>
+							<form th:object="${order}" th:action="@{/payment-confirmation}" th:method="post">
+								<input th:field="*{orderId}" type="hidden" value="${orderId}"/>
+								<input th:field="*{status}" type="hidden" value="${status}"/>
+								<input th:field="*{paymentMethod}" type="hidden"value="${paymentMethod}" />
+								<input th:field="*{totalPrice}" type="hidden" value="${totalPrice}"/>
+								<input th:field="*{voucher}" type="hidden" value="${voucher}"/>
+								<input th:field="*{shipFee}" type="hidden" value="${shipFee}"/>
+								<input th:field="*{subTotal}" type="hidden" value="${subTotal}"/>
+								<input th:field="*{address}" type="hidden" value="${address}"/>
+								<input th:field="*{orderDate}" type="hidden" value="${orderDate}"/>
+								<input type="submit" class="btn btn-main mt-20" value="Confirmation"/>
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments/footer :: footer"></div>
+	<div th:replace="fragments/js-script-container"></div>
+
+</body>
+
+</html>
