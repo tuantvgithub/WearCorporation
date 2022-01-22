@@ -36,7 +36,7 @@ public class AccountController {
     private final Map<String, OrderService> orderServiceMap;
 
     @Autowired
-    private  Map<String, CartService> cartServiceMap;
+    private Map<String, CartService> cartServiceMap;
 
     @Autowired
     private final Map<String, AccountService> accountServiceMap;
@@ -117,12 +117,16 @@ public class AccountController {
         AccountDTO accountDTO = accountService.signup(formDTO);
         String notice = null;
 
-        if (accountDTO == null)
-            notice = "Failed";
-        model.addAttribute("notice", notice);
-        CartService cartService=cartServiceMap.get(this.moduleConfig.getCartTeam());
-       cartService.createCart(new UserDTO(accountDTO.getId()));
+        if (accountDTO == null) {
 
+            notice = "Failed";
+            model.addAttribute("notice", notice);
+
+        } else {
+
+            CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
+            cartService.createCart(new UserDTO(accountDTO.getId()));
+        }
 
         return accountDTO == null ? new ModelAndView("signup", model)
                 : new ModelAndView("redirect:/account/login", model);
@@ -141,7 +145,6 @@ public class AccountController {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return new ModelAndView("redirect:/account/login", model);
 
-        System.out.println(this.currentAccount);
         ModelAndView mv = new ModelAndView();
         mv.addObject("profile", this.currentAccount);
         mv.setViewName("profile");
