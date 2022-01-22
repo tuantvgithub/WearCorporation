@@ -3,6 +3,7 @@ package com.example.demo.module.product.mapping.impl;
 import com.example.demo.module.product.bean.sp11.SP11CategoryBriefBean;
 import com.example.demo.module.product.bean.sp11.SP11ProductBriefBean;
 import com.example.demo.module.product.bean.sp11.SP11ProductDetailBean;
+import com.example.demo.module.product.bean.sp17.SP17CategoryDetailBean;
 import com.example.demo.module.product.bean.sp17.SP17ProductDetailBean;
 import com.example.demo.client_ui.dto.category.CategoryDTO;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
@@ -107,6 +108,17 @@ public class ProductMappingImpl implements ProductMapping {
         categoryBriefDTO.setUnit(categoryBriefBean.getUnit());
 
         return categoryBriefDTO;
+    }
+
+    @Override
+    public CategoryDTO categoryDetailBeanToCategoryDTO(SP17CategoryDetailBean detailBean) {
+        if (detailBean == null) return null;
+        CategoryDTO dto = new CategoryDTO();
+
+        dto.setId(detailBean.getId());
+        dto.setName(detailBean.getName());
+
+        return dto;
     }
 
     @Override
