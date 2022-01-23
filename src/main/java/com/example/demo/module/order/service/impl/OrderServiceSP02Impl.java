@@ -43,16 +43,13 @@ public class OrderServiceSP02Impl implements OrderService {
         for (OrderBriefDTO dto : this.ORDER_BRIEF_DTO_LIST)
             if (orderId.equals(dto.getId())) briefDTO = dto;
         if (briefDTO == null) return null;
-
-        OrderDetailDTO detailDTO = new OrderDetailDTO();
-        detailDTO.setOrderId(briefDTO.getId());
-        detailDTO.setStatus(briefDTO.getStatus());
-        detailDTO.setOrderDate(briefDTO.getOrderDate());
-        detailDTO.setTotalPrice(briefDTO.getTotalPrice());
-        detailDTO.setProductList(this.PRODUCT_ORDER_DTO_LIST.subList(0,
-                briefDTO.getNumberOfItems()));
-
-        return detailDTO;
+        return OrderDetailDTO.builder()
+                        .orderId(briefDTO.getId())
+                        .status(briefDTO.getStatus())
+                        .orderDate(briefDTO.getOrderDate())
+                        .totalPrice(briefDTO.getTotalPrice())
+                        .productList(this.PRODUCT_ORDER_DTO_LIST.subList(0, briefDTO.getNumberOfItems()))
+                        .build();
     }
 
 @Override

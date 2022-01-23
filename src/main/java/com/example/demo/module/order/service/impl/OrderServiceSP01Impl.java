@@ -91,8 +91,8 @@ public class OrderServiceSP01Impl implements OrderService {
     public OrderDetailDTO createOrder(OrderDetailDTO orderDetailDTO) {
 
         try {
-            OrderDetailDTO order = orderSP01WebServiceProxy.createOrder(X_API_KEY_TOKEN, orderDetailDTO);
-            return order;
+            SP01OrderBean order = orderSP01WebServiceProxy.createOrder(X_API_KEY_TOKEN, orderDetailDTO);
+            return orderMapping.beanToDetailDTO(order);
         } catch (Exception e) {
            log.error(e.getMessage(), e.getCause());
            return null;

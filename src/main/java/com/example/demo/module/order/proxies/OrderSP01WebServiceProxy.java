@@ -21,7 +21,7 @@ public interface OrderSP01WebServiceProxy {
             @RequestBody OrderDetailDTO updateOrder);
 
     @PostMapping
-    OrderDetailDTO createOrder(@RequestHeader("x-api-key") String token,
+    SP01OrderBean createOrder(@RequestHeader("x-api-key") String token,
             @RequestBody OrderDetailDTO orderDetailDTO);
 
     @GetMapping
