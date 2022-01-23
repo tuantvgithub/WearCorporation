@@ -9,6 +9,7 @@ import com.example.demo.client_ui.dto.product.ProductReviewDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.customer_care.service.CustomerCareService;
+import com.example.demo.module.inventory.service.InventoryService;
 import com.example.demo.module.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,11 +37,15 @@ public class ShopController {
 
     private final Map<String, CustomerCareService> customerCareServiceMap;
 
+    private final Map<String, InventoryService> inventoryServiceMap;
+
     @Autowired
     private ShopController(Map<String, ProductService> productServiceMap,
-                           Map<String, CustomerCareService> customerCareServiceMap) {
+                           Map<String, CustomerCareService> customerCareServiceMap,
+                           Map<String, InventoryService> inventoryServiceMap) {
         this.productServiceMap = productServiceMap;
         this.customerCareServiceMap = customerCareServiceMap;
+        this.inventoryServiceMap = inventoryServiceMap;
     }
 
     @GetMapping
@@ -67,6 +72,8 @@ public class ShopController {
     @GetMapping("/products/{id}")
     public String getProductDetailById(@PathVariable Integer id, Model model) {
         ProductService productService = this.productServiceMap.get(this.moduleConfig.getProductTeam());
+        InventoryService inventoryService = this.inventoryServiceMap.get(this.moduleConfig.getInventoryTeam());
+
         ProductDetailDTO productDetailDTO = productService.getProductDetailDTOById(id);
         List<ProductBriefDTO> relatedProductList;
 
@@ -85,6 +92,8 @@ public class ShopController {
                 this.moduleConfig.getCustomerCareTeam()).getAllProductReviewByProductId(productDetailDTO.getId());
 
         model.addAttribute("product", productDetailDTO);
+        model.addAttribute("quantity",
+                inventoryService.getProductQuantityInInventory(productDetailDTO.getId(), null));
         model.addAttribute("notice", null);
         ProductCartAddFormDTO productCart= new ProductCartAddFormDTO();
         productCart.setImageUrl(productDetailDTO.getImageUrl());

@@ -7,4 +7,5 @@ import java.util.List;
 public interface CustomerCareService {
 
     List<ProductReviewDTO> getAllProductReviewByProductId(Integer productId);
+
 }

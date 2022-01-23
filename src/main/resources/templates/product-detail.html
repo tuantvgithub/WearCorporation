@@ -94,15 +94,15 @@ FACEBOOK: https://www.facebook.com/themefisher
 									<option value="XL">XL</option>
 								</select>
 							</div>
+							<div class="product-category">
+								<span th:text="'In stock: ' + ${quantity}"></span>
+							</div>
 							<div class="product-quantity">
 								<span>Quantity:</span>
 								<div class="product-quantity-slider">
 									<input id="product-quantity" type="number" th:value="${1}"
-										th:attr="name='quantity'">
+										th:attr="name='quantity', min='1'">
 								</div>
-							</div>
-							<div class="product-category">
-								<span th:text="'Categories: ' + ${product?.categoryDTO?.name}"></span>
 							</div>
 							<p th:text="${notice}?: ''"></p>
 							<button type="submit" class="btn btn-main mt-20">Add To Cart</button>

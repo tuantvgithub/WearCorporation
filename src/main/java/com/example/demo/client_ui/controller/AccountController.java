@@ -162,7 +162,8 @@ public class AccountController {
 
         OrderService orderService = this.orderServiceMap.get(this.moduleConfig.getOrderTeam());
 
-        List<OrderBriefDTO> orderBriefDTOList = orderService.getAllOrderDTOByUserId(this.currentAccount.getId());
+        List<OrderBriefDTO> orderBriefDTOList =
+                orderService.getAllOrderDTOByUserId(2);
         if (orderBriefDTOList != null)
             model.addAttribute("orderList", orderBriefDTOList);
 

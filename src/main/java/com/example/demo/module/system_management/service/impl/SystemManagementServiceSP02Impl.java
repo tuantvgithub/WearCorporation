@@ -11,12 +11,12 @@ public class SystemManagementServiceSP02Impl implements SystemManagementService 
 
     @Override
     public AccountRoleDTO getRoleByEmail(String email) {
-        return AccountRoleDTO.BUYER;
+        return AccountRoleDTO.SALESMAN;
     }
 
     @Override
     public AccountRoleDTO getRole(UserRole userRole) {
-        return AccountRoleDTO.BUYER;
+        return AccountRoleDTO.SALESMAN;
     }
 
     @Override
