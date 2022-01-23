@@ -1,6 +1,9 @@
 package com.example.demo.module.system_management.service.impl;
 
 import com.example.demo.client_ui.dto.account.AccountRoleDTO;
+import com.example.demo.client_ui.dto.account.UserRoleDTO;
+import com.example.demo.client_ui.dto.config.ThemeDTO;
+import com.example.demo.client_ui.dto.config.ThemeRequest;
 import com.example.demo.module.account.bean.UserRole;
 import com.example.demo.module.system_management.service.SystemManagementService;
 
@@ -20,9 +23,16 @@ public class SystemManagementServiceSP05Impl implements SystemManagementService 
         return AccountRoleDTO.GUEST_ROLE;
     }
 
+
     @Override
-    public boolean setRole(UserRole userRole) {
+    public ThemeDTO getTheme(ThemeRequest themeRequest) {
         // TODO Auto-generated method stub
-        return false;
+        return null;
+    }
+
+    @Override
+    public UserRoleDTO setRole(UserRole userRole) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

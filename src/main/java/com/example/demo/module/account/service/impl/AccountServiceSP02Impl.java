@@ -19,10 +19,10 @@ public class AccountServiceSP02Impl implements AccountService {
     private final List<AccountDTO> ACCOUNT_LIST = Arrays.asList(
             new AccountDTO(1,null, "ltct.sp02@gmail.com", "sp02",null,
                     "ltct", "sp02", "HUST", "123456",
-                    "/images/avater.jpg", null),
+                    "/images/avater.jpg", null,null,null, null,null),
             new AccountDTO(2, null,"admin@gmail.com", "admin",null,
                     "Johanna", "Doe", "USA", "+880123123",
-                    "/images/avater.jpg", "Dec , 22 ,1991")
+                    "/images/avater.jpg", "Dec , 22 ,1991",null,null,null, null)
     );
 
     private final Set<AccountDTO> ACCOUNT_SET = new HashSet<>(ACCOUNT_LIST);
@@ -52,7 +52,7 @@ public class AccountServiceSP02Impl implements AccountService {
 
         AccountDTO savedAccount = new AccountDTO(ID_COUNT, null,formDTO.getEmail(),
                 formDTO.getPassword(),null, formDTO.getFirstName(), formDTO.getLastName(),
-                formDTO.getCountry(), null, null, null);
+                formDTO.getCountry(), null, null, null,null,null,null,null);
         this.ACCOUNT_SET.add(savedAccount);
         ID_COUNT += 1;
 
