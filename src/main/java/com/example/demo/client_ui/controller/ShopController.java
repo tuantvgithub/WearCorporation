@@ -2,7 +2,6 @@ package com.example.demo.client_ui.controller;
 
 import com.example.demo.client_ui.dto.account.AccountRoleDTO;
 import com.example.demo.client_ui.dto.cart.ProductCartAddFormDTO;
-import com.example.demo.client_ui.dto.cart.ProductCartDTO;
 import com.example.demo.client_ui.dto.category.CategoryDTO;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
 import com.example.demo.client_ui.dto.product.ProductDetailDTO;
@@ -86,13 +85,10 @@ public class ShopController {
                 this.moduleConfig.getCustomerCareTeam()).getAllProductReviewByProductId(productDetailDTO.getId());
 
         model.addAttribute("product", productDetailDTO);
-        model.addAttribute("relatedProductList", relatedProductList.size() > 3 ?
-                relatedProductList.subList(0, 4) : relatedProductList);
-        model.addAttribute("reviews", productReviewDTOList);
-
+        model.addAttribute("notice", null);
         ProductCartAddFormDTO productCart= new ProductCartAddFormDTO();
         productCart.setImageUrl(productDetailDTO.getImageUrl());
-        productCart.setProductId(productDetailDTO.getId());
+        productCart.setId(productDetailDTO.getId());
         productCart.setPrice(productDetailDTO.getPrice());
         productCart.setName(productDetailDTO.getName());
         model.addAttribute("productCartForm", productCart);

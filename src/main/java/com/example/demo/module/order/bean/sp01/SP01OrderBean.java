@@ -1,12 +1,15 @@
 package com.example.demo.module.order.bean.sp01;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
+import java.util.concurrent.PriorityBlockingQueue;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SP01OrderBean {
 
     @JsonProperty("order_id")
@@ -17,6 +20,21 @@ public class SP01OrderBean {
 
     @JsonProperty("price")
     private Integer price;
+
+    @JsonProperty("voucherCode")
+    private String voucherCode;
+
+    @JsonProperty("voucher")
+    private Integer voucher;
+
+    @JsonProperty("address")
+    private String address;
+
+    @JsonProperty("shipFee")
+    private Integer shipFee;
+
+    @JsonProperty("paymentMethod")
+    private String paymentMethod;
 
     @JsonProperty("delivery_note")
     private String deliveryNote;

@@ -220,7 +220,9 @@ FACEBOOK: https://www.facebook.com/themefisher
                      <input class="form-control" name="type" type="hidden" value="bank">
                   </div>
 
-                  <div th:each="voucher: ${vouchers}" style="border-style: dotted;">
+
+                  
+                  <div th:unless="${#lists.isEmpty(vouchers)}" th:each="voucher: ${vouchers}" style="border-style: dotted;">
                      Name:<p th:text="${voucher.name}"></p>
                      Discount code<p th:text="${voucher.discountCode}"></p>
                      Discount <p
@@ -228,6 +230,7 @@ FACEBOOK: https://www.facebook.com/themefisher
                      </p>
 
                   </div>
+                  <span th:if="${#lists.isEmpty(vouchers)}">No available voucher</span>
             </div>
             <button type="submit" class="btn btn-main">Apply Coupon</button>
             </form>

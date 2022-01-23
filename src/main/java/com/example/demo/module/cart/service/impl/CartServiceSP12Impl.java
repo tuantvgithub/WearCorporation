@@ -16,10 +16,13 @@ import com.example.demo.module.cart.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service("sp12-cart")
+@Slf4j
 public class CartServiceSP12Impl implements CartService {
 
-    @Autowired 
+    @Autowired
     private CartSP12WebServiceProxy cartSP12WebServiceProxy;
 
     @Autowired
@@ -28,18 +31,28 @@ public class CartServiceSP12Impl implements CartService {
     @Override
     public CartDTO getCartByAccountId(UserDTO userDTO) {
 
-       List<SP12ProductCartBean> products=cartSP12WebServiceProxy.getCartInfo(userDTO).getData();
-        if (userDTO != null) {
+        try {
+
+            List<SP12ProductCartBean> products = cartSP12WebServiceProxy.getCartInfo(userDTO).getData();
 
             return new CartDTO(cartMapping.mapListSP12BeanToListDTO(products));
+
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
+            return null;
         }
-        return null;
     }
 
     @Override
     public void addProduct(ProductCartAddFormDTO addFormDTO) {
 
-        cartSP12WebServiceProxy.addProductToCart(addFormDTO);
+        try {
+
+            cartSP12WebServiceProxy.addProductToCart(addFormDTO);
+
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
@@ -49,12 +62,22 @@ public class CartServiceSP12Impl implements CartService {
 
     @Override
     public void createCart(UserDTO userDTO) {
-       
-       cartSP12WebServiceProxy.createCart(userDTO);
+
+        try {
+            cartSP12WebServiceProxy.createCart(userDTO);
+
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
     public void resetCart(UserDTO userDTO) {
-        cartSP12WebServiceProxy.resetCart(userDTO);     
+        try {
+
+            cartSP12WebServiceProxy.resetCart(userDTO);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
+        }
     }
 }

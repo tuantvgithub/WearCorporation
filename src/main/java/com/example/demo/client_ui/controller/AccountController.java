@@ -1,11 +1,11 @@
 package com.example.demo.client_ui.controller;
 
 import com.example.demo.client_ui.dto.account.*;
-import com.example.demo.client_ui.dto.cart.CartDTO;
 import com.example.demo.client_ui.dto.order.OrderBriefDTO;
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
+import com.example.demo.module.account.bean.UserRole;
 import com.example.demo.module.account.service.AccountService;
 import com.example.demo.module.cart.service.CartService;
 import com.example.demo.module.order.service.OrderService;
@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -74,12 +74,12 @@ public class AccountController {
         if (accountDTO == null)
             notice = "Failed";
         else {
-
             this.currentAccount.setId(accountDTO.getId());
             this.currentAccount.setEmail(accountDTO.getEmail());
             this.currentAccount.setFullname(accountDTO.getUsername());
             this.currentAccount.setPhone(accountDTO.getPhone());
-            this.currentAccount.setRole(systemManagementService.getRoleByAccountId(accountDTO.getId().toString()));
+            this.currentAccount.setRole(systemManagementService.getRole(
+                    new UserRole(accountDTO.getId(), AccountRoleDTO.BUYER.getValue())));
             if (this.currentAccount.getRole() == AccountRoleDTO.SALESMAN)
                 this.currentAccount.setAdmin(true);
         }
@@ -124,7 +124,7 @@ public class AccountController {
         CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
         cartService.createCart(new UserDTO(accountDTO.getId()));
 
-        if (!systemManagementService.setRoleByAccountId(accountDTO.getId().toString(), AccountRoleDTO.BUYER)) {
+        if (!systemManagementService.setRole(new UserRole(accountDTO.getId(), AccountRoleDTO.BUYER.getValue()))) {
             model.addAttribute("notice", "Failed to set role for user");
             return new ModelAndView("signup", model);
         }
@@ -134,11 +134,11 @@ public class AccountController {
     }
 
     @GetMapping("/address")
-    public String getAddressPage(Model model) {
+    public ModelAndView getAddressPage(ModelMap model) {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
-            return "redirect:/account/login";
+            return new ModelAndView("redirect:/account/login", model);
 
-        return "address";
+        return new ModelAndView("address", model);
     }
 
     @GetMapping("/profile")
@@ -146,7 +146,6 @@ public class AccountController {
         if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
             return new ModelAndView("redirect:/account/login", model);
 
-        System.out.println(this.currentAccount);
         ModelAndView mv = new ModelAndView();
         mv.addObject("profile", this.currentAccount);
         mv.setViewName("profile");

@@ -14,11 +14,14 @@ import com.example.demo.module.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 @Service("sp01-order")
+@Slf4j
 public class OrderServiceSP01Impl implements OrderService {
 
     public static final String X_API_KEY_TOKEN = "kappa123";
@@ -37,9 +40,9 @@ public class OrderServiceSP01Impl implements OrderService {
 
     @Override
     public List<OrderBriefDTO> getAllOrderDTOByUserId(Integer userId) {
-        List<SP01OrderBean> sp01OrderBeanList =
-                this.orderSP01WebServiceProxy.getAllOrder(X_API_KEY_TOKEN, null);
-        if (sp01OrderBeanList == null) return null;
+        List<SP01OrderBean> sp01OrderBeanList = this.orderSP01WebServiceProxy.getAllOrder(X_API_KEY_TOKEN, null);
+        if (sp01OrderBeanList == null)
+            return null;
         List<OrderBriefDTO> briefDTOList = new LinkedList<>();
 
         for (SP01OrderBean orderBean : sp01OrderBeanList)
@@ -51,19 +54,19 @@ public class OrderServiceSP01Impl implements OrderService {
 
     @Override
     public OrderDetailDTO getOrderDTOById(Integer orderId) {
-        ProductService productService =
-                this.productServiceMap.get(this.moduleConfig.getProductTeam());
-        SP01OrderBean orderBean =
-                this.orderSP01WebServiceProxy.getOrderById(X_API_KEY_TOKEN, orderId);
+        ProductService productService = this.productServiceMap.get(this.moduleConfig.getProductTeam());
+        SP01OrderBean orderBean = this.orderSP01WebServiceProxy.getOrderById(X_API_KEY_TOKEN, orderId);
         OrderDetailDTO detailDTO = this.orderMapping.beanToDetailDTO(orderBean);
 
-        if (detailDTO == null) return null;
+        if (detailDTO == null)
+            return null;
         List<ProductOrderDTO> productOrderDTOList = new LinkedList<>();
         if (orderBean.getProductOrderList() != null) {
             for (SP01ProductOrderBean sp01ProductOrderBean : orderBean.getProductOrderList()) {
-                ProductDetailDTO productDetailDTO =
-                        productService.getProductDetailDTOById(sp01ProductOrderBean.getProductId());
-                if (productDetailDTO == null) continue;
+                ProductDetailDTO productDetailDTO = productService
+                        .getProductDetailDTOById(sp01ProductOrderBean.getProductId());
+                if (productDetailDTO == null)
+                    continue;
                 ProductOrderDTO productOrderDTO = new ProductOrderDTO();
                 productOrderDTO.setProductId(productDetailDTO.getId());
                 productOrderDTO.setProductPrice(productDetailDTO.getPrice());
@@ -86,8 +89,14 @@ public class OrderServiceSP01Impl implements OrderService {
 
     @Override
     public OrderDetailDTO createOrder(OrderDetailDTO orderDetailDTO) {
-        
-        OrderDetailDTO order=orderSP01WebServiceProxy.createOrder(X_API_KEY_TOKEN,orderDetailDTO);
-        return order;
+
+        try {
+            SP01OrderBean order = orderSP01WebServiceProxy.createOrder(X_API_KEY_TOKEN, orderDetailDTO);
+            return orderMapping.beanToDetailDTO(order);
+        } catch (Exception e) {
+           log.error(e.getMessage(), e.getCause());
+           return null;
+        }
+
     }
 }

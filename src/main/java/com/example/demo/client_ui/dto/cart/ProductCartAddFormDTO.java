@@ -1,5 +1,7 @@
 package com.example.demo.client_ui.dto.cart;
 
+import java.util.Locale.Category;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ProductCartAddFormDTO {
 
     @JsonProperty("productId")
-    private Integer productId;
+    private Integer id;
 
     @JsonProperty("quantity")
     private Integer quantity;
@@ -34,4 +36,8 @@ public class ProductCartAddFormDTO {
 
     @JsonProperty("userId")
     private Integer userId;
+
+    private Category categoryDTO;
+
+    private String description;
 }
