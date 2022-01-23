@@ -9,15 +9,16 @@ public class SystemManagementServiceSP02Impl implements SystemManagementService 
 
     @Override
     public AccountRoleDTO getRoleByEmail(String email) {
-        if (email.equals("admin@gmail.com")) return AccountRoleDTO.ADMIN_ROLE;
-
-        return AccountRoleDTO.USER_ROLE;
+        return AccountRoleDTO.BUYER;
     }
 
     @Override
     public AccountRoleDTO getRoleByAccountId(String id) {
-        if (id.equals("2")) return AccountRoleDTO.ADMIN_ROLE;
+        return AccountRoleDTO.BUYER;
+    }
 
-        return AccountRoleDTO.USER_ROLE;
+    @Override
+    public boolean setRoleByAccountId(String id, AccountRoleDTO role) {
+        return true;
     }
 }

@@ -32,24 +32,23 @@ public class AccountController {
     @Autowired
     private ModuleConfig moduleConfig;
 
-    @Autowired
     private final Map<String, OrderService> orderServiceMap;
 
-    @Autowired
-    private  Map<String, CartService> cartServiceMap;
+    private final Map<String, CartService> cartServiceMap;
 
-    @Autowired
     private final Map<String, AccountService> accountServiceMap;
 
-    @Autowired
     private final Map<String, SystemManagementService> sysManagementServiceMap;
 
-    public AccountController(Map<String, OrderService> orderServiceMap,
-            Map<String, AccountService> accountServiceMap,
-            Map<String, SystemManagementService> sysManagementServiceMap) {
+    @Autowired
+    private AccountController(Map<String, OrderService> orderServiceMap,
+                              Map<String, AccountService> accountServiceMap,
+                              Map<String, SystemManagementService> sysManagementServiceMap,
+                              Map<String, CartService> cartServiceMap) {
         this.orderServiceMap = orderServiceMap;
         this.accountServiceMap = accountServiceMap;
         this.sysManagementServiceMap = sysManagementServiceMap;
+        this.cartServiceMap = cartServiceMap;
     }
 
     @GetMapping("/login")
@@ -81,13 +80,14 @@ public class AccountController {
             this.currentAccount.setFullname(accountDTO.getUsername());
             this.currentAccount.setPhone(accountDTO.getPhone());
             this.currentAccount.setRole(systemManagementService.getRoleByAccountId(accountDTO.getId().toString()));
-            if (this.currentAccount.getRole() == AccountRoleDTO.ADMIN_ROLE)
+            if (this.currentAccount.getRole() == AccountRoleDTO.SALESMAN)
                 this.currentAccount.setAdmin(true);
         }
+
         model.addAttribute("notice", notice);
         model.addAttribute("account", this.currentAccount);
 
-        return accountDTO == null ? new ModelAndView("login", model)
+        return this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE ? new ModelAndView("login", model)
                 : new ModelAndView("redirect:" + request.getHeader("referer"), model);
     }
 
@@ -96,9 +96,6 @@ public class AccountController {
         this.currentAccount.setId(null);
         this.currentAccount.setEmail(null);
         this.currentAccount.setRole(AccountRoleDTO.GUEST_ROLE);
-
-//        model.addAttribute("notice", "Logout successfully");
-//        model.addAttribute("loginForm", new AccountLoginFormDTO());
 
         return "redirect:/";
     }
@@ -115,20 +112,25 @@ public class AccountController {
     public ModelAndView signup(@ModelAttribute("registerForm") AccountRegisterFormDTO formDTO,
             ModelMap model) {
         AccountService accountService = this.accountServiceMap.get(this.moduleConfig.getAccountTeam());
+        SystemManagementService systemManagementService = this.sysManagementServiceMap
+                .get(this.moduleConfig.getSysManagementTeam());
         AccountDTO accountDTO = accountService.signup(formDTO);
-        String notice = null;
 
-        if (accountDTO == null)
-            notice = "Failed";
-        model.addAttribute("notice", notice);
-
-        if (accountDTO != null) {
-            CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
-            cartService.createCart(new UserDTO(accountDTO.getId()));
+        if (accountDTO == null) {
+            model.addAttribute("notice", "Signup failed");
+            return new ModelAndView("signup", model);
         }
 
-        return accountDTO == null ? new ModelAndView("signup", model)
-                : new ModelAndView("redirect:/account/login", model);
+        CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
+        cartService.createCart(new UserDTO(accountDTO.getId()));
+
+        if (!systemManagementService.setRoleByAccountId(accountDTO.getId().toString(), AccountRoleDTO.BUYER)) {
+            model.addAttribute("notice", "Failed to set role for user");
+            return new ModelAndView("signup", model);
+        }
+
+        model.addAttribute("loginForm", new AccountLoginFormDTO());
+        return new ModelAndView("redirect:/account/login", model);
     }
 
     @GetMapping("/address")

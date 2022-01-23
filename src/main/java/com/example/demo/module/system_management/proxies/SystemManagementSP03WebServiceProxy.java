@@ -3,6 +3,7 @@ package com.example.demo.module.system_management.proxies;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
@@ -12,4 +13,7 @@ public interface SystemManagementSP03WebServiceProxy {
 
     @GetMapping("/user/get-role/from-id")
     ResponseEntity<Map<String, Object>> getRole(@RequestParam Map<String, Object> params);
+
+    @PostMapping("/user/set-role/for-id")
+    Map<String, Object> setRole(@RequestParam Map<String, Object> params);
 }

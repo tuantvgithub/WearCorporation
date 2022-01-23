@@ -16,4 +16,9 @@ public class SystemManagementServiceSP05Impl implements SystemManagementService 
     public AccountRoleDTO getRoleByAccountId(String id) {
         return null;
     }
+
+    @Override
+    public boolean setRoleByAccountId(String id, AccountRoleDTO role) {
+        return false;
+    }
 }

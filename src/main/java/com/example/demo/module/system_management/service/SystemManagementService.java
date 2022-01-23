@@ -6,5 +6,5 @@ public interface SystemManagementService {
 
     AccountRoleDTO getRoleByEmail(String email);
     AccountRoleDTO getRoleByAccountId(String id);
-
+    boolean setRoleByAccountId(String id, AccountRoleDTO role);
 }

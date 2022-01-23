@@ -40,10 +40,31 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
             Map<String, Object> data = res.getBody();
             if (data == null) return AccountRoleDTO.GUEST_ROLE;
 
-            if ((int) data.get("role") == 1) return AccountRoleDTO.USER_ROLE;
+            if ((int) data.get("role") == 0) return AccountRoleDTO.BUYER;
+            if ((int) data.get("role") == 1) return AccountRoleDTO.SALESMAN;
+            if ((int) data.get("role") == 2) return AccountRoleDTO.IT_TECHNICIAN;
+            if ((int) data.get("role") == 3) return AccountRoleDTO.SHIPPING_MANAGER;
+
         } catch (Exception ignore) {
             return AccountRoleDTO.GUEST_ROLE;
         }
         return AccountRoleDTO.GUEST_ROLE;
+    }
+
+    @Override
+    public boolean setRoleByAccountId(String accountId, AccountRoleDTO role) {
+        if (accountId == null || role == null) return false;
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", Integer.parseInt(accountId));
+        params.put("role", role.getValue());
+
+        try {
+            Map<String, Object> res = this.webServiceProxy.setRole(params);
+        } catch (Exception ignore) {
+            return false;
+        }
+
+        return true;
     }
 }
