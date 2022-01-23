@@ -33,24 +33,25 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
 
     @Override
     public AccountRoleDTO getRole(UserRole userRole) {
-        try {
-            ResponseEntity<Map<String, Object>> res = this.webServiceProxy.getRole(userRole);
-            if (res == null || !res.getStatusCode().is2xxSuccessful())
-                return AccountRoleDTO.GUEST_ROLE;
-
-            Map<String, Object> data = res.getBody();
-            if (data == null)
-                return AccountRoleDTO.GUEST_ROLE;
-
-            if ((int) data.get("role") == 0) return AccountRoleDTO.BUYER;
-            if ((int) data.get("role") == 1) return AccountRoleDTO.SALESMAN;
-            if ((int) data.get("role") == 2) return AccountRoleDTO.IT_TECHNICIAN;
-            if ((int) data.get("role") == 3) return AccountRoleDTO.SHIPPING_MANAGER;
-        } catch (Exception ignore) {
-            log.error(ignore.getMessage(), ignore.getCause());
-            return AccountRoleDTO.GUEST_ROLE;
-        }
-        return AccountRoleDTO.GUEST_ROLE;
+        return AccountRoleDTO.BUYER;
+//        try {
+//            ResponseEntity<Map<String, Object>> res = this.webServiceProxy.getRole(userRole);
+//            if (res == null || !res.getStatusCode().is2xxSuccessful())
+//                return AccountRoleDTO.GUEST_ROLE;
+//
+//            Map<String, Object> data = res.getBody();
+//            if (data == null)
+//                return AccountRoleDTO.GUEST_ROLE;
+//
+//            if ((int) data.get("role") == 0) return AccountRoleDTO.BUYER;
+//            if ((int) data.get("role") == 1) return AccountRoleDTO.SALESMAN;
+//            if ((int) data.get("role") == 2) return AccountRoleDTO.IT_TECHNICIAN;
+//            if ((int) data.get("role") == 3) return AccountRoleDTO.SHIPPING_MANAGER;
+//        } catch (Exception ignore) {
+//            log.error(ignore.getMessage(), ignore.getCause());
+//            return AccountRoleDTO.GUEST_ROLE;
+//        }
+//        return AccountRoleDTO.GUEST_ROLE;
     }
 
     @Override

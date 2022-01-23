@@ -53,8 +53,6 @@ public class AccountController {
 
     @GetMapping("/login")
     public ModelAndView getLoginPage(ModelMap model) {
-        if (this.currentAccount.getId() != null)
-            return new ModelAndView("redirect:/", model);
         AccountLoginFormDTO loginFormDTO = new AccountLoginFormDTO();
         model.addAttribute("loginForm", loginFormDTO);
 
@@ -82,13 +80,17 @@ public class AccountController {
                     new UserRole(accountDTO.getId(), AccountRoleDTO.BUYER.getValue())));
             if (this.currentAccount.getRole() == AccountRoleDTO.SALESMAN)
                 this.currentAccount.setAdmin(true);
+            if (this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE)
+                notice = "Failed";
         }
 
         model.addAttribute("notice", notice);
         model.addAttribute("account", this.currentAccount);
 
-        return this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE ? new ModelAndView("login", model)
-                : new ModelAndView("redirect:" + request.getHeader("referer"), model);
+        return this.currentAccount.getRole() == AccountRoleDTO.GUEST_ROLE ?
+                new ModelAndView("login", model) : new ModelAndView("redirect:" +
+                (request.getHeader("referer").contains("login") ? "/" :
+                        request.getHeader("referer")), model);
     }
 
     @GetMapping("/logout")
@@ -160,7 +162,7 @@ public class AccountController {
 
         OrderService orderService = this.orderServiceMap.get(this.moduleConfig.getOrderTeam());
 
-        List<OrderBriefDTO> orderBriefDTOList = orderService.getAllOrderDTOByUserId(2);
+        List<OrderBriefDTO> orderBriefDTOList = orderService.getAllOrderDTOByUserId(this.currentAccount.getId());
         if (orderBriefDTOList != null)
             model.addAttribute("orderList", orderBriefDTOList);
 
