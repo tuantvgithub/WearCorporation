@@ -1,10 +1,19 @@
 package com.example.demo.module.system_management.service.impl;
 
 import com.example.demo.client_ui.dto.account.AccountRoleDTO;
+import com.example.demo.client_ui.dto.account.UserRoleDTO;
+import com.example.demo.client_ui.dto.config.ThemeDTO;
+import com.example.demo.client_ui.dto.config.ThemeRequest;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.account.bean.UserRole;
+import com.example.demo.module.system_management.bean.sp03.ModuleCode;
+import com.example.demo.module.system_management.bean.sp03.SP03RoleConfigBean;
+import com.example.demo.module.system_management.bean.sp03.SP03ThemeConfigBean;
+import com.example.demo.module.system_management.bean.sp03.TeamCode;
+import com.example.demo.module.system_management.mapping.SystemManagementMapping;
 import com.example.demo.module.system_management.proxies.SystemManagementSP03WebServiceProxy;
 import com.example.demo.module.system_management.service.SystemManagementService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +23,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service("sp03-sys-management")
@@ -22,6 +32,12 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
 
     @Autowired
     private ModuleConfig moduleConfig;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private SystemManagementMapping systemManagementMapping;
 
     @Autowired
     private SystemManagementSP03WebServiceProxy webServiceProxy;
@@ -33,37 +49,102 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
 
     @Override
     public AccountRoleDTO getRole(UserRole userRole) {
-        return AccountRoleDTO.BUYER;
-//        try {
-//            ResponseEntity<Map<String, Object>> res = this.webServiceProxy.getRole(userRole);
-//            if (res == null || !res.getStatusCode().is2xxSuccessful())
-//                return AccountRoleDTO.GUEST_ROLE;
-//
-//            Map<String, Object> data = res.getBody();
-//            if (data == null)
-//                return AccountRoleDTO.GUEST_ROLE;
-//
-//            if ((int) data.get("role") == 0) return AccountRoleDTO.BUYER;
-//            if ((int) data.get("role") == 1) return AccountRoleDTO.SALESMAN;
-//            if ((int) data.get("role") == 2) return AccountRoleDTO.IT_TECHNICIAN;
-//            if ((int) data.get("role") == 3) return AccountRoleDTO.SHIPPING_MANAGER;
-//        } catch (Exception ignore) {
-//            log.error(ignore.getMessage(), ignore.getCause());
-//            return AccountRoleDTO.GUEST_ROLE;
-//        }
-//        return AccountRoleDTO.GUEST_ROLE;
+         try {
+             SP03RoleConfigBean configBean =
+                     this.webServiceProxy.getRole(userRole);
+             if (configBean == null)
+                 return AccountRoleDTO.GUEST_ROLE;
+
+             if (configBean.getRole() == 0) return AccountRoleDTO.BUYER;
+             if (configBean.getRole() == 1) return AccountRoleDTO.SALESMAN;
+             if (configBean.getRole() == 2) return AccountRoleDTO.IT_TECHNICIAN;
+             if (configBean.getRole() == 3) return AccountRoleDTO.SHIPPING_MANAGER;
+         } catch (Exception ignore) {
+             log.error(ignore.getMessage(), ignore.getCause());
+             return AccountRoleDTO.GUEST_ROLE;
+         }
+         return AccountRoleDTO.GUEST_ROLE;
     }
 
     @Override
-    public boolean setRole(UserRole userRole) {
-        if (userRole == null) return false;
+    public UserRoleDTO setRole(UserRole userRole) {
 
         try {
-            Map<String, Object> res = this.webServiceProxy.setRole(userRole);
+            SP03RoleConfigBean configBean = this.webServiceProxy.setRole(userRole);
+            return objectMapper.convertValue(configBean, UserRoleDTO.class);
         } catch (Exception ignore) {
-            return false;
+            log.error(ignore.getMessage(), ignore.getCause());
+            return null;
         }
 
-        return true;
+    }
+
+    @Override
+    public ThemeDTO getTheme(ThemeRequest themeRequest) {
+        try {
+            SP03ThemeConfigBean configBean = this.webServiceProxy.getConfig(themeRequest);
+            ThemeDTO themeDTO = objectMapper.convertValue(configBean, ThemeDTO.class);
+            return themeDTO;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
+            return null;
+        }
+
+    }
+
+    @Override
+    public String getTeamName(ModuleCode moduleCode) {
+        try {
+            List<Map<String, Object>> res = this.webServiceProxy.getModule(moduleCode.getValue());
+            if (res == null || res.isEmpty()) return null;
+            Map<String, Object> data = res.get(0);
+            if (!data.containsKey("team_code")) return null;
+
+            for (TeamCode teamCode : TeamCode.values())
+                if (teamCode.getValue().equals(data.get("team_code")))
+                    return this.systemManagementMapping.teamCodeToTeamName(teamCode);
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
+    }
+
+    @Override
+    public void loadModules(ModuleCode... moduleCodes) {
+        if (moduleCodes == null || moduleCodes.length == 0)
+            moduleCodes = ModuleCode.values();
+
+        for (ModuleCode moduleCode : moduleCodes) {
+            String moduleName = this.systemManagementMapping.moduleCodeToModuleName(moduleCode);
+            if (moduleName == null) continue;
+            String teamName = this.getTeamName(moduleCode);
+            if (teamName == null) continue;
+            this.moduleConfig.setTeamForModule(moduleName, teamName);
+        }
+    }
+
+    @Override
+    public String setModule(ModuleCode moduleCode, String teamName) {
+        String module = this.systemManagementMapping.moduleCodeToModuleName(moduleCode);
+        if (module == null) return "Failed";
+        TeamCode teamCode = this.systemManagementMapping.teamNameToTeamCode(teamName);
+        if (teamCode == null) return "Failed";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("module", moduleCode.getValue());
+        params.put("team_code", teamCode.getValue());
+
+        try {
+            Map<String, Object> res = this.webServiceProxy.setModule(params);
+            if (res != null && res.get("Message").equals("Success!")) {
+                this.moduleConfig.setTeamForModule(module, teamName);
+                return "Success";
+            }
+        } catch (Exception e) {
+            return "Failed";
+        }
+
+        return "Failed";
     }
 }

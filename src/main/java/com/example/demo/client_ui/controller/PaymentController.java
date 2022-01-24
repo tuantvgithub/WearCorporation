@@ -66,22 +66,22 @@ public class PaymentController {
 
 
 
-        // Call api create order
-         //OrderDetailDTO orderDetailDTO=orderService.createOrder(orderRequestBean);
        
-        OrderDetailDTO orderDetailDTO=OrderDetailDTO.builder()
-                                        .orderId(1)
-                                        .shipFee(10000)
-                                        .status("Unpaid")
-                                        .voucherCode(orderRequestBean.getVoucherCode())
-                                        .voucher(20000)
-                                        .voucherCode(orderRequestBean.getVoucherCode())
-                                        .orderDate(new Date().toString())
-                                        .subTotal(orderRequestBean.getSubTotal())
-                                        .totalPrice(orderRequestBean.getTotalPrice())
-                                        .address(orderRequestBean.getAddress())
-                                        .paymentMethod(orderRequestBean.getPaymentMethod())
-                                        .build();
+         OrderDetailDTO orderDetailDTO=orderService.createOrder(orderRequestBean);
+       
+        // OrderDetailDTO orderDetailDTO=OrderDetailDTO.builder()
+        //                                 .orderId(1)
+        //                                 .shipFee(10000)
+        //                                 .status("Unpaid")
+        //                                 .voucherCode(orderRequestBean.getVoucherCode())
+        //                                 .voucher(20000)
+        //                                 .voucherCode(orderRequestBean.getVoucherCode())
+        //                                 .orderDate(new Date().toString())
+        //                                 .subTotal(orderRequestBean.getSubTotal())
+        //                                 .totalPrice(orderRequestBean.getTotalPrice())
+        //                                 .address(orderRequestBean.getAddress())
+        //                                 .paymentMethod(orderRequestBean.getPaymentMethod())
+        //                                 .build();
 
         // Save payment info
         if (!checkoutDTO.getPaymentMethod().equals("cod")) {

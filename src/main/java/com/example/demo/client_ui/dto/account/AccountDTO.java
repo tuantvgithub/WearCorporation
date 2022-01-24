@@ -1,5 +1,7 @@
 package com.example.demo.client_ui.dto.account;
 
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,7 @@ public class AccountDTO {
     private String email;
 
     private String password;
-    
+
     private String password_confirmation;
 
     private String firstName;
@@ -30,4 +32,13 @@ public class AccountDTO {
     private String avatarImageUrl;
 
     private String dateOfBirth;
+    
+    private String invalidPassword;
+
+    private String invalidUsername;
+
+    private String invalidEmail;
+
+    private String invalidPhone;
+
 }

@@ -2,6 +2,7 @@ package com.example.demo.module.order.service.impl;
 
 import com.example.demo.client_ui.dto.order.OrderBriefDTO;
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
+import com.example.demo.module.order.bean.OrderRequestBean;
 import com.example.demo.module.order.service.OrderService;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class OrderServiceSP16Impl implements OrderService {
     }
 
     @Override
-    public OrderDetailDTO createOrder(OrderDetailDTO orderDetailDTO) {
+    public OrderDetailDTO createOrder(OrderRequestBean orderDetailDTO) {
         // TODO Auto-generated method stub
         return null;
     }

@@ -5,6 +5,7 @@ import com.example.demo.client_ui.dto.order.OrderDetailDTO;
 import com.example.demo.client_ui.dto.order.ProductOrderDTO;
 import com.example.demo.client_ui.dto.product.ProductDetailDTO;
 import com.example.demo.config.module.ModuleConfig;
+import com.example.demo.module.order.bean.OrderRequestBean;
 import com.example.demo.module.order.bean.sp01.SP01OrderBean;
 import com.example.demo.module.order.bean.sp01.SP01ProductOrderBean;
 import com.example.demo.module.order.mapping.OrderMapping;
@@ -41,6 +42,7 @@ public class OrderServiceSP01Impl implements OrderService {
     @Override
     public List<OrderBriefDTO> getAllOrderDTOByUserId(Integer userId) {
         List<SP01OrderBean> sp01OrderBeanList = this.orderSP01WebServiceProxy.getAllOrder(X_API_KEY_TOKEN, null);
+        System.out.println(sp01OrderBeanList);
         if (sp01OrderBeanList == null)
             return null;
         List<OrderBriefDTO> briefDTOList = new LinkedList<>();
@@ -49,6 +51,7 @@ public class OrderServiceSP01Impl implements OrderService {
             if (orderBean.getUserId().equals(userId))
                 briefDTOList.add(this.orderMapping.beanToBriefDTO(orderBean));
 
+        System.out.println(briefDTOList);
         return briefDTOList;
     }
 
@@ -88,7 +91,7 @@ public class OrderServiceSP01Impl implements OrderService {
     }
 
     @Override
-    public OrderDetailDTO createOrder(OrderDetailDTO orderDetailDTO) {
+    public OrderDetailDTO createOrder(OrderRequestBean orderDetailDTO) {
 
         try {
             SP01OrderBean order = orderSP01WebServiceProxy.createOrder(X_API_KEY_TOKEN, orderDetailDTO);

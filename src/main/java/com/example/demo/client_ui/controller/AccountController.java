@@ -119,14 +119,14 @@ public class AccountController {
         AccountDTO accountDTO = accountService.signup(formDTO);
 
         if (accountDTO == null) {
-            model.addAttribute("notice", "Signup failed");
+            model.addAttribute("notice", accountDTO);
             return new ModelAndView("signup", model);
         }
 
         CartService cartService = cartServiceMap.get(this.moduleConfig.getCartTeam());
         cartService.createCart(new UserDTO(accountDTO.getId()));
 
-        if (!systemManagementService.setRole(new UserRole(accountDTO.getId(), AccountRoleDTO.BUYER.getValue()))) {
+        if (systemManagementService.setRole(new UserRole(accountDTO.getId(), AccountRoleDTO.BUYER.getValue()))==null) {
             model.addAttribute("notice", "Failed to set role for user");
             return new ModelAndView("signup", model);
         }

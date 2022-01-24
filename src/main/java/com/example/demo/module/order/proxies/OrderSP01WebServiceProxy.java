@@ -1,6 +1,7 @@
 package com.example.demo.module.order.proxies;
 
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
+import com.example.demo.module.order.bean.OrderRequestBean;
 import com.example.demo.module.order.bean.sp01.SP01OrderBean;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public interface OrderSP01WebServiceProxy {
 
     @PostMapping
     SP01OrderBean createOrder(@RequestHeader("x-api-key") String token,
-            @RequestBody OrderDetailDTO orderDetailDTO);
+            @RequestBody OrderRequestBean orderDetailDTO);
 
     @GetMapping
     List<SP01OrderBean> getAllOrder(@RequestHeader("x-api-key") String token,
