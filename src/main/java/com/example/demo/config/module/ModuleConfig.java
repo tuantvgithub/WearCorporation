@@ -33,24 +33,24 @@ public class ModuleConfig {
 
     public void setTeamForModule(String moduleName, String teamName) {
         if (moduleName.equals(PRODUCT_MODULE_NAME))
-            this.productTeam = teamName;
+            this.productTeam = teamName.contains("sp02") ? "sp02-product" : teamName;
         if (moduleName.equals(ADVERTISEMENT_MODULE_NAME))
-            this.productTeam = teamName;
+            this.advertisementTeam = teamName.contains("sp02") ? "sp02-advertisement" : teamName;
         if (moduleName.equals(CART_MODULE_NAME))
-            this.productTeam = teamName;
+            this.cartTeam = teamName.contains("sp02") ? "sp02-cart" : teamName;
         if (moduleName.equals(ACCOUNT_MODULE_NAME))
-            this.productTeam = teamName;
+            this.accountTeam = teamName.contains("sp02") ? "sp02-account" : teamName;
         if (moduleName.equals(INVENTORY_MODULE_NAME))
-            this.productTeam = teamName;
+            this.inventoryTeam = teamName.contains("sp02") ? "sp02-inventory" : teamName;
         if (moduleName.equals(DELIVERY_MODULE_NAME))
-            this.productTeam = teamName;
+            this.deliveryTeam = teamName.contains("sp02") ? "sp02-delivery" : teamName;
         if (moduleName.equals(SYS_MANAGEMENT_MODULE_NAME))
-            this.productTeam = teamName;
+            this.sysManagementTeam = teamName.contains("sp02") ? "sp02-sys-management" : teamName;
         if (moduleName.equals(CUSTOMER_CARE_MODULE_NAME))
-            this.productTeam = teamName;
+            this.customerCareTeam = teamName.contains("sp02") ? "sp02-customer-care" : teamName;
         if (moduleName.equals(SEARCH_AND_REPORT_MODULE_NAME))
-            this.productTeam = teamName;
+            this.searchAndReportTeam = teamName.contains("sp02") ? "sp02-search-and-report" : teamName;
         if (moduleName.equals(ORDER_MODULE_NAME))
-            this.productTeam = teamName;
+            this.orderTeam = teamName.contains("sp02") ? "sp02-order" : teamName;
     }
 }

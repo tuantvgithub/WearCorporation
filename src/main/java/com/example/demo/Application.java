@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.client_ui.controller.ModuleConfigController;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.system_management.service.SystemManagementService;
-import com.example.demo.switch_team.service.SwitchTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

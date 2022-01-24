@@ -32,6 +32,8 @@ public class SystemManagementMappingImpl implements SystemManagementMapping {
             return "sp17-product";
         if (teamCode == TeamCode.SP21)
             return "sp21-customer-care";
+        if (teamCode == TeamCode.SP02)
+            return "sp02-team";
 
         return null;
     }
@@ -42,6 +44,8 @@ public class SystemManagementMappingImpl implements SystemManagementMapping {
 
         if (teamName.contains("sp01"))
             return TeamCode.SP01;
+        if (teamName.contains("sp02"))
+            return TeamCode.SP02;
         if (teamName.contains("sp06"))
             return TeamCode.SP06;
         if (teamName.contains("sp07"))
