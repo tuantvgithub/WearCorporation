@@ -24,7 +24,7 @@ public interface SystemManagementSP03WebServiceProxy {
     @PostMapping("/user/set-role/for-id")
     SP03RoleConfigBean setRole(@RequestBody UserRole userRole);
 
-    @PostMapping("/user/get-screen-config/from-id")
+    @PostMapping("/user/get-screen-config/for-post")
     SP03ThemeConfigBean getConfig(@RequestBody ThemeRequest data);
     
 }

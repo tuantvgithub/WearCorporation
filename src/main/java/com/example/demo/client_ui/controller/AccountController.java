@@ -1,6 +1,8 @@
 package com.example.demo.client_ui.controller;
 
 import com.example.demo.client_ui.dto.account.*;
+import com.example.demo.client_ui.dto.config.ThemeDTO;
+import com.example.demo.client_ui.dto.config.ThemeRequest;
 import com.example.demo.client_ui.dto.order.OrderBriefDTO;
 import com.example.demo.client_ui.dto.order.OrderDetailDTO;
 import com.example.demo.config.account.CurrentAccount;
@@ -35,6 +37,8 @@ public class AccountController {
     private final Map<String, OrderService> orderServiceMap;
 
     private final Map<String, CartService> cartServiceMap;
+
+
 
     private final Map<String, AccountService> accountServiceMap;
 
@@ -72,6 +76,7 @@ public class AccountController {
         if (accountDTO == null)
             notice = "Failed";
         else {
+
             this.currentAccount.setId(accountDTO.getId());
             this.currentAccount.setEmail(accountDTO.getEmail());
             this.currentAccount.setFullname(accountDTO.getUsername());

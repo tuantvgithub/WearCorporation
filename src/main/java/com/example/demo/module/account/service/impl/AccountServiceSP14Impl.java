@@ -36,7 +36,7 @@ public class AccountServiceSP14Impl implements AccountService {
 
             SP14AccountBean sp14AccountBean = responseBean.getData();
 
-            System.out.println(responseBean);
+          
             accountDTO.setId(sp14AccountBean.getId());
             accountDTO.setEmail(sp14AccountBean.getEmail());
             accountDTO.setUsername(sp14AccountBean.getUsername());

@@ -12,22 +12,15 @@ import com.example.demo.module.system_management.proxies.SystemManagementSP03Web
 import com.example.demo.module.system_management.service.SystemManagementService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service("sp03-sys-management")
 @Slf4j
 public class SystemManagementServiceSP03Impl implements SystemManagementService {
 
-    @Autowired
-    private ModuleConfig moduleConfig;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -81,7 +74,11 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
     public ThemeDTO getTheme(ThemeRequest themeRequest) {
         try {
             SP03ThemeConfigBean configBean = this.webServiceProxy.getConfig(themeRequest);
-            ThemeDTO themeDTO = objectMapper.convertValue(configBean, ThemeDTO.class);
+            ThemeDTO themeDTO = new ThemeDTO();
+            themeDTO.setFontSize(configBean.getFontSize());
+            themeDTO.setLanguage(configBean.getLanguage());
+            themeDTO.setTheme(configBean.getTheme());
+            themeDTO.setUserId(configBean.getUserId());
             return themeDTO;
         } catch (Exception e) {
             log.error(e.getMessage(), e.getCause());
