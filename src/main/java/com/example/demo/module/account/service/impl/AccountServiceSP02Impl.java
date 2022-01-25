@@ -17,10 +17,10 @@ public class AccountServiceSP02Impl implements AccountService {
     public static Integer ID_COUNT = 3;
 
     private final List<AccountDTO> ACCOUNT_LIST = Arrays.asList(
-            new AccountDTO(1,null, "ltct.sp02@gmail.com", "sp02",null,
+            new AccountDTO(1,"sp02", "ltct.sp02@gmail.com", "sp02",null,
                     "ltct", "sp02", "HUST", "123456",
-                    "/images/avater.jpg", null,null,null, null,null),
-            new AccountDTO(2, null,"admin@gmail.com", "admin",null,
+                    "/images/avater.jpg", null, null, null, null, null),
+            new AccountDTO(2, "admin","admin@gmail.com", "admin",null,
                     "Johanna", "Doe", "USA", "+880123123",
                     "/images/avater.jpg", "Dec , 22 ,1991",null,null,null, null)
     );
@@ -39,7 +39,7 @@ public class AccountServiceSP02Impl implements AccountService {
     @Override
     public AccountDTO login(AccountLoginFormDTO formDTO) {
         for (AccountDTO dto : this.ACCOUNT_SET)
-            if (dto.getEmail().equals(formDTO.getEmail()) &&
+            if (dto.getUsername().equals(formDTO.getUsername()) &&
                     dto.getPassword().equals(formDTO.getPassword()))
                 return dto;
         return null;
@@ -50,7 +50,7 @@ public class AccountServiceSP02Impl implements AccountService {
         if (formDTO == null) return null;
         if (!isValidEmail(formDTO.getEmail())) return null;
 
-        AccountDTO savedAccount = new AccountDTO(ID_COUNT, null,formDTO.getEmail(),
+        AccountDTO savedAccount = new AccountDTO(ID_COUNT, formDTO.getUsername(),formDTO.getEmail(),
                 formDTO.getPassword(),null, formDTO.getFirstName(), formDTO.getLastName(),
                 formDTO.getCountry(), null, null, null,null,null,null,null);
         this.ACCOUNT_SET.add(savedAccount);

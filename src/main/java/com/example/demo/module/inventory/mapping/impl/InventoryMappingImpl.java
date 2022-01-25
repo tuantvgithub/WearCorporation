@@ -18,7 +18,7 @@ public class InventoryMappingImpl implements InventoryMapping {
     public InventoryProductDTO mapSp20BeanToDto(SP20InventoryBean bean) {
 
         return InventoryProductDTO.builder()
-                .productId(bean.getId())
+                .productId(bean.getId().toString())
                 .quantity(bean.getQuantity())
                 .warehouseId(bean.getWarehouseId())
                 .build();

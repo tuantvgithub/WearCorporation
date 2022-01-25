@@ -6,4 +6,5 @@ import com.example.demo.client_ui.dto.inventory.InventoryDetailProductDTO;
 public interface InventoryService {
 
     InventoryDetailProductDTO getProductInInventoryById(Integer id);
+    Integer getProductQuantityInInventory(Integer productId, Integer inventoryId);
 }

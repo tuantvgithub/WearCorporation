@@ -15,5 +15,8 @@ public class InventoryServiceSP13Impl implements InventoryService {
         return null;
     }
 
-   
+    @Override
+    public Integer getProductQuantityInInventory(Integer productId, Integer inventoryId) {
+        return null;
+    }
 }

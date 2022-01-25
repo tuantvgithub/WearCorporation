@@ -13,10 +13,10 @@ public class SwitchTeamServiceImpl implements SwitchTeamService {
 
     public static final List<String> AVAILABLE_PRODUCT_TEAM = Arrays.asList("sp02-product", "sp17-product", "sp11-product");
     public static final List<String> AVAILABLE_ORDER_TEAM = Arrays.asList("sp02-order", "sp01-order");
-    public static final List<String> AVAILABLE_INVENTORY_TEAM = Arrays.asList("sp02-inventory");
-    public static final List<String> AVAILABLE_ACCOUNT_TEAM = Arrays.asList("sp02-account");
+    public static final List<String> AVAILABLE_INVENTORY_TEAM = Arrays.asList("sp02-inventory", "sp20-inventory");
+    public static final List<String> AVAILABLE_ACCOUNT_TEAM = Arrays.asList("sp02-account", "sp14-account");
     public static final List<String> AVAILABLE_CUSTOMER_CARE_TEAM = Arrays.asList("sp02-customer-care", "sp21-customer-care");
-    public static final List<String> AVAILABLE_DELIVERY_TEAM = Arrays.asList("sp02-delivery");
+    public static final List<String> AVAILABLE_DELIVERY_TEAM = Arrays.asList("sp02-delivery", "sp07-delivery");
     public static final List<String> AVAILABLE_ADVERTISEMENT_TEAM = Arrays.asList("sp02-advertisement", "sp09-advertisement");
     public static final List<String> AVAILABLE_CART_TEAM = Arrays.asList("sp02-cart","sp12-cart");
     public static final List<String> AVAILABLE_SYS_MANAGEMENT_TEAM = Arrays.asList("sp02-sys-management", "sp03-sys-management");

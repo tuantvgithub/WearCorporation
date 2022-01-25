@@ -66,17 +66,16 @@ public class CartController {
             return "redirect:/account/login";
         CartService cartService = this.cartServiceMap.get(this.moduleConfig.getCartTeam());
         InventoryService inventoryService = this.inventoryServiceMap.get(this.moduleConfig.getInventoryTeam());
+
         addFormDTO.setUserId(this.currentAccount.getId());
 
         // Check product available in warehouse
         InventoryDetailProductDTO inventoryProductDTO = inventoryService.getProductInInventoryById(addFormDTO.getId());
         if (inventoryProductDTO != null) {
             if (inventoryProductDTO.getTotal() > addFormDTO.getQuantity()) {
-
                 cartService.addProduct(addFormDTO);
                 return "redirect:/cart";
             }
-
         }
 
         model.addAttribute("notice", inventoryProductDTO!=null?NOT_ENOUGH_PRODUCT_IN_WAREHOUSE +inventoryProductDTO.getTotal():NOT_ENOUGH_PRODUCT_IN_WAREHOUSE);

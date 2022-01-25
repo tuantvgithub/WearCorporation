@@ -9,7 +9,7 @@ public enum AccountRoleDTO {
     GUEST_ROLE(10);
 
     private final int value;
-    private AccountRoleDTO(int value) {
+    AccountRoleDTO(int value) {
         this.value = value;
     }
 

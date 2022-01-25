@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 import com.example.demo.client_ui.dto.config.ThemeDTO;
@@ -26,6 +27,11 @@ public interface SystemManagementSP03WebServiceProxy {
 
     @PostMapping("/user/get-screen-config/for-post")
     SP03ThemeConfigBean getConfig(@RequestBody ThemeRequest data);
-    
+
+    @GetMapping("/moduleSwitch/get")
+    List<Map<String, Object>> getModule(@RequestParam("module") Integer moduleCode);
+
+    @PostMapping("/moduleSwitch/set")
+    Map<String, Object> setModule(@RequestBody Map<String, Object> params);
 }
 

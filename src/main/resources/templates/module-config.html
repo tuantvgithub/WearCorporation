@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head(title='Module Config')"></head>
+<body id="body">
+
+<section class="signin-page account">
+    <div class="container">
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <form th:action="@{/module/submit}" method="get">
+                    <p>Module Quản lý tài khoản:</p>
+                    <div>
+                        <input type="radio" id="choice1"
+                               th:name="account-team" th:value="sp14-account">
+                        <label for="choice1">SP14</label>
+                        <input type="radio" id="choice2"
+                               th:name="account-team" th:value="sp08-account">
+                        <label for="choice2">SP08</label>
+                        <input type="radio" id="choice3"
+                               th:name="account-team" th:value="sp02-account">
+                        <label for="choice3">SP02</label>
+                    </div>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form th:action="@{/module/submit}" method="get">
+                    <p>Module Quản lý sản phẩm:</p>
+                    <div>
+                        <input type="radio" id="choice21"
+                               th:name="product-team" th:value="sp11-product">
+                        <label for="choice21">SP11</label>
+                        <input type="radio" id="choice22"
+                               th:name="product-team" th:value="sp17-product">
+                        <label for="choice22">SP17</label>
+                        <input type="radio" id="choice23"
+                               th:name="product-team" th:value="sp02-product">
+                        <label for="choice23">SP02</label>
+                    </div>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <form th:action="@{/module/submit}" method="get">
+                    <p>Module giao hàng:</p>
+                    <div>
+                        <input type="radio" id="choice31"
+                               th:name="delivery-team" th:value="sp07-delivery">
+                        <label for="choice31">SP07</label>
+                        <input type="radio" id="choice32"
+                               th:name="delivery-team" th:value="sp15-delivery">
+                        <label for="choice32">SP15</label>
+                        <input type="radio" id="choice33"
+                               th:name="delivery-team" th:value="sp02-delivery">
+                        <label for="choice33">SP02</label>
+                    </div>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form th:action="@{/module/submit}" method="get">
+                    <p>Module chăm sóc khách hàng:</p>
+                    <div>
+                        <input type="radio" id="choice41"
+                               th:name="customer-care-team" th:value="sp21-customer-care">
+                        <label for="choice41">SP21</label>
+                        <input type="radio" id="choice42"
+                               th:name="customer-care-team" th:value="sp06-customer-care">
+                        <label for="choice42">SP06</label>
+                        <input type="radio" id="choice43"
+                               th:name="customer-care-team" th:value="sp02-customer-care">
+                        <label for="choice43">SP02</label>
+                    </div>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <form th:action="@{/module/submit}" method="get">
+                    <p>Module Quản lý đơn hàng:</p>
+                    <div>
+                        <input type="radio" id="choice51"
+                               th:name="order-team" th:value="sp01-order">
+                        <label for="choice51">SP01</label>
+                        <input type="radio" id="choice52"
+                               th:name="order-team" th:value="sp16-order">
+                        <label for="choice52">SP16</label>
+                        <input type="radio" id="choice53"
+                               th:name="order-team" th:value="sp02-order">
+                        <label for="choice53">SP02</label>
+                    </div>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+    </div>
+</section>
+
+<div th:replace="fragments/js-script-container"></div>
+</body>
+</html>

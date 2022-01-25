@@ -8,7 +8,7 @@ import lombok.Data;
 public class SP20InventoryBean {
    
     @JsonProperty("id")
-    private String id;
+    private Integer id;
 
     @JsonProperty("quantity")
     private Integer quantity;
