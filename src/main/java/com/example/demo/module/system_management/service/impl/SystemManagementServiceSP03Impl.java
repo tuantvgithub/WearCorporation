@@ -7,6 +7,7 @@ import com.example.demo.client_ui.dto.config.ThemeRequest;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.account.bean.UserRole;
 import com.example.demo.module.system_management.bean.sp03.ModuleCode;
+import com.example.demo.module.system_management.bean.sp03.SP03ModuleBean;
 import com.example.demo.module.system_management.bean.sp03.SP03RoleConfigBean;
 import com.example.demo.module.system_management.bean.sp03.SP03ThemeConfigBean;
 import com.example.demo.module.system_management.bean.sp03.TeamCode;
@@ -98,7 +99,10 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
     @Override
     public String getTeamName(ModuleCode moduleCode) {
         try {
-            List<Map<String, Object>> res = this.webServiceProxy.getModule(moduleCode.getValue());
+            SP03ModuleBean bean=new SP03ModuleBean();
+            bean.setModule(moduleCode.getValue());
+            List<Map<String, Object>> res = this.webServiceProxy.getModule(bean);
+            System.out.println(res);
             if (res == null || res.isEmpty()) return null;
             Map<String, Object> data = res.get(0);
             if (!data.containsKey("team_code")) return null;

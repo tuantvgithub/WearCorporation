@@ -13,6 +13,7 @@ import java.util.Map;
 import com.example.demo.client_ui.dto.config.ThemeDTO;
 import com.example.demo.client_ui.dto.config.ThemeRequest;
 import com.example.demo.module.account.bean.UserRole;
+import com.example.demo.module.system_management.bean.sp03.SP03ModuleBean;
 import com.example.demo.module.system_management.bean.sp03.SP03RoleConfigBean;
 import com.example.demo.module.system_management.bean.sp03.SP03ThemeConfigBean;
 
@@ -28,8 +29,8 @@ public interface SystemManagementSP03WebServiceProxy {
     @PostMapping("/user/get-screen-config/for-post")
     SP03ThemeConfigBean getConfig(@RequestBody ThemeRequest data);
 
-    @GetMapping("/moduleSwitch/get")
-    List<Map<String, Object>> getModule(@RequestParam("module") Integer moduleCode);
+    @PostMapping("/moduleSwitch/get/for-post")
+    List<Map<String, Object>> getModule(@RequestBody SP03ModuleBean moduleCode);
 
     @PostMapping("/moduleSwitch/set")
     Map<String, Object> setModule(@RequestBody Map<String, Object> params);

@@ -52,7 +52,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 			<div class="row">
 				<!-- Contact Form -->
 				<div class="contact-form col-md-6 " >
-					<form id="contact-form" method="post" action="" role="form">
+					<form id="contact-form" th:method="post" th:action="@{/contact}" th:object="${feedback}" role="form">
 					
 						<div class="form-group">
 							<input type="text" placeholder="Your Name" class="form-control" name="name" id="name">
@@ -67,7 +67,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 						</div>
 						
 						<div class="form-group">
-							<textarea rows="6" placeholder="Message" class="form-control" name="message" id="message"></textarea>	
+							<textarea rows="6" placeholder="Message" class="form-control" th:field="*{content}" name="message" id="message"></textarea>
 						</div>
 						
 						<div id="mail-success" class="success">

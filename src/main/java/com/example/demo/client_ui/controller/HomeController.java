@@ -7,8 +7,6 @@ import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.module.advertisement.service.AdvertisementService;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
 import com.example.demo.config.module.ModuleConfig;
-import com.example.demo.config.theme.CurrentTheme;
-import com.example.demo.config.theme.ThemeConfig;
 import com.example.demo.module.cart.service.CartService;
 import com.example.demo.module.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +26,6 @@ public class HomeController {
         @Autowired
         private ModuleConfig moduleConfig;
 
-        @Autowired
-        private CurrentTheme currentTheme;
-
         private final Map<String, AdvertisementService> advServiceMap;
         private final Map<String, ProductService> productServiceMap;
         private final Map<String, CartService> cartServiceMap;
@@ -46,7 +41,6 @@ public class HomeController {
         
         @GetMapping("/")
         public String displayHomepage(Model model) {
-                System.out.println(currentTheme);
                 List<AdvertisementBriefDTO> advBriefList = this.advServiceMap.get(
                                 this.moduleConfig.getAdvertisementTeam()).getAllAdvertisementBriefDTOs();
                 List<ProductBriefDTO> trendyProductList = this.productServiceMap.get(

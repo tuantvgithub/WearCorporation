@@ -20,4 +20,6 @@ public class AccountRegisterFormDTO {
     private String phone;
     
     private String country;
+
+    private String role;
 }

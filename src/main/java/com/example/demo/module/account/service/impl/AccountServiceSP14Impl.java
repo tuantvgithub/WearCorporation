@@ -63,6 +63,8 @@ public class AccountServiceSP14Impl implements AccountService {
     @Override
     public AccountDTO signup(AccountRegisterFormDTO formDTO) {
         try {
+
+            formDTO.setRole("User");
             AccountResponseBean<SP14AccountBean> responseBeanEntity = accountSP14WebServiceProxy.signup(ACCEPT_HEADER,
                     formDTO);
 

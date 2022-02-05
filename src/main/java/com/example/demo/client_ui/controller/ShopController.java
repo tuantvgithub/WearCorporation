@@ -90,11 +90,13 @@ public class ShopController {
 
         List<ProductReviewDTO> productReviewDTOList = this.customerCareServiceMap.get(
                 this.moduleConfig.getCustomerCareTeam()).getAllProductReviewByProductId(productDetailDTO.getId());
+        model.addAttribute("reviews", productReviewDTOList);
 
         model.addAttribute("product", productDetailDTO);
         model.addAttribute("quantity",
                 inventoryService.getProductQuantityInInventory(productDetailDTO.getId(), null));
         model.addAttribute("notice", null);
+
         ProductCartAddFormDTO productCart= new ProductCartAddFormDTO();
         productCart.setImageUrl(productDetailDTO.getImageUrl());
         productCart.setId(productDetailDTO.getId());

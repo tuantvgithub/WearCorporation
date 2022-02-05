@@ -1,6 +1,8 @@
 package com.example.demo.module.customer_care.mapping.impl;
 
+import com.example.demo.client_ui.dto.feedback.FeedbackDTO;
 import com.example.demo.client_ui.dto.product.ProductReviewDTO;
+import com.example.demo.module.customer_care.bean.sp21.SP21FeedBackBean;
 import com.example.demo.module.customer_care.bean.sp21.SP21ProductCommentBean;
 import com.example.demo.module.customer_care.mapping.CustomerCareMapping;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,5 +26,12 @@ public class CustomerCareMappingImpl implements CustomerCareMapping {
         reviewDTO.setUserId(commentBean.getUserId());
 
         return reviewDTO;
+    }
+
+    @Override
+    public SP21FeedBackBean feedBackDtoToBean(FeedbackDTO feedbackDTO) {
+        SP21FeedBackBean sp21FeedBackBean=new SP21FeedBackBean();
+        sp21FeedBackBean.setContent(feedbackDTO.getContent());
+        return sp21FeedBackBean;
     }
 }
