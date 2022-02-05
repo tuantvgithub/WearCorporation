@@ -12,11 +12,6 @@ public class IntroductionController {
         return "about";
     }
 
-    @GetMapping("/contact")
-    public String getContactPage(Model model) {
-        return "contact";
-    }
-
     @GetMapping("/faq")
     public String getFAQPage(Model model) {
         return "faq";
