@@ -31,9 +31,8 @@ public class OrderMappingImpl implements OrderMapping {
                 .orderDate(bean.getOrderTime())
                 .voucher(bean.getVoucher())
                 .shipFee(bean.getShipFee())
-                .totalPrice(bean.getPrice())
+                .totalPrice(bean.getTotal())
                 .paymentMethod(bean.getPaymentMethod())
-                .totalPrice(bean.getPrice())
                 .subTotal(bean.getSubtotal())
                 .status(bean.getStatus())
                 .address(bean.getAddress())
@@ -50,7 +49,7 @@ public class OrderMappingImpl implements OrderMapping {
         briefDTO.setOrderDate(bean.getOrderTime());
         if (bean.getProductOrderList() != null)
             briefDTO.setNumberOfItems(bean.getProductOrderList().size());
-        briefDTO.setTotalPrice(bean.getPrice());
+        briefDTO.setTotalPrice(bean.getTotal());
         briefDTO.setStatus(bean.getStatus());
 
         return briefDTO;
@@ -116,6 +115,7 @@ public class OrderMappingImpl implements OrderMapping {
 
         return OrderRequestBean.builder()
                 .address(checkoutDTO.getAddress() + " - " + checkoutDTO.getCity())
+                .fromAddress("Hoàn Kiếm - Hà Nội")
                 .paymentMethod(checkoutDTO.getPaymentMethod())
                 .voucherCode(checkoutDTO.getVoucherCode())
                 .products(dtoToOrderProductRequest(cartDTO))

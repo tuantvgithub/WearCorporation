@@ -63,7 +63,7 @@ public class CheckoutController {
         List<VoucherCodeDTO> voucherCodes = promotionService.getAllVoucherCode();
 
         CheckoutDTO checkoutDTO = new CheckoutDTO();
-        checkoutDTO.setAddress("Bắc Từ Liêm");
+        checkoutDTO.setAddress("Thanh Xuân");
         checkoutDTO.setCity("Hà Nội");
         checkoutDTO.setCardHolder("SPTwo SPFour");
         checkoutDTO.setCardNumber("123567");
