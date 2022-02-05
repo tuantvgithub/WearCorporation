@@ -18,8 +18,11 @@ public class SP01OrderBean {
     @JsonProperty("user_id")
     private Integer userId;
 
-    @JsonProperty("price")
+    @JsonProperty("total")
     private Integer price;
+
+    @JsonProperty("subtotal")
+    private Integer subtotal;
 
     @JsonProperty("voucherCode")
     private String voucherCode;
@@ -27,13 +30,13 @@ public class SP01OrderBean {
     @JsonProperty("voucher")
     private Integer voucher;
 
-    @JsonProperty("address")
+    @JsonProperty("from_address")
     private String address;
 
-    @JsonProperty("shipFee")
+    @JsonProperty("shipping_fee")
     private Integer shipFee;
 
-    @JsonProperty("paymentMethod")
+    @JsonProperty("payment_method")
     private String paymentMethod;
 
     @JsonProperty("delivery_note")
@@ -41,6 +44,9 @@ public class SP01OrderBean {
 
     @JsonProperty("status")
     private String status;
+
+    @JsonProperty("phone_number")
+    private String phone;
 
     @JsonProperty("order_timestamp")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

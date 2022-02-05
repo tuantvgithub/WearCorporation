@@ -69,6 +69,8 @@ public class CheckoutController {
         checkoutDTO.setCardNumber("123567");
         checkoutDTO.setCvv("4590");
         checkoutDTO.setExpiredDate("10/27");
+        checkoutDTO.setPassword("abcxyz");
+        checkoutDTO.setPhone("0123789456");
         checkoutDTO.setVoucherCode(code);
         // Calculate money
         int subtotal = 0;

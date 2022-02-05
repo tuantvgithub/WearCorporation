@@ -34,7 +34,9 @@ public class OrderMappingImpl implements OrderMapping {
                 .totalPrice(bean.getPrice())
                 .paymentMethod(bean.getPaymentMethod())
                 .totalPrice(bean.getPrice())
+                .subTotal(bean.getSubtotal())
                 .status(bean.getStatus())
+                .address(bean.getAddress())
                 .build();
     }
 
