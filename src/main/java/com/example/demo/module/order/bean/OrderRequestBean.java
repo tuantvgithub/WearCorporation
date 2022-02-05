@@ -11,28 +11,28 @@ import lombok.Data;
 @Builder
 public class OrderRequestBean {
 
-    @JsonProperty("orderId")
+    @JsonProperty("order_id")
     private Integer orderId;
 
-    @JsonProperty("userId")
+    @JsonProperty("user_id")
     private Integer userId;
 
     @JsonProperty("orderDate")
     private String orderDate;
 
-    @JsonProperty("totalPrice")
+    @JsonProperty("total")
     private Integer totalPrice;
 
-    @JsonProperty("subTotal")
+    @JsonProperty("subtotal")
     private Integer subTotal;
 
-    @JsonProperty("paymentMethod")
+    @JsonProperty("payment_method")
     private String paymentMethod;
 
-    @JsonProperty("address")
+    @JsonProperty("from_address")
     private String address;
 
-    @JsonProperty("phone")
+    @JsonProperty("phone_number")
     private String phone;
 
     @JsonProperty("voucherCode")
