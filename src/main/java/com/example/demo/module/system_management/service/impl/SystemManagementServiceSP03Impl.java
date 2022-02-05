@@ -138,6 +138,11 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
         TeamCode teamCode = this.systemManagementMapping.teamNameToTeamCode(teamName);
         if (teamCode == null) return "Failed";
 
+        if (teamCode == TeamCode.SP02) {
+            this.moduleConfig.setTeamForModule(module, teamName);
+            return "Success!";
+        }
+
         Map<String, Object> params = new HashMap<>();
         params.put("module", moduleCode.getValue());
         params.put("team_code", teamCode.getValue());

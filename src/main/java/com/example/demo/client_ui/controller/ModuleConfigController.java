@@ -44,7 +44,6 @@ public class ModuleConfigController {
             @RequestParam(value = "product-team", required = false) String productTeam,
             @RequestParam(value = "order-team", required = false) String orderTeam,
             @RequestParam(value = "account-team", required = false) String accountTeam,
-            @RequestParam(value = "delivery-team", required = false) String deliveryTeam,
             @RequestParam(value = "customer-care-team", required = false) String customerCareTeam
     ) {
         SystemManagementService systemManagementService =
@@ -56,8 +55,6 @@ public class ModuleConfigController {
             systemManagementService.setModule(ModuleCode.ORDER_MODULE, orderTeam);
         if (accountTeam != null)
             systemManagementService.setModule(ModuleCode.ACCOUNT_MODULE, accountTeam);
-        if (deliveryTeam != null)
-            systemManagementService.setModule(ModuleCode.DELIVERY_MODULE, deliveryTeam);
         if (customerCareTeam != null)
             systemManagementService.setModule(ModuleCode.CUSTOMER_CARE_MODULE, customerCareTeam);
 
