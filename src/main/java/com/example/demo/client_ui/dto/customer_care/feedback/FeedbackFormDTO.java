@@ -1,9 +1,11 @@
-package com.example.demo.client_ui.dto.customer_care;
+package com.example.demo.client_ui.dto.customer_care.feedback;
 
 import lombok.Data;
 
 @Data
 public class FeedbackFormDTO {
+
+    private Integer userId;
 
     private String userName;
 

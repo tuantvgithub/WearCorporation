@@ -11,4 +11,10 @@ public class DateUtil {
         DateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.format(date);
     }
+
+    public static String dateNow(String format) {
+        Date date = new Date();
+
+        return convertDateToString(date, format);
+    }
 }

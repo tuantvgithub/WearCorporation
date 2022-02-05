@@ -13,6 +13,8 @@ public class ProductReviewDTO {
 
     private Integer userId;
 
+    private Integer productId;
+
     private String userName;
 
     private String userImage;

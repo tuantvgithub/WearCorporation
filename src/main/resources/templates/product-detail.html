@@ -150,6 +150,18 @@ FACEBOOK: https://www.facebook.com/themefisher
 										</li>
 									</ul>
 								</div>
+								<form id="contact-form" method="post" th:action="@{|/shop/product/${product.id}/review}"
+									  th:object="${feedbackForm}">
+									<input type="hidden" th:feild="*{userId}" th:value="${feedbackForm.userId}">
+
+									<div class="form-group">
+										<textarea th:feild="*{message}" rows="6" placeholder="Message" class="form-control"></textarea>
+									</div>
+									<div id="cf-submit">
+										<input type="submit" id="contact-submit" class="btn btn-transparent" value="Submit">
+									</div>
+
+								</form>
 							</div>
 						</div>
 					</div>

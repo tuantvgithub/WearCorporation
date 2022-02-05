@@ -1,6 +1,9 @@
 package com.example.demo.module.customer_care.service.impl;
 
+import com.example.demo.client_ui.dto.customer_care.feedback.FeedbackDTO;
+import com.example.demo.client_ui.dto.customer_care.feedback.FeedbackFormDTO;
 import com.example.demo.client_ui.dto.product.ProductReviewDTO;
+import com.example.demo.client_ui.dto.product.ProductReviewFormDTO;
 import com.example.demo.module.customer_care.bean.sp21.SP21ProductCommentBean;
 import com.example.demo.module.customer_care.mapping.CustomerCareMapping;
 import com.example.demo.module.customer_care.proxies.CustomerCareSP21WebServiceProxy;
@@ -42,5 +45,20 @@ public class CustomerCareServiceSP21Impl implements CustomerCareService {
         }
 
         return reviewDTOList;
+    }
+
+    @Override
+    public void sendFeedbackForm(FeedbackFormDTO formDTO) {
+
+    }
+
+    @Override
+    public ProductReviewDTO createProductReview(ProductReviewFormDTO formDTO) {
+        return null;
+    }
+
+    @Override
+    public List<FeedbackDTO> getAllFeedback() {
+        return null;
     }
 }

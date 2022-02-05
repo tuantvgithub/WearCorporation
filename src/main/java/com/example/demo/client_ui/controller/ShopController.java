@@ -6,6 +6,7 @@ import com.example.demo.client_ui.dto.category.CategoryDTO;
 import com.example.demo.client_ui.dto.product.ProductBriefDTO;
 import com.example.demo.client_ui.dto.product.ProductDetailDTO;
 import com.example.demo.client_ui.dto.product.ProductReviewDTO;
+import com.example.demo.client_ui.dto.product.ProductReviewFormDTO;
 import com.example.demo.config.account.CurrentAccount;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.customer_care.service.CustomerCareService;
@@ -14,10 +15,8 @@ import com.example.demo.module.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -102,7 +101,24 @@ public class ShopController {
         productCart.setName(productDetailDTO.getName());
         model.addAttribute("productCartForm", productCart);
 
+        ProductReviewFormDTO reviewFormDTO = new ProductReviewFormDTO();
+        reviewFormDTO.setUserId(this.currentAccount.getId());
+        reviewFormDTO.setProductId(id);
+        model.addAttribute("productReviewForm", reviewFormDTO);
+
         return "product-detail";
     }
 
+    @PostMapping("/products/{id}/review")
+    public RedirectView reviewProduct(@PathVariable("id") Integer productId,
+                                      @ModelAttribute("productReviewForm") ProductReviewFormDTO reviewFormDTO,
+                                      Model model) {
+        RedirectView redirectView = new RedirectView();
+        redirectView.setContextRelative(true);
+        redirectView.setUrl("/products/");
+
+        // TODO
+
+        return redirectView;
+    }
 }
