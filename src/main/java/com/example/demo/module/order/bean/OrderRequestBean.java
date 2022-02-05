@@ -41,6 +41,6 @@ public class OrderRequestBean {
     @JsonProperty("status")
     private String status;
 
-    @JsonProperty("products")
+    @JsonProperty("product_list")
     private List<OrderProductRequestBean> products;
 }

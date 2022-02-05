@@ -41,7 +41,8 @@ public class OrderServiceSP01Impl implements OrderService {
 
     @Override
     public List<OrderBriefDTO> getAllOrderDTOByUserId(Integer userId) {
-        List<SP01OrderBean> sp01OrderBeanList = this.orderSP01WebServiceProxy.getAllOrder(X_API_KEY_TOKEN, null);
+        List<SP01OrderBean> sp01OrderBeanList =
+                this.orderSP01WebServiceProxy.getAllOrder(X_API_KEY_TOKEN, 100);
         System.out.println(sp01OrderBeanList);
         if (sp01OrderBeanList == null)
             return null;

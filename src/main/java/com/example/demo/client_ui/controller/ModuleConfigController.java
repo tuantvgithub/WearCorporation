@@ -3,7 +3,6 @@ package com.example.demo.client_ui.controller;
 import com.example.demo.config.module.ModuleConfig;
 import com.example.demo.module.system_management.bean.sp03.ModuleCode;
 import com.example.demo.module.system_management.service.SystemManagementService;
-import com.example.demo.switch_team.service.SwitchTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +18,6 @@ public class ModuleConfigController {
 
     @Autowired
     private ModuleConfig moduleConfig;
-
-    @Autowired
-    private SwitchTeamService switchTeamService;
 
     private final Map<String, SystemManagementService> sysManagementServiceMap;
 
