@@ -12,6 +12,7 @@ import com.example.demo.client_ui.dto.order.ProductOrderDTO;
 import com.example.demo.module.order.bean.OrderProductRequestBean;
 import com.example.demo.module.order.bean.OrderRequestBean;
 import com.example.demo.module.order.bean.sp01.SP01OrderBean;
+import com.example.demo.module.order.bean.sp01.SP01ProductOrderBean;
 import com.example.demo.module.order.bean.sp16.SP16OrderBean;
 import com.example.demo.module.order.bean.sp16.SP16ProductOrderBean;
 import com.example.demo.module.order.mapping.OrderMapping;
@@ -26,6 +27,18 @@ public class OrderMappingImpl implements OrderMapping {
         if (bean == null)
             return null;
 
+        List<ProductOrderDTO> orderDTOs = new ArrayList<>();
+        if(bean.getProductOrderList()!=null)
+        {
+            
+            for (SP01ProductOrderBean productOrderBean: bean.getProductOrderList()) {
+    
+                ProductOrderDTO productOrderDTO=new ProductOrderDTO();
+                productOrderDTO.setProductId(productOrderBean.getProductId());
+                productOrderDTO.setQuantity(productOrderBean.getQuantity());
+                orderDTOs.add(productOrderDTO);  
+            }
+        }
         return OrderDetailDTO.builder()
                 .orderId(bean.getOrderId())
                 .orderDate(bean.getOrderTime())
@@ -36,8 +49,10 @@ public class OrderMappingImpl implements OrderMapping {
                 .subTotal(bean.getSubtotal())
                 .status(bean.getStatus())
                 .address(bean.getAddress())
+                .productList(orderDTOs)
                 .build();
     }
+
 
     @Override
     public OrderBriefDTO beanToBriefDTO(SP01OrderBean bean) {

@@ -67,7 +67,7 @@ public class PaymentController {
 
        
         OrderDetailDTO orderDetailDTO=orderService.createOrder(orderRequestBean);
-               
+
         System.out.println(orderDetailDTO);
        // Save payment info
         if (!checkoutDTO.getPaymentMethod().equals("cod")) {
