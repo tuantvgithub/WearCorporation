@@ -10,7 +10,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SP01OrderBean {
+public class    SP01OrderBean {
 
     @JsonProperty("order_id")
     private Integer orderId;
@@ -19,7 +19,7 @@ public class SP01OrderBean {
     private Integer userId;
 
     @JsonProperty("total")
-    private Integer price;
+    private Integer total;
 
     @JsonProperty("subtotal")
     private Integer subtotal;
@@ -30,8 +30,11 @@ public class SP01OrderBean {
     @JsonProperty("voucher")
     private Integer voucher;
 
-    @JsonProperty("from_address")
+    @JsonProperty("to_address")
     private String address;
+
+    @JsonProperty("from_address")
+    private String fromAddress;
 
     @JsonProperty("shipping_fee")
     private Integer shipFee;

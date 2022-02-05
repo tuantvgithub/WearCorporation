@@ -23,13 +23,17 @@ public class OrderRequestBean {
     @JsonProperty("total")
     private Integer totalPrice;
 
+    @JsonProperty("from_address")
+    private String fromAddress;
+
     @JsonProperty("subtotal")
     private Integer subTotal;
+
 
     @JsonProperty("payment_method")
     private String paymentMethod;
 
-    @JsonProperty("from_address")
+    @JsonProperty("to_address")
     private String address;
 
     @JsonProperty("phone_number")
