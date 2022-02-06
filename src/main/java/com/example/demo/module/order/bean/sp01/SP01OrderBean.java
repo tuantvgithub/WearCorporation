@@ -24,21 +24,21 @@ public class    SP01OrderBean {
     @JsonProperty("subtotal")
     private Integer subtotal;
 
-    @JsonProperty("voucherCode")
-    private String voucherCode;
-
     @JsonProperty("voucher")
     private Integer voucher;
-
+    
     @JsonProperty("to_address")
     private String address;
-
+    
     @JsonProperty("from_address")
     private String fromAddress;
-
+    
     @JsonProperty("shipping_fee")
     private Integer shipFee;
-
+    
+    @JsonProperty("shipping_voucher")
+    private String voucherCode;
+    
     @JsonProperty("payment_method")
     private String paymentMethod;
 

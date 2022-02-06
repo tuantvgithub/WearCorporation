@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.demo.module.sale_promotion.bean.sp19.CodeSP19Bean;
 import com.example.demo.module.sale_promotion.bean.sp19.PromoDetailSP19Bean;
 import com.example.demo.module.sale_promotion.bean.sp19.PromotionSP19Bean;
+import com.example.demo.module.sale_promotion.bean.sp19.SP19CodeResponseBean;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,6 @@ public interface SP19WebServiceProxy {
     @GetMapping("/sale/promotion/{id}")
     PromoDetailSP19Bean getPromotionDetail(@PathVariable("id") String id);
 
-    @GetMapping("/sale/code")
-    List<CodeSP19Bean> getAllVoucherCode();
+    @GetMapping("/sale/code/admin")
+    SP19CodeResponseBean getAllVoucherCode();
 }

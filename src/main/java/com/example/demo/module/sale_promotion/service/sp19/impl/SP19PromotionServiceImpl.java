@@ -10,6 +10,7 @@ import com.example.demo.client_ui.dto.sale_promotion.VoucherCodeDTO;
 import com.example.demo.module.sale_promotion.bean.sp19.CodeSP19Bean;
 import com.example.demo.module.sale_promotion.bean.sp19.PromoDetailSP19Bean;
 import com.example.demo.module.sale_promotion.bean.sp19.PromotionSP19Bean;
+import com.example.demo.module.sale_promotion.bean.sp19.SP19CodeResponseBean;
 import com.example.demo.module.sale_promotion.mapping.PromotionMapping;
 import com.example.demo.module.sale_promotion.proxies.sp19.SP19WebServiceProxy;
 import com.example.demo.module.sale_promotion.service.sp19.PromotionService;
@@ -61,7 +62,8 @@ public class SP19PromotionServiceImpl implements PromotionService {
 
         try {
 
-            List<CodeSP19Bean> codeBeans = sp19WebServiceProxy.getAllVoucherCode();
+            SP19CodeResponseBean sp19CodeResponseBean=sp19WebServiceProxy.getAllVoucherCode();
+            List<CodeSP19Bean> codeBeans = sp19CodeResponseBean.getData();
             List<VoucherCodeDTO> voucherCodeDTOs = new ArrayList<>();
 
             for (CodeSP19Bean code : codeBeans) {

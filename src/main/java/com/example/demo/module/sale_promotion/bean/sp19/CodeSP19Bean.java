@@ -28,26 +28,11 @@ public class CodeSP19Bean {
     @JsonProperty("count")
     private Integer count;
 
-    @JsonProperty("images")
-    private List<String> images;
+    @JsonProperty("condition")
+    private SP19ConditionBean condition;
 
-    @JsonProperty("percentDiscount")
-    private Integer percentDiscount;
-
-    @JsonProperty("cashDiscount")
-    private Integer cashDiscount;
-
-    @JsonProperty("bundledProduct")
-    private String bundledProduct;
-
-    @JsonProperty("level")
-    private String level;
-
-    @JsonProperty("priceMin")
-    private Integer priceMin;
-
-    @JsonProperty("totalProduct")
-    private Integer totalProduct;
+    @JsonProperty("discount")
+    private SP19DiscountBean discount;
 
     @JsonProperty("discountCode")
     private String discountCode;

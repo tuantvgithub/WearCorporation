@@ -27,6 +27,7 @@ public class SalePromotionController {
         ModelAndView mv=new ModelAndView();
         List<PromotionDTO> promotionDTOs=promotionService.getAllSales();
 
+        
         mv.addObject("promotions", promotionDTOs);
         mv.setViewName("promotion");
 

@@ -50,6 +50,7 @@ public class OrderMappingImpl implements OrderMapping {
                 .status(bean.getStatus())
                 .address(bean.getAddress())
                 .productList(orderDTOs)
+                .voucherCode(bean.getVoucherCode())
                 .build();
     }
 
