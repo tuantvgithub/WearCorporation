@@ -50,17 +50,17 @@
         <div class="row">
             <div class="col-md-6">
                 <form th:action="@{/module/submit}" method="get">
-                    <p>Module giao hàng:</p>
+                    <p>Module Quản lý đơn hàng:</p>
                     <div>
-                        <input type="radio" id="choice31"
-                               th:name="delivery-team" th:value="sp07-delivery">
-                        <label for="choice31">SP07</label>
-                        <input type="radio" id="choice32"
-                               th:name="delivery-team" th:value="sp15-delivery">
-                        <label for="choice32">SP15</label>
-                        <input type="radio" id="choice33"
-                               th:name="delivery-team" th:value="sp02-delivery">
-                        <label for="choice33">SP02</label>
+                        <input type="radio" id="choice51"
+                               th:name="order-team" th:value="sp01-order">
+                        <label for="choice51">SP01</label>
+                        <input type="radio" id="choice52"
+                               th:name="order-team" th:value="sp16-order">
+                        <label for="choice52">SP16</label>
+                        <input type="radio" id="choice53"
+                               th:name="order-team" th:value="sp02-order">
+                        <label for="choice53">SP02</label>
                     </div>
                     <div>
                         <button type="submit">Submit</button>
@@ -80,28 +80,6 @@
                         <input type="radio" id="choice43"
                                th:name="customer-care-team" th:value="sp02-customer-care">
                         <label for="choice43">SP02</label>
-                    </div>
-                    <div>
-                        <button type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <form th:action="@{/module/submit}" method="get">
-                    <p>Module Quản lý đơn hàng:</p>
-                    <div>
-                        <input type="radio" id="choice51"
-                               th:name="order-team" th:value="sp01-order">
-                        <label for="choice51">SP01</label>
-                        <input type="radio" id="choice52"
-                               th:name="order-team" th:value="sp16-order">
-                        <label for="choice52">SP16</label>
-                        <input type="radio" id="choice53"
-                               th:name="order-team" th:value="sp02-order">
-                        <label for="choice53">SP02</label>
                     </div>
                     <div>
                         <button type="submit">Submit</button>
