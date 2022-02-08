@@ -39,7 +39,7 @@ public class OrderRequestBean {
     @JsonProperty("phone_number")
     private String phone;
 
-    @JsonProperty("voucherCode")
+    @JsonProperty("shipping_voucher")
     private String voucherCode;
 
     @JsonProperty("status")

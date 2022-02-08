@@ -199,7 +199,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 
                   <div th:each="voucher: ${vouchers}" style="border-style: dotted;">
                      Name:<p th:text="${voucher.name}"></p>
-                     Discount code<p th:text="${voucher.discountCode}"></p>
+                     Discount code<p th:text="${voucher.codeId}"></p>
                      Discount <p
                         th:text="${voucher.percentDiscount != null} ? ${voucher.percentDiscount} +'%' : ${voucher.cashDiscount}">
                      </p>

@@ -61,6 +61,7 @@ public class CheckoutController {
 
         List<ProductCartDTO> products = cartDTO.getProductCartList();
         List<VoucherCodeDTO> voucherCodes = promotionService.getAllVoucherCode();
+        
 
         CheckoutDTO checkoutDTO = new CheckoutDTO();
         checkoutDTO.setAddress("Thanh Xuân");
