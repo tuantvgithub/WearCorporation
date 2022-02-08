@@ -50,8 +50,7 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
     @Override
     public AccountRoleDTO getRole(UserRole userRole) {
          try {
-             SP03RoleConfigBean configBean =
-                     this.webServiceProxy.getRole(userRole);
+             SP03RoleConfigBean configBean = this.webServiceProxy.getRole(userRole);
              if (configBean == null)
                  return AccountRoleDTO.GUEST_ROLE;
 
