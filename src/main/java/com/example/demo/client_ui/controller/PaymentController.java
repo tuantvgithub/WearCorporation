@@ -1,6 +1,7 @@
 package com.example.demo.client_ui.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.example.demo.client_ui.dto.account.AccountRoleDTO;
@@ -20,12 +21,16 @@ import com.example.demo.module.payment.service.PaymentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.client.RestTemplate;
 
 
 @Controller
@@ -63,12 +68,9 @@ public class PaymentController {
 
         OrderRequestBean orderRequestBean=orderMapping.dtoToOrderRequest(checkoutDTO, cartDTO);
         orderRequestBean.setUserId(this.currentAccount.getId());
-
-
-       
         OrderDetailDTO orderDetailDTO=orderService.createOrder(orderRequestBean);
 
-        System.out.println(orderDetailDTO);
+
        // Save payment info
         if (!checkoutDTO.getPaymentMethod().equals("cod")) {
 
@@ -105,10 +107,20 @@ public class PaymentController {
         }
 
         // Update order Info
-        // OrderDetailDTO updateOrder = new OrderDetailDTO();
-        // updateOrder.setStatus("Paid");
-        // orderService.updateOrder(orderDetailDTO.getOrderId(), updateOrder);
+        Map<String,String> update=new HashMap<>();
+        update.put("status","active");
+         //orderService.updateOrder(orderDetailDTO.getOrderId(), updateOrder);
 
+        RestTemplate rest=new RestTemplate();
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        factory.setConnectTimeout(30000);
+        factory.setReadTimeout(30000);
+        rest.setRequestFactory(factory);
+
+        String url = "http://binhnguyen-tech.stackstaging.com/OrderModule/order/"+orderDetailDTO.getOrderId();
+
+        HttpEntity<Map<String,String>> requestUpdate =new HttpEntity<>(update);
+        rest.exchange(url, HttpMethod.PATCH, requestUpdate,String.class);
         cartService.resetCart(new UserDTO(this.currentAccount.getId()));
 
         return "redirect:/payment-successful";
@@ -122,13 +134,5 @@ public class PaymentController {
         return "payment-successful";
     }
 
-    // private int calculateShippingFee(String address, String city) {
-    //     DeliveryService deliveryService = this.deliveryServiceMap.get(this.moduleConfig.getDeliveryTeam());
-    //     StringBuilder sb = new StringBuilder();
-    //     sb.append(address);
-    //     sb.append(" - ");
-    //     sb.append(city);
-    //     String to_address = sb.toString();   
-    //     return deliveryService.calculateShipFee(to_address).getFee();
-    // }
+
 }

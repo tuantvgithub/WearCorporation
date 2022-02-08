@@ -106,7 +106,6 @@ public class CheckoutController {
             return new ModelAndView("redirect:/account/login");
 
         String type = checkoutDTO.getPaymentMethod();
-        System.out.println(checkoutDTO);
         if (!type.equals("cod")) {
 
             PaymentInfo paymentInfo = new PaymentInfo();
