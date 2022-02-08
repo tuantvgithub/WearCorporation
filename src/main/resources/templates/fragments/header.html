@@ -74,7 +74,9 @@
                                         class="tf-ion-ios-search-strong"></i> Search</a>
                                 <ul class="dropdown-menu search-dropdown">
                                     <li>
-                                        <form action="post"><input type="search" class="form-control" placeholder="Search..."></form>
+                                        <form th:action="@{/shop}" method="get">
+                                            <input type="search" class="form-control" placeholder="Search..." th:name="keyword">
+                                        </form>
                                     </li>
                                 </ul>
                             </li><!-- / Search -->
