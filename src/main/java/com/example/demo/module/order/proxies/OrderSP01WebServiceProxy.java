@@ -30,5 +30,6 @@ public interface OrderSP01WebServiceProxy {
             @RequestParam(name = "limit", required = false) Integer limit);
 
     @GetMapping("/{id}")
-    SP01OrderBean getOrderById(@RequestHeader("x-api-key") String token, @PathVariable Integer id);
+    SP01OrderBean getOrderById(@RequestHeader("x-api-key") String token,
+                               @PathVariable Integer id);
 }

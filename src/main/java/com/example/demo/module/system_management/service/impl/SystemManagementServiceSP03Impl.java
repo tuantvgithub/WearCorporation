@@ -50,8 +50,7 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
     @Override
     public AccountRoleDTO getRole(UserRole userRole) {
          try {
-             SP03RoleConfigBean configBean =
-                     this.webServiceProxy.getRole(userRole);
+             SP03RoleConfigBean configBean = this.webServiceProxy.getRole(userRole);
              if (configBean == null)
                  return AccountRoleDTO.GUEST_ROLE;
 
@@ -137,6 +136,11 @@ public class SystemManagementServiceSP03Impl implements SystemManagementService 
         if (module == null) return "Failed";
         TeamCode teamCode = this.systemManagementMapping.teamNameToTeamCode(teamName);
         if (teamCode == null) return "Failed";
+
+        if (teamCode == TeamCode.SP02) {
+            this.moduleConfig.setTeamForModule(module, teamName);
+            return "Success!";
+        }
 
         Map<String, Object> params = new HashMap<>();
         params.put("module", moduleCode.getValue());

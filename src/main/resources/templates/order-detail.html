@@ -82,11 +82,11 @@ FACEBOOK: https://www.facebook.com/themefisher
                                             <ul class="summary-prices">
                                                 <li>
                                                     <span>Subtotal:</span>
-                                                    <span class="price" th:text="'$' + ${order.totalPrice}"></span>
+                                                    <span class="price" th:text="'$' + ${order.subTotal}"></span>
                                                 </li>
                                                 <li>
                                                     <span>Shipping:</span>
-                                                    <span>Free</span>
+                                                    <span th:text="'$' + ${order.shipFee}"></span>
                                                 </li>
                                             </ul>
                                             <div class="summary-total">
